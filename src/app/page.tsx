@@ -1,7 +1,9 @@
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import Services from "@/components/Services";
+import SwordvoicesCard from "@/components/SwordvoicesCard";
 import services from "@/constants/services";
+import swordvoices from "@/constants/swordvoices";
 
 export default function Home() {
   return (
@@ -15,7 +17,7 @@ export default function Home() {
             <span className="font-bold">Academia online</span> no tradicional
           </p>
         </div>
-        <Button label="Registrarme" /> 
+        <Button label="Registrarme" />
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
@@ -61,6 +63,25 @@ export default function Home() {
         </div>
         <div className="flex justify-center w-full pt-12">
           <Button label="Registrarme" />
+        </div>
+      </div>
+      {/* Fourth Page */}
+      <div className="min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
+        <h1 className="text-title text-center">
+          Nuestras <span className="text-primary">Swordvoices</span>
+        </h1>
+        <div className="flex flex-wrap justify-center my-8">
+          {swordvoices.map((swordvoice) => (
+            <SwordvoicesCard
+              linkedin={swordvoice.linkedin}
+              github={swordvoice.github}
+              portfolio={swordvoice.portfolio}
+              name={swordvoice.name}
+              photo={swordvoice.photo}
+              rol={swordvoice.rol}
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
+            />
+          ))}{" "}
         </div>
       </div>
     </main>
