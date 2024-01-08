@@ -25,7 +25,9 @@ export default function Home() {
       {/* First page */}
       <div className="min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col">
         <div className="flex flex-col items-center bg-[#000e2799] w-[95%] py-2">
-          <h1 className="text-title leading-[48px]">Swordvoice Academy</h1>
+          <h1 className="text-title leading-[48px] title">
+            Swordvoice Academy
+          </h1>
           <p className="text-base">
             <span className="font-bold">Academia online</span> no tradicional
           </p>
@@ -36,7 +38,7 @@ export default function Home() {
       {/* Second Page */}
       <div className="px-32 min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
         <div className="w-[45%]">
-          <h1 className="text-title mb-8">
+          <h1 className="text-title mb-8 title">
             ¿Qué es <br />
             <span className="text-primary">Swordvoice</span>
             <span className="text-secondary"> Academy</span>?
@@ -60,7 +62,7 @@ export default function Home() {
       <div className="min-h-screen bg-[black] w-full px-[100px] pb-12 pt-20">
         <div className="grid grid-cols-2 gap-x-12 ">
           <div className="relative">
-            <h1 className="text-title mb-12 absolute top-[-32px]">
+            <h1 className="text-title mb-12 absolute top-[-32px] title">
               ¿Qué incluye <br />
               <span className="text-secondary">nuestro servicio?</span>
             </h1>
@@ -80,7 +82,7 @@ export default function Home() {
       </div>
       {/* Fourth Page */}
       <div className="min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
-        <h1 className="text-title text-center">
+        <h1 className="text-title text-center font-sedgwick">
           Nuestras <span className="text-primary">Swordvoices</span>
         </h1>
         <div className="flex flex-wrap justify-center my-8">
@@ -101,7 +103,7 @@ export default function Home() {
       {/* Fifth Page */}
       <div className="min-h-screen bg-white w-full">
         <div className="w-full p-12 bg-ourPathsBackground bg-contain">
-          <h1 className="text-title text-center">
+          <h1 className="text-title text-center title">
             Nuestros <span className="text-primary">Paths</span>
           </h1>
         </div>
