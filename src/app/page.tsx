@@ -1,3 +1,6 @@
+import Services from "@/components/Services";
+import services from "@/constants/services";
+
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col">
@@ -22,6 +25,29 @@ export default function Home() {
             los recursos y el plan que debes seguir para que no pierdas tiempo.
           </p>
         </div>
+      </div>
+      <div className="h-[58px] bg-[black] w-full"></div>
+      {/* Third Page */}
+      <div className="min-h-screen bg-[black] w-full px-[100px] pb-12 pt-20">
+        <div className="grid grid-cols-2 gap-x-12 ">
+          <div className="relative">
+            <h1 className="text-title mb-12 absolute top-[-32px]">
+              ¿Qué incluye <br />
+              <span className="text-secondary">nuestro servicio?</span>
+            </h1>
+          </div>
+          {services.map(({ title, description, Icon }, index) => (
+            <Services
+              title={title}
+              description={description}
+              icon={<Icon />}
+              key={`services-${index}`}
+            />
+          ))}
+        </div>
+        {/* <div className="flex justify-center w-full pt-12">
+          <Button label="Registrarme" />
+        </div> */}
       </div>
     </main>
   );
