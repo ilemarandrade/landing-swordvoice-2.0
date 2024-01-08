@@ -1,3 +1,4 @@
+import Logo from "@/assets/icons/Logo";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import Services from "@/components/Services";
@@ -15,7 +16,7 @@ export default function Home() {
             <span className="font-bold">Academia online</span> no tradicional
           </p>
         </div>
-        <Button label="Registrarme" /> 
+        <Button label="Registrarme" />
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
@@ -62,6 +63,13 @@ export default function Home() {
         <div className="flex justify-center w-full pt-12">
           <Button label="Registrarme" />
         </div>
+      </div>
+      {/* Footer */}
+      <div className="min-h-screen bg-[black] w-full p-12 grid grid-cols-2">
+        <div className="flex justify-center">
+          <Logo />
+        </div>
+        <div></div>
       </div>
     </main>
   );
