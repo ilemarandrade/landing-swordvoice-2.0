@@ -1,9 +1,21 @@
+import Navbar from "@/components/Navbar";
 import Services from "@/components/Services";
 import services from "@/constants/services";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col">
+      <Navbar />
+      {/* First page */}
+      <div className="min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col">
+        <div className="flex flex-col items-center bg-[#000e2799] w-[95%] py-2">
+          <h1 className="text-title leading-[48px]">Swordvoice Academy</h1>
+          <p className="text-base">
+            <span className="font-bold">Academia online</span> no tradicional
+          </p>
+        </div>
+        {/* <Button label="Registrarme" /> */}
+      </div>
       {/* Second Page */}
       <div className="px-32 min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
         <div className="w-[45%]">
