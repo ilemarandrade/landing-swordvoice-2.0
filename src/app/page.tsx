@@ -1,11 +1,24 @@
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
+import PathAvailable from "@/components/PathAvailable";
 import Services from "@/components/Services";
 import SwordvoicesCard from "@/components/SwordvoicesCard";
 import services from "@/constants/services";
 import swordvoices from "@/constants/swordvoices";
+import paths from "@/constants/paths";
+import { useMemo } from "react";
 
 export default function Home() {
+  const pathAvailables = useMemo(
+    () => paths.filter(({ isAvailable }) => isAvailable),
+    [],
+  );
+
+  const pathNotAvailables = useMemo(
+    () => paths.filter(({ isAvailable }) => !isAvailable),
+    [],
+  );
+
   return (
     <main className="flex min-h-screen flex-col">
       <Navbar />
@@ -81,7 +94,38 @@ export default function Home() {
               rol={swordvoice.rol}
               description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
             />
-          ))}{" "}
+          ))}
+        </div>
+      </div>
+      {/* Fifth Page */}
+      <div className="min-h-screen bg-white w-full">
+        <div className="w-full p-12 bg-ourPathsBackground bg-contain">
+          <h1 className="text-title text-center">
+            Nuestros <span className="text-primary">Paths</span>
+          </h1>
+        </div>
+        <div className="w-full px-12 bg-white py-20">
+          <div className="grid grid-cols-2 justify-items-center">
+            {pathAvailables.map(({ name, description, Icon }, index) => (
+              <PathAvailable
+                key={`path-${index}`}
+                name={name}
+                description={description}
+                Icon={Icon}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="w-full flex justify-center pb-12">
+          <div className="flex justify-center max-w-[900px] flex-wrap">
+            {pathNotAvailables.map(({ name }, index) => (
+              <div key={`path-${index}`} className="mx-12 my-2">
+                <p className="text-[#5A5A5A] text-xl text-center">
+                  <span className="font-bold">{name}</span>: próximamente
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </main>
