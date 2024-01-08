@@ -84,8 +84,9 @@ export default function Home() {
           Nuestras <span className="text-primary">Swordvoices</span>
         </h1>
         <div className="flex flex-wrap justify-center my-8">
-          {swordvoices.map((swordvoice) => (
+          {swordvoices.map((swordvoice, index) => (
             <SwordvoicesCard
+              key={`swordvoices-${index}`}
               linkedin={swordvoice.linkedin}
               github={swordvoice.github}
               portfolio={swordvoice.portfolio}
