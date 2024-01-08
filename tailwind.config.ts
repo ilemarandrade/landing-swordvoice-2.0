@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sedgwick: "var(--font-sedgwick)",
+      },
       backgroundImage: {
         home: "url('/backgrounds/homeBackground.jpg')",
         whatIsSwordvoices:
