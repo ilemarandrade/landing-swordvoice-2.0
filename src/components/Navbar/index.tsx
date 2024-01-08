@@ -16,7 +16,7 @@ const links: NavItem[] = [
 
 const Navbar = () => {
   return (
-    <div className="bg-blurry w-full fixed flex justify-between h-[85px]">
+    <div className="bg-blurry w-full fixed flex justify-between h-[85px] z-20">
       <Logo className="mx-8 mt-8" />
       <div className="mx-8 mt-5 flex gap-[40px] py-4">
         {links.map((link: NavItem, index: number) => (
