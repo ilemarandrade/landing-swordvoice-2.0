@@ -32,7 +32,7 @@ const config: Config = {
         base: ["16px", "24px"],
         md: ["18px", "24px"],
         lg: ["20px", "28px"],
-        xl: ["24px", "32px"],
+        xl: ["24px", "28px"],
         title: ["48px", "56px"],
       },
     },

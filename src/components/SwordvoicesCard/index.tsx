@@ -34,7 +34,7 @@ const SwordvoicesCard = ({
           className="rounded-t-[18px] w-full"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent from-10% via-transparent via-30% to-blue to-100%" />
-        <h1 className="absolute bottom-0 text-xl p-4">{name}</h1>
+        <h1 className="absolute bottom-0 text-xl p-4 title">{name}</h1>
       </div>
       <div className="h-[50%] p-4">
         <h2 className="text-black text-lg font-bold mb-4">{rol}</h2>
