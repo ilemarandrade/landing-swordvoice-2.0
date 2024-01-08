@@ -13,7 +13,7 @@ const config: Config = {
         whatIsSwordvoices:
           "url('/backgrounds/whatIsSwordvoicesBackground.jpg')",
         ourSwordVoices: "url('/backgrounds/ourSwordVoicesBackground.jpg')",
-        "footer-texture": "url('/img/footer-texture.png')",
+        ourPathsBackground: "url('/backgrounds/ourPathsBackground.jpg')",
       },
       colors: {
         primary: "#FF7A00",
