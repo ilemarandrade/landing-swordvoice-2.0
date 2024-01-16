@@ -36,9 +36,9 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <div className="px-32 min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
-        <div className="w-[45%]">
-          <h1 className="text-title mb-8 title">
+      <div className="px-12 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
+        <div className="w-full lg:w-[45%]">
+          <h1 className="text-title mb-8 title text-center lg:text-left">
             ¿Qué es <br />
             <span className="text-primary">Swordvoice</span>
             <span className="text-secondary"> Academy</span>?
