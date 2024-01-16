@@ -8,6 +8,12 @@ import services from "@/constants/services";
 import swordvoices from "@/constants/swordvoices";
 import paths from "@/constants/paths";
 import { useMemo } from "react";
+import World from "@/assets/icons/World";
+import Link from "next/link";
+import Input from "@/components/Input";
+import Textarea from "@/components/Textarea";
+import InstagramIcon from "@/assets/icons/InstagramIcon";
+import WorldIcon from "@/assets/icons/WorldIcon";
 
 export default function Home() {
   const pathAvailables = useMemo(
@@ -133,11 +139,34 @@ export default function Home() {
         </div>
       </div>
       {/* Footer */}
-      <div className="min-h-screen bg-[black] w-full p-12 grid grid-cols-2">
-        <div className="flex justify-center">
-          <Logo />
+      <div className="min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2">
+        <div className="flex items-center flex-col mb-8 md:mb-0">
+          <div className="mb-8">
+            <Logo />
+          </div>
+          <Input label="Nombre y Apellido" />
+          <Input label="Correo electrónico" />
+          <Textarea label="Mensaje" />
+          <div className="w-full flex justify-end max-w-md mt-2">
+            <button className="text-primary font-bold">ENVIAR</button>
+          </div>
         </div>
-        <div></div>
+        <div className="flex flex-col items-center p-4">
+          <p className="text-title title text-center mb-8 text-secondary hidden md:block">
+            Contáctanos
+          </p>
+          <div className="mb-6 w-full md:w-[90%] lg:w-[70%] max-w-md">
+            <World />
+          </div>
+          <div className="flex justify-center items-center w-100">
+            <Link href="" className="p-1 mr-1">
+              <InstagramIcon />
+            </Link>
+            <Link href="">
+              <WorldIcon />
+            </Link>
+          </div>
+        </div>
       </div>
     </main>
   );
