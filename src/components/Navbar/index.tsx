@@ -8,7 +8,7 @@ interface NavItem {
 }
 
 const links: NavItem[] = [
-  { href: routes.MEET_US, label: "Conócenoshol" },
+  { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.SERVICES, label: "Servicios" },
   { href: routes.OUR_PATHS, label: "Nuestro path" },
   { href: routes.CONTACT_US, label: "Contáctanos" },
