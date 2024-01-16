@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
+
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+const sedgwick = localFont({
+  src: "../assets/font/SedgwickAve-Regular.ttf",
+  variable: "--font-sedgwick",
+});
 
 export const metadata: Metadata = {
   title: "Swordvoice Academy",
@@ -17,7 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} ${sedgwick.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
