@@ -1,6 +1,10 @@
+"use client";
 import Link from "next/link";
 import routes from "@/constants/routes";
 import Logo from "@/assets/icons/Logo";
+import { useEffect, useState } from "react";
+import Hamburguer from "@/assets/icons/Hamburguer";
+import { useIsMobile } from "@/constants/Hooks/isMobile";
 
 interface NavItem {
   label: string;
@@ -14,11 +18,33 @@ const links: NavItem[] = [
   { href: routes.CONTACT_US, label: "Contáctanos" },
 ];
 
+const linksResponsive: NavItem[] = [
+  { href: routes.HOME, label: "Home" },
+  { href: routes.MEET_US, label: "Conócenos" },
+  { href: routes.SERVICES, label: "Servicios" },
+  { href: routes.OUR_PATHS, label: "Nuestro path" },
+  { href: routes.CONTACT_US, label: "Contáctanos" },
+];
 const Navbar = () => {
+  const [showMenu, setShowMenu] = useState(false);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (!isMobile && showMenu) {
+      setShowMenu(false);
+    }
+  }, [isMobile, showMenu]);
+
   return (
-    <div className="bg-blurry w-full fixed flex justify-between h-[85px]">
-      <Logo className="mx-8 mt-8" />
-      <div className="mx-8 mt-5 flex gap-[40px] py-4">
+    <div
+      className={`${
+        !showMenu
+          ? `bg-blurry w-full fixed flex justify-center md:justify-between h-[85px] `
+          : `bg-center z-1 after:inset-0 after:z-1 after:absolute after:bg-gradient-to-t after:from-blueGra1 after:to-blueGra2 bg-[url('/backgrounds/homeBackground.jpg')] fixed flex flex-col justify-center items-center w-screen h-full`
+      }`}
+    >
+      <Logo className="w-[50%] md:w-[20%] mx-4 my-8 z-10" />
+      <div className="hidden md:flex mx-8 mt-5 gap-[40px] py-4">
         {links.map((link: NavItem, index: number) => (
           <Link href={link.href} key={index} className="no-underline">
             <div className="text-lg font-medium text-white no-underline">
@@ -26,6 +52,31 @@ const Navbar = () => {
             </div>
           </Link>
         ))}
+      </div>
+
+      <div
+        className={`md:hidden ${
+          showMenu &&
+          `z-10 border border-2 border-blueLight border-b-transparent rounded-t-[10px] p-10 flex flex-col items-center`
+        }`}
+      >
+        <div className={`${!showMenu && `absolute right-4 top-8`}`}>
+          <Hamburguer onClick={() => setShowMenu(!showMenu)} className="cursor-pointer hover:animate-spin-slow"/>
+        </div>
+        {showMenu && (
+          <div className="flex flex-col items-center mt-4">
+            {linksResponsive.map((link: NavItem, index: number) => (
+              <Link href={link.href} key={index} className="no-underline">
+                <div
+                  className="text-xl font-bold text-white no-underline my-4 hover:text-primary"
+                  onClick={() => setShowMenu(false)}
+                >
+                  {link.label}
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
