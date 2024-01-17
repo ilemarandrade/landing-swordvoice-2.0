@@ -31,7 +31,10 @@ export default function Home() {
     <main className="flex min-h-screen flex-col">
       <Navbar />
       {/* First page */}
-      <div className="min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col">
+      <div
+        id="home"
+        className="min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col"
+      >
         <div className="flex flex-col items-center bg-[#000e2799] w-[95%] py-2">
           <Typography variant="h1" className="font-sedgwick">
             Swordvoice Academy
