@@ -8,6 +8,7 @@ import services from "@/constants/services";
 import swordvoices from "@/constants/swordvoices";
 import paths from "@/constants/paths";
 import { useMemo } from "react";
+import { Typography } from "@/components/Typography";
 import World from "@/assets/icons/World";
 import Link from "next/link";
 import Input from "@/components/Input";
@@ -32,12 +33,12 @@ export default function Home() {
       {/* First page */}
       <div className="min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col">
         <div className="flex flex-col items-center bg-[#000e2799] w-[95%] py-2">
-          <h1 className="text-title leading-[48px] title">
+          <Typography variant="h1" className="font-sedgwick">
             Swordvoice Academy
-          </h1>
-          <p className="text-base">
+          </Typography>
+          <Typography>
             <span className="font-bold">Academia online</span> no tradicional
-          </p>
+          </Typography>
         </div>
         <Button label="Registrarme" />
       </div>
@@ -45,23 +46,23 @@ export default function Home() {
       {/* Second Page */}
       <div className="px-12 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
         <div className="w-full lg:w-[45%]">
-          <h1 className="text-title mb-8 title text-center lg:text-left">
+          <Typography variant="h1" className="mb-8 font-sedgwick">
             ¿Qué es <br />
             <span className="text-primary">Swordvoice</span>
             <span className="text-secondary"> Academy</span>?
-          </h1>
-          <p className="text-lg mb-4">
+          </Typography>
+          <Typography variant="h6" className="mb-4">
             Hola, somos <span className="font-bold">Swordvoice academy</span> y
             si buscas cursos online tradicionales{" "}
             <span className="font-bold">NO</span> estás en el lugar correcto.
-          </p>
-          <p className="text-lg">
+          </Typography>
+          <Typography variant="h6">
             Nosotros ofrecemos un modelo diferente, un modelo de mentorías.
             Sabemos que la informacion está disponible en la Web, pero{" "}
             <span className="font-bold">¿por dónde empezar?</span>. Tu{" "}
             <span className="font-bold">MENTOR</span> asignado te proveerá de
             los recursos y el plan que debes seguir para que no pierdas tiempo.
-          </p>
+          </Typography>
         </div>
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
@@ -69,10 +70,13 @@ export default function Home() {
       <div className="min-h-screen bg-[black] w-full p-6 lg:px-[100px] lg:pb-12 lg:pt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <div className="relative">
-            <h1 className="text-title mb-12 md:absolute md:top-[-32px] title text-center md:text-left">
+            <Typography
+              variant="h1"
+              className="font-sedgwick mb-12 md:absolute md:top-[-32px] text-center md:text-left"
+            >
               ¿Qué incluye <br />
               <span className="text-secondary">nuestro servicio?</span>
-            </h1>
+            </Typography>
           </div>
           {services.map(({ title, description, Icon }, index) => (
             <Services
@@ -89,9 +93,9 @@ export default function Home() {
       </div>
       {/* Fourth Page */}
       <div className="min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
-        <h1 className="text-title text-center font-sedgwick">
+        <Typography variant="h1" className="text-center font-sedgwick">
           Nuestras <span className="text-primary">Swordvoices</span>
-        </h1>
+        </Typography>
         <div className="flex flex-wrap justify-center my-8">
           {swordvoices.map((swordvoice, index) => (
             <SwordvoicesCard
@@ -110,9 +114,9 @@ export default function Home() {
       {/* Fifth Page */}
       <div className="min-h-screen bg-white w-full">
         <div className="w-full p-12 bg-ourPathsBackground bg-contain">
-          <h1 className="text-title text-center title">
+          <Typography variant="h1" className="text-center font-sedgwick">
             Nuestros <span className="text-primary">Paths</span>
-          </h1>
+          </Typography>
         </div>
         <div className="w-full px-12 bg-white py-20">
           <div className="grid grid-cols-2 justify-items-center">
@@ -130,9 +134,9 @@ export default function Home() {
           <div className="flex justify-center max-w-[900px] flex-wrap">
             {pathNotAvailables.map(({ name }, index) => (
               <div key={`path-${index}`} className="mx-12 my-2">
-                <p className="text-[#5A5A5A] text-xl text-center">
+                <Typography variant="h5" className="text-[#5A5A5A] text-center">
                   <span className="font-bold">{name}</span>: próximamente
-                </p>
+                </Typography>
               </div>
             ))}
           </div>
@@ -152,9 +156,12 @@ export default function Home() {
           </div>
         </div>
         <div className="flex flex-col items-center p-4">
-          <p className="text-title title text-center mb-8 text-secondary hidden md:block">
+          <Typography
+            variant="h1"
+            className="text-center mb-8 text-secondary hidden md:block"
+          >
             Contáctanos
-          </p>
+          </Typography>
           <div className="mb-6 w-full md:w-[90%] lg:w-[70%] max-w-md">
             <World />
           </div>

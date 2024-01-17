@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { Typography } from "../Typography";
 
 interface IServices {
   icon: ReactElement;
@@ -13,8 +14,10 @@ const Services: React.FC<IServices> = ({ icon, title, description }) => {
         {icon}
       </div>
       <div className="flex-1 md:flex-[5]">
-        <p className="text-xl font-bold">{title}</p>
-        <p className="text-lg">{description}</p>
+        <Typography variant="h5" className="font-bold">
+          {title}
+        </Typography>
+        <Typography>{description}</Typography>
       </div>
     </div>
   );

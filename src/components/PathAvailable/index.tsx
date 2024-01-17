@@ -1,3 +1,5 @@
+import { Typography } from "../Typography";
+
 interface IProps {
   Icon: any;
   name: string;
@@ -10,8 +12,12 @@ const PathAvailable: React.FC<IProps> = ({ Icon, name, description }) => (
       <Icon />
     </div>
     <div>
-      <p className="text-[black] text-center text-xl font-bold">{name}</p>
-      <p className="text-[black] text-center text-lg">{description}</p>
+      <Typography variant="h5" className="text-[black] text-center font-bold">
+        {name}
+      </Typography>
+      <Typography variant="h6" className="text-[black] text-center">
+        {description}
+      </Typography>
     </div>
   </div>
 );
