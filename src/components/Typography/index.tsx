@@ -31,15 +31,15 @@ const tags: Record<Variant, ElementType> = {
 };
 
 const sizes: Record<Variant, string> = {
-  h1: "text-4xl sm:text-5xl",
-  h2: "text-3xl sm:text-4xl",
-  h3: "text-2xl sm:text-3xl",
-  h4: "text-1xl sm:text-2xl",
-  h5: "text-lg sm:text-xl",
-  h6: "text-md sm:text-lg",
-  body: "text-sm sm:text-base",
-  //   "body-small": "text-sm sm:text-md",
-  small: "text-xs sm:text-sm",
+  h1: "text-4xl md:text-5xl",
+  h2: "text-3xl md:text-4xl",
+  h3: "text-2xl md:text-3xl",
+  h4: "text-1xl md:text-2xl",
+  h5: "text-lg md:text-xl",
+  h6: "text-md md:text-lg",
+  body: "text-sm md:text-base",
+  //   "body-small": "text-sm md:text-md",
+  small: "text-xs md:text-sm",
 };
 
 export const Typography = ({

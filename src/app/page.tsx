@@ -44,9 +44,12 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <div className="px-12 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
+      <div className="px-4 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
         <div className="w-full lg:w-[45%]">
-          <Typography variant="h1" className="mb-8 font-sedgwick">
+          <Typography
+            variant="h1"
+            className="mb-8 font-sedgwick text-center md:text-left"
+          >
             ¿Qué es <br />
             <span className="text-primary">Swordvoice</span>
             <span className="text-secondary"> Academy</span>?
@@ -67,12 +70,12 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Third Page */}
-      <div className="min-h-screen bg-[black] w-full p-6 lg:px-[100px] lg:pb-12 lg:pt-20">
+      <div className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <div className="relative">
             <Typography
               variant="h1"
-              className="font-sedgwick mb-12 md:absolute md:top-[-32px] text-center md:text-left"
+              className="font-sedgwick mb-12 md:absolute md:top-[-32px] text-center md:text-left leading-[3.2rem] md:leading-[3.5rem]"
             >
               ¿Qué incluye <br />
               <span className="text-secondary">nuestro servicio?</span>
@@ -118,7 +121,7 @@ export default function Home() {
             Nuestros <span className="text-primary">Paths</span>
           </Typography>
         </div>
-        <div className="w-full px-12 bg-white py-20">
+        <div className="w-full px-4 bg-white py-20">
           <div className="grid grid-cols-2 justify-items-center">
             {pathAvailables.map(({ name, description, Icon }, index) => (
               <PathAvailable
@@ -158,7 +161,7 @@ export default function Home() {
         <div className="flex flex-col items-center p-4">
           <Typography
             variant="h1"
-            className="text-center mb-8 text-secondary hidden md:block"
+            className="text-center mb-8 text-secondary hidden md:block font-sedgwick"
           >
             Contáctanos
           </Typography>
