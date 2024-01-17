@@ -3,6 +3,7 @@ import Link from "next/link";
 import LinkedinIcon from "@/assets/icons/LinkedinIcon";
 import GithubIcon from "@/assets/icons/GithubIcon";
 import PageIcon from "@/assets/icons/PageIcon";
+import { Typography } from "../Typography";
 
 interface SwordvoicesProps {
   photo: any;
@@ -24,8 +25,8 @@ const SwordvoicesCard = ({
   github,
 }: SwordvoicesProps) => {
   return (
-    <div className="max-h-[500px] max-w-[250px] bg-white rounded-[18px] m-6 z-1">
-      <div className="relative h-[50%]">
+    <div className="max-h-[600px] max-w-[300px] bg-white rounded-[18px] m-6 z-1">
+      <div className="relative h-[50%] overflow-hidden">
         <Image
           alt=""
           src={photo}
@@ -34,11 +35,20 @@ const SwordvoicesCard = ({
           className="rounded-t-[18px] w-full"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent from-10% via-transparent via-30% to-blue to-100%" />
-        <h1 className="absolute bottom-0 text-xl p-4 title">{name}</h1>
+        <Typography
+          variant="h5"
+          className="absolute bottom-0 p-4 font-sedgwick"
+        >
+          {name}
+        </Typography>
       </div>
       <div className="h-[50%] p-4">
-        <h2 className="text-black text-lg font-bold mb-4">{rol}</h2>
-        <p className="text-black text-xs mb-8">{description}</p>
+        <Typography variant="h6" className="text-black font-bold mb-2">
+          {rol}
+        </Typography>
+        <Typography variant="small" className="text-black mb-8">
+          {description}
+        </Typography>
         <div className="flex justify-start items-center">
           <Link href={linkedin}>
             <LinkedinIcon width={32} height={32} color="#0A66C2" />

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer utilities {
-  .title {
+  .font-sedgwick {
     font-family: var(--font-sedgwick);
   }
 }
