@@ -156,9 +156,12 @@ export default function Home() {
           </div>
         </div>
         <div className="flex flex-col items-center p-4">
-          <p className="text-title title text-center mb-8 text-secondary hidden md:block">
+          <Typography
+            variant="h1"
+            className="text-center mb-8 text-secondary hidden md:block"
+          >
             Contáctanos
-          </p>
+          </Typography>
           <div className="mb-6 w-full md:w-[90%] lg:w-[70%] max-w-md">
             <World />
           </div>
