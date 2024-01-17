@@ -25,6 +25,8 @@ const config: Config = {
         "grey-ligth": "#E2E2E2",
         blurry: "#00000099",
         blue: "#104454",
+        blueGra1: "#00236859",
+        blueGra2: "#00236859"
       },
 
       fontSize: {
@@ -35,6 +37,9 @@ const config: Config = {
         xl: ["24px", "28px"],
         title: ["48px", "56px"],
       },
+      animation: {
+        'spin-slow': 'spin 2s linear 1',
+      }
     },
   },
   plugins: [],
