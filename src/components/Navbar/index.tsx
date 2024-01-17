@@ -47,7 +47,7 @@ const Navbar = () => {
       <div className="hidden md:flex mx-8 mt-5 gap-[40px] py-4">
         {links.map((link: NavItem, index: number) => (
           <Link href={link.href} key={index} className="no-underline">
-            <div className="text-lg font-medium text-white no-underline">
+            <div className="text-lg font-medium text-white no-underline hover:text-primary">
               {link.label}
             </div>
           </Link>
