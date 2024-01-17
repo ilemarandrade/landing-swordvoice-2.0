@@ -9,7 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sedgwick: "var(--font-sedgwick)",
+        sedgwick: "var(--font-sedgwick)"
+      },
+      fontSize: {
+        xs: ["14px", "18px"],
+        base: ["16px", "24px"],
+        md: ["18px", "24px"],
+        lg: ["20px", "28px"],
+        xl: ["24px", "32px"],
+        title: ["48px", "56px"],
       },
       backgroundImage: {
         home: "url('/backgrounds/homeBackground.jpg')",
@@ -27,15 +35,6 @@ const config: Config = {
         blue: "#104454",
         blueGra1: "#00236859",
         blueGra2: "#00236859"
-      },
-
-      fontSize: {
-        xs: ["14px", "18px"],
-        base: ["16px", "24px"],
-        md: ["18px", "24px"],
-        lg: ["20px", "28px"],
-        xl: ["24px", "28px"],
-        title: ["48px", "56px"],
       },
       animation: {
         'spin-slow': 'spin 2s linear 1',

@@ -24,6 +24,7 @@ const linksResponsive: NavItem[] = [
   { href: routes.OUR_PATHS, label: "Nuestro path" },
   { href: routes.CONTACT_US, label: "Contáctanos" },
 ];
+
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const isMobile = useIsMobile();
