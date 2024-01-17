@@ -3,11 +3,9 @@ import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import PathAvailable from "@/components/PathAvailable";
 import Services from "@/components/Services";
-import SwordvoicesCard from "@/components/SwordvoicesCard";
 import services from "@/constants/services";
-import swordvoices from "@/constants/swordvoices";
 import paths from "@/constants/paths";
-import { useMemo } from "react";
+import { useMemo} from "react";
 import { Typography } from "@/components/Typography";
 import World from "@/assets/icons/World";
 import Link from "next/link";
@@ -15,6 +13,8 @@ import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import InstagramIcon from "@/assets/icons/InstagramIcon";
 import WorldIcon from "@/assets/icons/WorldIcon";
+import SwordVoicesModule from "@/components/SwordVoicesModule";
+
 
 export default function Home() {
   const pathAvailables = useMemo(
@@ -96,20 +96,7 @@ export default function Home() {
         <Typography variant="h1" className="text-center font-sedgwick">
           Nuestras <span className="text-primary">Swordvoices</span>
         </Typography>
-        <div className="flex flex-wrap justify-center my-8">
-          {swordvoices.map((swordvoice, index) => (
-            <SwordvoicesCard
-              key={`swordvoices-${index}`}
-              linkedin={swordvoice.linkedin}
-              github={swordvoice.github}
-              portfolio={swordvoice.portfolio}
-              name={swordvoice.name}
-              photo={swordvoice.photo}
-              rol={swordvoice.rol}
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
-            />
-          ))}
-        </div>
+       <SwordVoicesModule/>
       </div>
       {/* Fifth Page */}
       <div className="min-h-screen bg-white w-full">

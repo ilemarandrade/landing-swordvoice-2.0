@@ -42,7 +42,7 @@ const SwordvoicesCard = ({
           {name}
         </Typography>
       </div>
-      <div className="h-[50%] p-4">
+      <div className="max-h-[50%] p-4">
         <Typography variant="h6" className="text-black font-bold mb-2">
           {rol}
         </Typography>
