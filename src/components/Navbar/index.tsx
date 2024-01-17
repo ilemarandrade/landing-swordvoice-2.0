@@ -12,16 +12,16 @@ interface NavItem {
 }
 
 const links: NavItem[] = [
-  { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.SERVICES, label: "Servicios" },
+  { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.OUR_PATHS, label: "Nuestro path" },
   { href: routes.CONTACT_US, label: "Contáctanos" },
 ];
 
 const linksResponsive: NavItem[] = [
   { href: routes.HOME, label: "Home" },
-  { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.SERVICES, label: "Servicios" },
+  { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.OUR_PATHS, label: "Nuestro path" },
   { href: routes.CONTACT_US, label: "Contáctanos" },
 ];
