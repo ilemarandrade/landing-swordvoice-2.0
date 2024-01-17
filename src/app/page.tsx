@@ -161,7 +161,7 @@ export default function Home() {
         <div className="flex flex-col items-center p-4">
           <Typography
             variant="h1"
-            className="text-center mb-8 text-secondary hidden md:block"
+            className="text-center mb-8 text-secondary hidden md:block font-sedgwick"
           >
             Contáctanos
           </Typography>
