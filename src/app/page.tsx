@@ -70,12 +70,12 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Third Page */}
-      <div className="min-h-screen bg-[black] w-full p-4 lg:px-[100px] lg:pb-12 lg:pt-20">
+      <div className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <div className="relative">
             <Typography
               variant="h1"
-              className="font-sedgwick mb-12 md:absolute md:top-[-32px] text-center md:text-left"
+              className="font-sedgwick mb-12 md:absolute md:top-[-32px] text-center md:text-left leading-[3.2rem] md:leading-[3.5rem]"
             >
               ¿Qué incluye <br />
               <span className="text-secondary">nuestro servicio?</span>
