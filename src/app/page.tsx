@@ -156,8 +156,8 @@ export default function Home() {
         className="min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2"
       >
         <div className="flex items-center flex-col mb-8 md:mb-0">
-          <div className="mb-8">
-            <Logo />
+          <div className="mb-8 flex justify-center">
+            <Logo className="w-[80%] md:w-auto" />
           </div>
           <Input label="Nombre y Apellido" />
           <Input label="Correo electrónico" />
