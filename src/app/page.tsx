@@ -66,10 +66,10 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Third Page */}
-      <div className="min-h-screen bg-[black] w-full px-[100px] pb-12 pt-20">
-        <div className="grid grid-cols-2 gap-x-12 ">
+      <div className="min-h-screen bg-[black] w-full p-6 lg:px-[100px] lg:pb-12 lg:pt-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <div className="relative">
-            <h1 className="text-title mb-12 absolute top-[-32px] title">
+            <h1 className="text-title mb-12 md:absolute md:top-[-32px] title text-center md:text-left">
               ¿Qué incluye <br />
               <span className="text-secondary">nuestro servicio?</span>
             </h1>
