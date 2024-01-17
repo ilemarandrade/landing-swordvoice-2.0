@@ -17,6 +17,7 @@ import InstagramIcon from "@/assets/icons/InstagramIcon";
 import WorldIcon from "@/assets/icons/WorldIcon";
 
 export default function Home() {
+
   const pathAvailables = useMemo(
     () => paths.filter(({ isAvailable }) => isAvailable),
     [],
@@ -47,32 +48,6 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <div className="px-4 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
-        <div className="w-full lg:w-[45%]">
-          <Typography
-            variant="h1"
-            className="mb-8 font-sedgwick text-center md:text-left"
-          >
-            ¿Qué es <br />
-            <span className="text-primary">Swordvoice</span>
-            <span className="text-secondary"> Academy</span>?
-          </Typography>
-          <Typography variant="h6" className="mb-4">
-            Hola, somos <span className="font-bold">Swordvoice academy</span> y
-            si buscas cursos online tradicionales{" "}
-            <span className="font-bold">NO</span> estás en el lugar correcto.
-          </Typography>
-          <Typography variant="h6">
-            Nosotros ofrecemos un modelo diferente, un modelo de mentorías.
-            Sabemos que la informacion está disponible en la Web, pero{" "}
-            <span className="font-bold">¿por dónde empezar?</span>. Tu{" "}
-            <span className="font-bold">MENTOR</span> asignado te proveerá de
-            los recursos y el plan que debes seguir para que no pierdas tiempo.
-          </Typography>
-        </div>
-      </div>
-      <div className="h-[58px] bg-[black] w-full"></div>
-      {/* Third Page */}
       <div className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <div className="relative">
@@ -97,9 +72,12 @@ export default function Home() {
           <Button label="Registrarme" />
         </div>
       </div>
-      <div id="meet-us" className="h-[58px] bg-[black] w-full"></div>
+      <div className="h-[58px] bg-[black] w-full"></div>
       {/* Third Page */}
-      <div className="px-12 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
+      <div
+        id="meet-us"
+        className="px-12 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center"
+      >
         <div className="w-full lg:w-[45%]">
           <Typography variant="h1" className="mb-8 font-sedgwick">
             ¿Qué es <br />
