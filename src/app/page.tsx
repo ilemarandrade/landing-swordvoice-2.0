@@ -115,14 +115,14 @@ export default function Home() {
         </div>
       </div>
       {/* Fifth Page */}
-      <div className="min-h-screen bg-white w-full">
-        <div className="w-full p-12 bg-ourPathsBackground bg-contain">
+      <div className="md:min-h-screen bg-white w-full">
+        <div className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat">
           <Typography variant="h1" className="text-center font-sedgwick">
             Nuestros <span className="text-primary">Paths</span>
           </Typography>
         </div>
-        <div className="w-full px-4 bg-white py-20">
-          <div className="grid grid-cols-2 justify-items-center">
+        <div className="w-full px-4 bg-white py-10 md:py-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center">
             {pathAvailables.map(({ name, description, Icon }, index) => (
               <PathAvailable
                 key={`path-${index}`}
