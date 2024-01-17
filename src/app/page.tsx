@@ -9,9 +9,9 @@ export default function Home() {
       {/* First page */}
       <div className="min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col">
         <div className="flex flex-col items-center bg-[#000e2799] w-[95%] py-2">
-          <h1 className="text-title leading-[48px]">Swordvoice Academy</h1>
+          <h1 className="text-title leading-[48px] text-center">Swordvoice Academy</h1>
           <p className="text-base">
-            <span className="font-bold">Academia online</span> no tradicional
+            <span className="font-bold text-center">Academia online</span> no tradicional
           </p>
         </div>
         {/* <Button label="Registrarme" /> */}
