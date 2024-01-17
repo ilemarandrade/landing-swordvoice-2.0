@@ -4,6 +4,7 @@ import Logo from "@/assets/icons/Logo";
 import { MouseEvent, useEffect, useState } from "react";
 import Hamburguer from "@/assets/icons/Hamburguer";
 import { useIsMobile } from "@/constants/Hooks/isMobile";
+import { Typography } from "../Typography";
 
 interface NavItem {
   label: string;
@@ -72,9 +73,12 @@ const Navbar = () => {
             className="no-underline"
             onClick={(event) => handleClick(event, link.href)}
           >
-            <div className="text-lg font-medium text-white no-underline">
+            <Typography
+              variant="h6"
+              className="font-medium text-white no-underline font-sedgwick"
+            >
               {link.label}
-            </div>
+            </Typography>
           </a>
         ))}
       </div>
@@ -100,9 +104,12 @@ const Navbar = () => {
                 className="no-underline"
                 onClick={(event) => handleClick(event, link.href)}
               >
-                <div className="text-xl font-bold text-white no-underline my-4 hover:text-primary">
+                <Typography
+                  variant="h5"
+                  className="text-white no-underline my-4 hover:text-primary font-sedgwick"
+                >
                   {link.label}
-                </div>
+                </Typography>
               </a>
             ))}
           </div>
