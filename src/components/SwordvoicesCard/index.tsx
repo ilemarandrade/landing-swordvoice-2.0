@@ -25,7 +25,7 @@ const SwordvoicesCard = ({
   github,
 }: SwordvoicesProps) => {
   return (
-    <div className="max-h-[600px] max-w-[300px] bg-white rounded-[18px] m-6 z-1">
+    <div className="min-h-[400px] max-h-[550px] min-w-[240px] max-w-[300px] bg-white rounded-[18px] m-6 z-1">
       <div className="relative h-[50%] overflow-hidden">
         <Image
           alt=""
