@@ -1,3 +1,4 @@
+import Logo from "@/assets/icons/Logo";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import PathAvailable from "@/components/PathAvailable";
@@ -8,6 +9,12 @@ import swordvoices from "@/constants/swordvoices";
 import paths from "@/constants/paths";
 import { useMemo } from "react";
 import { Typography } from "@/components/Typography";
+import World from "@/assets/icons/World";
+import Link from "next/link";
+import Input from "@/components/Input";
+import Textarea from "@/components/Textarea";
+import InstagramIcon from "@/assets/icons/InstagramIcon";
+import WorldIcon from "@/assets/icons/WorldIcon";
 
 export default function Home() {
   const pathAvailables = useMemo(
@@ -37,8 +44,8 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <div className="px-32 min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
-        <div className="w-[45%]">
+      <div className="px-12 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
+        <div className="w-full lg:w-[45%]">
           <Typography variant="h1" className="mb-8 font-sedgwick">
             ¿Qué es <br />
             <span className="text-primary">Swordvoice</span>
@@ -132,6 +139,36 @@ export default function Home() {
                 </Typography>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+      {/* Footer */}
+      <div className="min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2">
+        <div className="flex items-center flex-col mb-8 md:mb-0">
+          <div className="mb-8">
+            <Logo />
+          </div>
+          <Input label="Nombre y Apellido" />
+          <Input label="Correo electrónico" />
+          <Textarea label="Mensaje" />
+          <div className="w-full flex justify-end max-w-md mt-2">
+            <button className="text-primary font-bold">ENVIAR</button>
+          </div>
+        </div>
+        <div className="flex flex-col items-center p-4">
+          <p className="text-title title text-center mb-8 text-secondary hidden md:block">
+            Contáctanos
+          </p>
+          <div className="mb-6 w-full md:w-[90%] lg:w-[70%] max-w-md">
+            <World />
+          </div>
+          <div className="flex justify-center items-center w-100">
+            <Link href="" className="p-1 mr-1">
+              <InstagramIcon />
+            </Link>
+            <Link href="">
+              <WorldIcon />
+            </Link>
           </div>
         </div>
       </div>
