@@ -1,7 +1,13 @@
 import * as React from "react";
 
-const Logo = (props: any) => (
+const Logo: React.ForwardRefRenderFunction<
+  any,
+  {
+    className: string;
+  }
+> = (props, ref) => (
   <svg
+    ref={ref}
     width={250}
     height={95}
     viewBox="0 0 315 120"
@@ -20,4 +26,4 @@ const Logo = (props: any) => (
   </svg>
 );
 
-export default Logo;
+export default React.forwardRef(Logo);

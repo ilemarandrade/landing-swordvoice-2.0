@@ -5,7 +5,10 @@ import { MouseEvent, useEffect, useState } from "react";
 import Hamburguer from "@/assets/icons/Hamburguer";
 import { useIsMobile } from "@/constants/Hooks/useIsMobile";
 import { Typography } from "../Typography";
+import { motion } from "framer-motion";
+import { navAnimation } from "@/constants/animations/navAnimation";
 
+const MotionLogo = motion(Logo);
 interface NavItem {
   label: string;
   href: string;
@@ -56,15 +59,28 @@ const Navbar = () => {
   };
 
   return (
-    <div
+    <motion.div
+      initial="offscreen"
+      whileInView="onscreen"
+      viewport={{ once: true }}
       className={`z-10 bg-blurry fixed flex justify-center ${
         !showMenu
           ? `w-full md:justify-between h-[85px] `
           : `bg-center after:inset-0 after:absolute after:bg-blue300 bg-[url('/backgrounds/homeBackground.jpg')] flex-col items-center w-screen h-full`
       }`}
     >
-      <Logo className="w-[50%] md:w-[20%] mx-4 my-8 z-10" />
-      <div className="hidden md:flex mx-8 mt-5 gap-[40px] py-4">
+      <MotionLogo
+        className="w-[50%] md:w-[20%] mx-4 my-8 z-10"
+        variants={navAnimation.logo}
+        transition={{
+          duration: 0.5,
+          ease: [0, 0.71, 0.2, 1.1],
+        }}
+      />
+      <motion.div
+        variants={navAnimation.nav}
+        className="hidden md:flex mx-8 mt-5 gap-[40px] py-4"
+      >
         {links.map((link: NavItem, index: number) => (
           <a
             href={link.href}
@@ -80,7 +96,7 @@ const Navbar = () => {
             </Typography>
           </a>
         ))}
-      </div>
+      </motion.div>
 
       <div
         className={`md:hidden ${
@@ -114,7 +130,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
