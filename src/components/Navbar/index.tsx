@@ -74,7 +74,7 @@ const Navbar = () => {
           >
             <Typography
               variant="h6"
-              className="font-medium text-white no-underline font-sedgwick"
+              className="font-medium text-white no-underline font-sedgwick hover:text-primary"
             >
               {link.label}
             </Typography>

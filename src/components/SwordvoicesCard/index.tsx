@@ -25,13 +25,13 @@ const SwordvoicesCard = ({
   github,
 }: SwordvoicesProps) => {
   return (
-    <div className="min-h-[400px] max-h-[550px] min-w-[240px] max-w-[300px] bg-white rounded-[18px] m-6 z-1">
+    <div className="min-h-[450px] max-h-[520px] min-w-[240px] max-w-[300px] bg-white rounded-[18px] m-6 z-1">
       <div className="relative h-[50%] overflow-hidden">
         <Image
           alt=""
           src={photo}
-          width={220}
-          height={200}
+          width={180}
+          height={100}
           className="rounded-t-[18px] w-full"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent from-10% via-transparent via-30% to-blue to-100%" />
@@ -42,14 +42,14 @@ const SwordvoicesCard = ({
           {name}
         </Typography>
       </div>
-      <div className="max-h-[50%] p-4">
+      <div className="h-[50%] p-4">
         <Typography variant="h6" className="text-black font-bold mb-2">
           {rol}
         </Typography>
-        <Typography variant="small" className="text-black mb-8">
+        <Typography variant="small" className="text-black">
           {description}
         </Typography>
-        <div className="flex justify-start items-center">
+        <div className="flex justify-start items-center mt-4">
           <Link href={linkedin}>
             <LinkedinIcon width={32} height={32} color="#0A66C2" />
           </Link>

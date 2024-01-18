@@ -6,19 +6,28 @@ import SwordvoicesCard from "@/components/SwordvoicesCard";
 import swordvoices from "@/constants/swordvoices";
 import { useRef } from "react";
 
-const SwordVoicesCarousel =()=>{
+const SwordVoicesModule =()=>{
     const slider = useRef<Slider>(null);
 
     const settings = {
-      infinite: false,
       dots: true,
       speed: 500,
+      arrows: false,
+      infinite: true,
       slidesToShow: 4,
       slidesToScroll: 1,
-      arrows: false,
+      customPaging: () => (
+        <div
+          style={{
+            width: "20px",
+            height: "20px",
+          }}
+          className="border-primary border-[3px] rounded-full bg-white dots"
+        ></div>
+      ),
       responsive: [
         {
-          breakpoint: 1300,
+          breakpoint: 1200,
           settings: {
             slidesToShow: 3,
             slidesToScroll: 1,
@@ -28,18 +37,14 @@ const SwordVoicesCarousel =()=>{
           breakpoint: 830,
           settings: {
             slidesToShow: 2,
-            slidesToScroll: 2,
-            infinite: true,
-            dots: true,
+            slidesToScroll: 1,
           },
         },
         {
-          breakpoint: 590,
+          breakpoint: 680,
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1,
-            infinite: true,
-            dots: true,
           },
         },
       ],
@@ -59,13 +64,12 @@ const SwordVoicesCarousel =()=>{
               name={swordvoice.name}
               photo={swordvoice.photo}
               rol={swordvoice.rol}
-              description={swordvoice.description}
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
             />
           ))}
-          
         </Slider>
       </>
     )
 }
 
-export default SwordVoicesCarousel
+export default SwordVoicesModule

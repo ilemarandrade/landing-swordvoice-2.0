@@ -34,7 +34,7 @@ const swordvoices = [
       name: "Chellys Castillo",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-      rol: "Frontend Developer Jr",
+      rol: "Frontend Dev Jr",
       linkedin: "https://www.linkedin.com/in/chellys-castillo/",
       github: "https://github.com/chellysA",
       portfolio: "https://chellys-castillo-portfolio.vercel.app/",
