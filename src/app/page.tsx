@@ -48,7 +48,7 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <div className="h-auto lg:min-h-[1000px] bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
+      <div className="h-auto xl:min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <div className="relative">
             <Typography
@@ -76,7 +76,7 @@ export default function Home() {
       {/* Third Page */}
       <div
         id="meet-us"
-        className="px-12 py-12 sm:px-20 md:px-32 md:py-32 h-auto lg:min-h-[1000px] bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center"
+        className="px-12 py-12 sm:px-20 md:px-32 md:py-32 h-auto xl:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center"
       >
         <div className="w-full lg:w-[45%]">
           <Typography variant="h1" className="mb-8 font-sedgwick">
@@ -100,14 +100,15 @@ export default function Home() {
       </div>
       {/* Fourth Page */}
       <div className="h-[58px] bg-[black] w-full"></div>
-      <div className="h-auto lg:min-h-[1000px] bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
+      <div className="h-auto xl:min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
         <Typography variant="h1" className="text-center font-sedgwick">
           Nuestras <span className="text-primary">Swordvoices</span>
         </Typography>
        <SwordVoicesCarousel/>
       </div>
+      <div className="h-[58px] bg-[black] w-full"></div>
       {/* Fifth Page */}
-      <div id="our_paths" className="h-auto lg:min-h-[1000px] bg-white w-full">
+      <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full">
         <div className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat bg-center">
           <Typography variant="h1" className="text-center font-sedgwick">
             Nuestros <span className="text-primary">Paths</span>
@@ -140,7 +141,7 @@ export default function Home() {
       {/* Footer */}
       <div
         id="contact_us"
-        className="h-auto lg:min-h-[1000px] bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2"
+        className="h-auto xl:min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2"
       >
         <div className="flex items-center flex-col mb-8 md:mb-0">
           <div className="mb-8 flex justify-center">
