@@ -5,11 +5,9 @@ import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
 import PathAvailable from "@/components/PathAvailable";
 import Services from "@/components/Services";
-import SwordvoicesCard from "@/components/SwordvoicesCard";
 import services from "@/constants/services";
-import swordvoices from "@/constants/swordvoices";
 import paths from "@/constants/paths";
-import { useMemo } from "react";
+import { useMemo} from "react";
 import { Typography } from "@/components/Typography";
 import World from "@/assets/icons/World";
 import Link from "next/link";
@@ -20,6 +18,8 @@ import WorldIcon from "@/assets/icons/WorldIcon";
 import { motion } from "framer-motion";
 import { homeAnimation } from "@/constants/animations/homeAnimation";
 import { servicesAnimation } from "@/constants/animations/servicesAnimation";
+import SwordVoicesCarousel from "@/components/SwordVoicesCarousel";
+
 
 export default function Home() {
   const pathAvailables = useMemo(
@@ -41,7 +41,7 @@ export default function Home() {
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ once: true }}
-        className="min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col"
+        className="h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col"
       >
         <motion.div
           variants={homeAnimation.containerTitle}
@@ -122,7 +122,7 @@ export default function Home() {
       {/* Third Page */}
       <div
         id="meet-us"
-        className="px-12 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center"
+        className="px-12 py-12 sm:px-20 md:px-32 md:py-32 h-auto xl:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center"
       >
         <div className="w-full lg:w-[45%]">
           <Typography variant="h1" className="mb-8 font-sedgwick">
@@ -146,27 +146,15 @@ export default function Home() {
       </div>
       {/* Fourth Page */}
       <div className="h-[58px] bg-[black] w-full"></div>
-      <div className="min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
+      <div className="h-auto xl:min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
         <Typography variant="h1" className="text-center font-sedgwick">
           Nuestras <span className="text-primary">Swordvoices</span>
         </Typography>
-        <div className="flex flex-wrap justify-center my-8">
-          {swordvoices.map((swordvoice, index) => (
-            <SwordvoicesCard
-              key={`swordvoices-${index}`}
-              linkedin={swordvoice.linkedin}
-              github={swordvoice.github}
-              portfolio={swordvoice.portfolio}
-              name={swordvoice.name}
-              photo={swordvoice.photo}
-              rol={swordvoice.rol}
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
-            />
-          ))}
-        </div>
+       <SwordVoicesCarousel/>
       </div>
+      <div className="h-[58px] bg-[black] w-full relative top-3"></div>
       {/* Fifth Page */}
-      <div id="our_paths" className="md:min-h-screen bg-white w-full">
+      <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full ">
         <div className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat bg-center">
           <Typography variant="h1" className="text-center font-sedgwick">
             Nuestros <span className="text-primary">Paths</span>
@@ -199,7 +187,7 @@ export default function Home() {
       {/* Footer */}
       <div
         id="contact_us"
-        className="min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2"
+        className="h-auto xl:min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2"
       >
         <div className="flex items-center flex-col mb-8 md:mb-0">
           <div className="mb-8 flex justify-center">

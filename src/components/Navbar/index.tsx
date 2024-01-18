@@ -63,10 +63,10 @@ const Navbar = () => {
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ once: true }}
-      className={`${
+      className={`z-10 bg-blurry fixed flex justify-center ${
         !showMenu
-          ? `z-10 bg-blurry w-full fixed flex justify-center md:justify-between h-[85px] `
-          : `bg-center z-10 after:inset-0 after:absolute after:bg-gradient-to-t after:from-blueGra1 after:to-blueGra2 bg-[url('/backgrounds/homeBackground.jpg')] fixed flex flex-col justify-center items-center w-screen h-full`
+          ? `w-full md:justify-between h-[85px] `
+          : `bg-center after:inset-0 after:absolute after:bg-blue300 bg-[url('/backgrounds/homeBackground.jpg')] flex-col items-center w-screen h-full`
       }`}
     >
       <MotionLogo
@@ -90,7 +90,7 @@ const Navbar = () => {
           >
             <Typography
               variant="h6"
-              className="font-medium text-white no-underline font-sedgwick"
+              className="font-medium text-white no-underline font-sedgwick hover:text-primary"
             >
               {link.label}
             </Typography>
@@ -101,7 +101,7 @@ const Navbar = () => {
       <div
         className={`md:hidden ${
           showMenu &&
-          `z-10 border border-blueLight border-b-transparent rounded-t-[10px] p-10 flex flex-col items-center`
+          `z-10 border-2 border-blue200 border-b-transparent rounded-t-[10px] p-10 flex flex-col items-center`
         }`}
       >
         <div className={`${!showMenu && `absolute right-4 top-8`}`}>
