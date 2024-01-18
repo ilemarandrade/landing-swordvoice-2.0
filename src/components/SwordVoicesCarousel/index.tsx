@@ -31,6 +31,7 @@ const SwordVoicesModule =()=>{
           settings: {
             slidesToShow: 3,
             slidesToScroll: 1,
+            infinite: false
           },
         },
         {
