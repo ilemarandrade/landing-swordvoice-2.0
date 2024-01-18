@@ -1,10 +1,10 @@
 "use client";
-import Link from "next/link";
 import routes from "@/constants/routes";
 import Logo from "@/assets/icons/Logo";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import Hamburguer from "@/assets/icons/Hamburguer";
-import { useIsMobile } from "@/constants/Hooks/isMobile";
+import { useIsMobile } from "@/constants/Hooks/useIsMobile";
+import { Typography } from "../Typography";
 
 interface NavItem {
   label: string;
@@ -12,16 +12,16 @@ interface NavItem {
 }
 
 const links: NavItem[] = [
-  { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.SERVICES, label: "Servicios" },
+  { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.OUR_PATHS, label: "Nuestro path" },
   { href: routes.CONTACT_US, label: "Contáctanos" },
 ];
 
 const linksResponsive: NavItem[] = [
   { href: routes.HOME, label: "Home" },
-  { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.SERVICES, label: "Servicios" },
+  { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.OUR_PATHS, label: "Nuestro path" },
   { href: routes.CONTACT_US, label: "Contáctanos" },
 ];
@@ -35,6 +35,26 @@ const Navbar = () => {
     }
   }, [isMobile, showMenu]);
 
+  const handleClick = (
+    event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,
+    ancla: string,
+  ) => {
+    event.preventDefault();
+    const isHome = ancla === "/";
+
+    if (isMobile) {
+      setShowMenu(false);
+    }
+
+    const addPx = !isMobile ? 85 : 110;
+    const desplazamiento =
+      // @ts-ignore
+      document.querySelector(isHome ? "#home" : ancla.slice(1))?.offsetTop -
+      addPx;
+
+    window.scrollTo({ top: desplazamiento, behavior: "smooth" });
+  };
+
   return (
     <div
       className={`z-10 bg-blurry fixed flex justify-center ${
@@ -46,11 +66,19 @@ const Navbar = () => {
       <Logo className="w-[50%] md:w-[20%] mx-4 my-8 z-10" />
       <div className="hidden md:flex mx-8 mt-5 gap-[40px] py-4">
         {links.map((link: NavItem, index: number) => (
-          <Link href={link.href} key={index} className="no-underline">
-            <div className="text-lg font-medium text-white no-underline">
+          <a
+            href={link.href}
+            key={index}
+            className="no-underline"
+            onClick={(event) => handleClick(event, link.href)}
+          >
+            <Typography
+              variant="h6"
+              className="font-medium text-white no-underline font-sedgwick"
+            >
               {link.label}
-            </div>
-          </Link>
+            </Typography>
+          </a>
         ))}
       </div>
 
@@ -61,19 +89,27 @@ const Navbar = () => {
         }`}
       >
         <div className={`${!showMenu && `absolute right-4 top-8`}`}>
-          <Hamburguer onClick={() => setShowMenu(!showMenu)} className="cursor-pointer hover:animate-spin-slow"/>
+          <Hamburguer
+            onClick={() => setShowMenu(!showMenu)}
+            className="cursor-pointer hover:animate-spin-slow"
+          />
         </div>
         {showMenu && (
           <div className="flex flex-col items-center mt-4">
             {linksResponsive.map((link: NavItem, index: number) => (
-              <Link href={link.href} key={index} className="no-underline">
-                <div
-                  className="text-xl font-bold text-white no-underline my-4 hover:text-primary"
-                  onClick={() => setShowMenu(false)}
+              <a
+                href={link.href}
+                key={index}
+                className="no-underline"
+                onClick={(event) => handleClick(event, link.href)}
+              >
+                <Typography
+                  variant="h5"
+                  className="font-medium text-white no-underline font-sedgwick my-4 hover:text-primary"
                 >
                   {link.label}
-                </div>
-              </Link>
+                </Typography>
+              </a>
             ))}
           </div>
         )}
