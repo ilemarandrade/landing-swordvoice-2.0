@@ -32,5 +32,8 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.slick-active>.dots {
+  background-color: #FF7A00
+}
 
 
