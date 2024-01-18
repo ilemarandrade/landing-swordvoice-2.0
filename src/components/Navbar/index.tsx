@@ -5,7 +5,10 @@ import { MouseEvent, useEffect, useState } from "react";
 import Hamburguer from "@/assets/icons/Hamburguer";
 import { useIsMobile } from "@/constants/Hooks/useIsMobile";
 import { Typography } from "../Typography";
+import { motion } from "framer-motion";
+import { navAnimation } from "@/constants/animations/navAnimation";
 
+const MotionLogo = motion(Logo);
 interface NavItem {
   label: string;
   href: string;
@@ -56,15 +59,28 @@ const Navbar = () => {
   };
 
   return (
-    <div
+    <motion.div
+      initial="offscreen"
+      whileInView="onscreen"
+      viewport={{ once: true }}
       className={`${
         !showMenu
           ? `z-10 bg-blurry w-full fixed flex justify-center md:justify-between h-[85px] `
           : `bg-center z-10 after:inset-0 after:absolute after:bg-gradient-to-t after:from-blueGra1 after:to-blueGra2 bg-[url('/backgrounds/homeBackground.jpg')] fixed flex flex-col justify-center items-center w-screen h-full`
       }`}
     >
-      <Logo className="w-[50%] md:w-[20%] mx-4 my-8 z-10" />
-      <div className="hidden md:flex mx-8 mt-5 gap-[40px] py-4">
+      <MotionLogo
+        className="w-[50%] md:w-[20%] mx-4 my-8 z-10"
+        variants={navAnimation.logo}
+        transition={{
+          duration: 0.5,
+          ease: [0, 0.71, 0.2, 1.1],
+        }}
+      />
+      <motion.div
+        variants={navAnimation.nav}
+        className="hidden md:flex mx-8 mt-5 gap-[40px] py-4"
+      >
         {links.map((link: NavItem, index: number) => (
           <a
             href={link.href}
@@ -80,12 +96,12 @@ const Navbar = () => {
             </Typography>
           </a>
         ))}
-      </div>
+      </motion.div>
 
       <div
         className={`md:hidden ${
           showMenu &&
-          `z-10 border border-2 border-blueLight border-b-transparent rounded-t-[10px] p-10 flex flex-col items-center`
+          `z-10 border border-blueLight border-b-transparent rounded-t-[10px] p-10 flex flex-col items-center`
         }`}
       >
         <div className={`${!showMenu && `absolute right-4 top-8`}`}>
@@ -114,7 +130,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

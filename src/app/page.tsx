@@ -1,3 +1,5 @@
+"use client";
+
 import Logo from "@/assets/icons/Logo";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
@@ -15,9 +17,10 @@ import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import InstagramIcon from "@/assets/icons/InstagramIcon";
 import WorldIcon from "@/assets/icons/WorldIcon";
+import { motion } from "framer-motion";
+import { homeAnimation } from "@/constants/animations/homeAnimation";
 
 export default function Home() {
-
   const pathAvailables = useMemo(
     () => paths.filter(({ isAvailable }) => isAvailable),
     [],
@@ -32,20 +35,39 @@ export default function Home() {
     <main className="flex min-h-screen flex-col">
       <Navbar />
       {/* First page */}
-      <div
+      <motion.div
         id="home"
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true }}
         className="min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col"
       >
-        <div className="flex flex-col items-center bg-[#000e2799] w-[95%] py-2">
-          <Typography variant="h1" className="font-sedgwick">
-            Swordvoice Academy
-          </Typography>
-          <Typography>
-            <span className="font-bold">Academia online</span> no tradicional
-          </Typography>
-        </div>
-        <Button label="Registrarme" />
-      </div>
+        <motion.div
+          variants={homeAnimation.containerTitle}
+          transition={{ when: "beforeChildren", duration: 1.2, delay: 0.5 }}
+          className="flex flex-col items-center bg-[#000e2799] w-[95%] py-2 overflow-hidden"
+        >
+          <motion.div
+            variants={homeAnimation.titleCenter}
+            transition={{ duration: 1 }}
+          >
+            <Typography variant="h1" className="font-sedgwick">
+              Swordvoice Academy
+            </Typography>
+          </motion.div>
+          <motion.div
+            transition={{ duration: 1.2 }}
+            variants={homeAnimation.titleCenter}
+          >
+            <Typography>
+              <span className="font-bold">Academia online</span> no tradicional
+            </Typography>
+          </motion.div>
+        </motion.div>
+        <motion.div variants={homeAnimation.registerButton}>
+          <Button label="Registrarme" />
+        </motion.div>
+      </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
       <div className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
