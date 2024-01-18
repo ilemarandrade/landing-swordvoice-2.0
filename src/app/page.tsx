@@ -19,6 +19,7 @@ import InstagramIcon from "@/assets/icons/InstagramIcon";
 import WorldIcon from "@/assets/icons/WorldIcon";
 import { motion } from "framer-motion";
 import { homeAnimation } from "@/constants/animations/homeAnimation";
+import { servicesAnimation } from "@/constants/animations/servicesAnimation";
 
 export default function Home() {
   const pathAvailables = useMemo(
@@ -70,9 +71,14 @@ export default function Home() {
       </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <div className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
+      <motion.div
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ once: true }}
+        className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
-          <div className="relative">
+          <motion.div className="relative" variants={servicesAnimation.title}>
             <Typography
               variant="h1"
               className="font-sedgwick mb-12 md:absolute md:top-[-32px] text-center md:text-left leading-[3.2rem] md:leading-[3.5rem]"
@@ -80,20 +86,38 @@ export default function Home() {
               ¿Qué incluye <br />
               <span className="text-secondary">nuestro servicio?</span>
             </Typography>
-          </div>
-          {services.map(({ title, description, Icon }, index) => (
-            <Services
-              title={title}
-              description={description}
-              icon={<Icon />}
-              key={`services-${index}`}
-            />
-          ))}
+          </motion.div>
+          {services.map(({ title, description, Icon }, index) => {
+            console.log(index % 100, "delay", index);
+            return (
+              <div key={`services-${index}`} className="overflow-hidden">
+                <motion.div
+                  key={`services-${index}`}
+                  variants={
+                    index % 2
+                      ? servicesAnimation.elementInRight
+                      : servicesAnimation.elementInLeft
+                  }
+                  transition={{ delay: 0.5 + index / 10 }}
+                  className="relative"
+                >
+                  <Services
+                    title={title}
+                    description={description}
+                    icon={<Icon />}
+                  />
+                </motion.div>
+              </div>
+            );
+          })}
         </div>
-        <div className="flex justify-center w-full pt-12">
+        <motion.div
+          variants={servicesAnimation.registerButton}
+          className="flex justify-center w-full pt-12"
+        >
           <Button label="Registrarme" />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Third Page */}
       <div
