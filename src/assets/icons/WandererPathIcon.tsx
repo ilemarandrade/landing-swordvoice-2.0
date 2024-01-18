@@ -1,7 +1,13 @@
-const WandererPathIcon = () => (
+"use client";
+
+interface IProps {
+  width?: number;
+}
+
+const WandererPathIcon: React.FC<IProps> = ({ width = 122 }) => (
   <svg
-    width={122}
-    height={122}
+    width={width}
+    height="auto"
     viewBox="0 0 122 122"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

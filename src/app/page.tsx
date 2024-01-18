@@ -17,6 +17,7 @@ import SwordVoicesModule from "@/components/SwordVoicesModule";
 
 
 export default function Home() {
+
   const pathAvailables = useMemo(
     () => paths.filter(({ isAvailable }) => isAvailable),
     [],
@@ -31,7 +32,10 @@ export default function Home() {
     <main className="flex min-h-screen flex-col">
       <Navbar />
       {/* First page */}
-      <div className="min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col">
+      <div
+        id="home"
+        className="min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col"
+      >
         <div className="flex flex-col items-center bg-[#000e2799] w-[95%] py-2">
           <Typography variant="h1" className="font-sedgwick">
             Swordvoice Academy
@@ -44,7 +48,36 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <div className="px-12 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center">
+      <div className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
+          <div className="relative">
+            <Typography
+              variant="h1"
+              className="font-sedgwick mb-12 md:absolute md:top-[-32px] text-center md:text-left leading-[3.2rem] md:leading-[3.5rem]"
+            >
+              ¿Qué incluye <br />
+              <span className="text-secondary">nuestro servicio?</span>
+            </Typography>
+          </div>
+          {services.map(({ title, description, Icon }, index) => (
+            <Services
+              title={title}
+              description={description}
+              icon={<Icon />}
+              key={`services-${index}`}
+            />
+          ))}
+        </div>
+        <div className="flex justify-center w-full pt-12">
+          <Button label="Registrarme" />
+        </div>
+      </div>
+      <div className="h-[58px] bg-[black] w-full"></div>
+      {/* Third Page */}
+      <div
+        id="meet-us"
+        className="px-12 py-12 sm:px-20 md:px-32 md:py-32 lg:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center"
+      >
         <div className="w-full lg:w-[45%]">
           <Typography variant="h1" className="mb-8 font-sedgwick">
             ¿Qué es <br />
@@ -65,33 +98,8 @@ export default function Home() {
           </Typography>
         </div>
       </div>
-      <div className="h-[58px] bg-[black] w-full"></div>
-      {/* Third Page */}
-      <div className="min-h-screen bg-[black] w-full p-6 lg:px-[100px] lg:pb-12 lg:pt-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
-          <div className="relative">
-            <Typography
-              variant="h1"
-              className="font-sedgwick mb-12 md:absolute md:top-[-32px] text-center md:text-left"
-            >
-              ¿Qué incluye <br />
-              <span className="text-secondary">nuestro servicio?</span>
-            </Typography>
-          </div>
-          {services.map(({ title, description, Icon }, index) => (
-            <Services
-              title={title}
-              description={description}
-              icon={<Icon />}
-              key={`services-${index}`}
-            />
-          ))}
-        </div>
-        <div className="flex justify-center w-full pt-12">
-          <Button label="Registrarme" />
-        </div>
-      </div>
       {/* Fourth Page */}
+      <div className="h-[58px] bg-[black] w-full"></div>
       <div className="min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
         <Typography variant="h1" className="text-center font-sedgwick">
           Nuestras <span className="text-primary">Swordvoices</span>
@@ -99,14 +107,14 @@ export default function Home() {
        <SwordVoicesModule/>
       </div>
       {/* Fifth Page */}
-      <div className="min-h-screen bg-white w-full">
-        <div className="w-full p-12 bg-ourPathsBackground bg-contain">
+      <div id="our_paths" className="md:min-h-screen bg-white w-full">
+        <div className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat bg-center">
           <Typography variant="h1" className="text-center font-sedgwick">
             Nuestros <span className="text-primary">Paths</span>
           </Typography>
         </div>
-        <div className="w-full px-12 bg-white py-20">
-          <div className="grid grid-cols-2 justify-items-center">
+        <div className="w-full px-4 bg-white py-10 md:py-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center">
             {pathAvailables.map(({ name, description, Icon }, index) => (
               <PathAvailable
                 key={`path-${index}`}
@@ -130,10 +138,13 @@ export default function Home() {
         </div>
       </div>
       {/* Footer */}
-      <div className="min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2">
+      <div
+        id="contact_us"
+        className="min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2"
+      >
         <div className="flex items-center flex-col mb-8 md:mb-0">
-          <div className="mb-8">
-            <Logo />
+          <div className="mb-8 flex justify-center">
+            <Logo className="w-[80%] md:w-auto" />
           </div>
           <Input label="Nombre y Apellido" />
           <Input label="Correo electrónico" />
@@ -145,7 +156,7 @@ export default function Home() {
         <div className="flex flex-col items-center p-4">
           <Typography
             variant="h1"
-            className="text-center mb-8 text-secondary hidden md:block"
+            className="text-center mb-8 text-secondary hidden md:block font-sedgwick"
           >
             Contáctanos
           </Typography>
