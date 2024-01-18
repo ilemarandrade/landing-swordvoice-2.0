@@ -34,7 +34,7 @@ export default function Home() {
       {/* First page */}
       <div
         id="home"
-        className="h-auto lg:min-h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col"
+        className="h-screen bg-home w-full bg-cover bg-bottom bg-no-repeat border-b-2 border-b-[black] justify-center items-center flex flex-col"
       >
         <div className="flex flex-col items-center bg-[#000e2799] w-[95%] py-2">
           <Typography variant="h1" className="font-sedgwick">
@@ -106,9 +106,9 @@ export default function Home() {
         </Typography>
        <SwordVoicesCarousel/>
       </div>
-      <div className="h-[58px] bg-[black] w-full"></div>
+      <div className="h-[58px] bg-[black] w-full relative top-3"></div>
       {/* Fifth Page */}
-      <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full">
+      <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full ">
         <div className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat bg-center">
           <Typography variant="h1" className="text-center font-sedgwick">
             Nuestros <span className="text-primary">Paths</span>
