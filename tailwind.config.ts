@@ -25,8 +25,8 @@ const config: Config = {
         "grey-ligth": "#E2E2E2",
         blurry: "#00000099",
         blue: "#104454",
-        blueGra1: "#00236859",
-        blueGra2: "#00236859"
+        blue200: "#00B2FF",
+        blue300: "#00136856"
       },
 
       fontSize: {
@@ -42,6 +42,18 @@ const config: Config = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addComponents }:any) {
+      const newComponents = {
+        '.my-slider .slick-slide.slick-active': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+      };
+
+      addComponents(newComponents);
+    },
+  ],
 };
 export default config;
