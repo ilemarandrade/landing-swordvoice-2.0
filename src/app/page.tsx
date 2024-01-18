@@ -121,7 +121,7 @@ export default function Home() {
       </div>
       {/* Fifth Page */}
       <div id="our_paths" className="md:min-h-screen bg-white w-full">
-        <div className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat">
+        <div className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat bg-center">
           <Typography variant="h1" className="text-center font-sedgwick">
             Nuestros <span className="text-primary">Paths</span>
           </Typography>
