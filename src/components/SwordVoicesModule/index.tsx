@@ -10,12 +10,22 @@ const SwordVoicesModule =()=>{
     const slider = useRef<Slider>(null);
 
     const settings = {
-      infinite: false,
       dots: true,
       speed: 500,
-      slidesToShow: 4,
-      slidesToScroll: 1,
       arrows: false,
+      infinite: false,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      variableWidth: true,
+      customPaging: () => (
+        <div
+          style={{
+            width: "20px",
+            height: "20px",
+          }}
+          className="border-primary border-[3px] rounded-full bg-white dots"
+        ></div>
+      ),
       responsive: [
         {
           breakpoint: 1300,
@@ -29,17 +39,14 @@ const SwordVoicesModule =()=>{
           settings: {
             slidesToShow: 2,
             slidesToScroll: 1,
-            infinite: true,
-            dots: true,
           },
         },
         {
           breakpoint: 590,
           settings: {
+            centerMode: true,
             slidesToShow: 1,
             slidesToScroll: 1,
-            infinite: true,
-            dots: true,
           },
         },
       ],
