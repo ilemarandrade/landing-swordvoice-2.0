@@ -88,7 +88,6 @@ export default function Home() {
             </Typography>
           </motion.div>
           {services.map(({ title, description, Icon }, index) => {
-            console.log(index % 100, "delay", index);
             return (
               <div key={`services-${index}`} className="overflow-hidden">
                 <motion.div
@@ -150,7 +149,7 @@ export default function Home() {
         <Typography variant="h1" className="text-center font-sedgwick">
           Nuestras <span className="text-primary">Swordvoices</span>
         </Typography>
-       <SwordVoicesCarousel/>
+        <SwordVoicesCarousel />
       </div>
       <div className="h-[58px] bg-[black] w-full relative top-3"></div>
       {/* Fifth Page */}
