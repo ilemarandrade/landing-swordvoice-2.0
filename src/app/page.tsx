@@ -21,6 +21,7 @@ import { servicesAnimation } from "@/constants/animations/servicesAnimation";
 import SwordVoicesCarousel from "@/components/SwordVoicesCarousel";
 import { whatIsSwordvoiceAnimation } from "@/constants/animations/whatIsSwordvoiceAnimation";
 import { ourSwordvoicesAnimation } from "@/constants/animations/ourSwordvoicesAnimation";
+import { ourPathAnimation } from "@/constants/animations/ourPathAnimation";
 
 export default function Home() {
   const pathAvailables = useMemo(
@@ -196,11 +197,18 @@ export default function Home() {
       <div className="h-[58px] bg-[black] w-full relative top-3"></div>
       {/* Fifth Page */}
       <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full ">
-        <div className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat bg-center">
-          <Typography variant="h1" className="text-center font-sedgwick">
-            Nuestros <span className="text-primary">Paths</span>
-          </Typography>
-        </div>
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat bg-center overflow-hidden"
+        >
+          <motion.div variants={ourPathAnimation.title}>
+            <Typography variant="h1" className="text-center font-sedgwick">
+              Nuestros <span className="text-primary">Paths</span>
+            </Typography>
+          </motion.div>
+        </motion.div>
         <div className="w-full px-4 bg-white py-10 md:py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center">
             {pathAvailables.map(({ name, description, Icon }, index) => (
