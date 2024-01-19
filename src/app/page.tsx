@@ -73,7 +73,10 @@ export default function Home() {
       </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <motion.div className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
+      <motion.div
+        id="services"
+        className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <motion.div className="relative" variants={servicesAnimation.title}>
             <Typography
@@ -140,7 +143,10 @@ export default function Home() {
             className="w-full"
             variants={whatIsSwordvoiceAnimation.elementInRight}
           >
-            <Typography variant="h1" className="mb-8 font-sedgwick">
+            <Typography
+              variant="h1"
+              className="mb-8 font-sedgwick text-center md:text-left"
+            >
               ¿Qué es <br />
               <span className="text-primary">Swordvoice</span>
               <span className="text-secondary"> Academy</span>?
@@ -150,12 +156,12 @@ export default function Home() {
             variants={whatIsSwordvoiceAnimation.text}
             transition={{ delay: 1 }}
           >
-            <Typography variant="h6" className="mb-4">
+            <Typography variant="h6" className="mb-4 text-justify md:text-left">
               Hola, somos <span className="font-bold">Swordvoice academy</span>{" "}
               y si buscas cursos online tradicionales{" "}
               <span className="font-bold">NO</span> estás en el lugar correcto.
             </Typography>
-            <Typography variant="h6">
+            <Typography variant="h6" className="text-justify md:text-left">
               Nosotros ofrecemos un modelo diferente, un modelo de mentorías.
               Sabemos que la informacion está disponible en la Web, pero{" "}
               <span className="font-bold">¿por dónde empezar?</span>. Tu{" "}
