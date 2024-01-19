@@ -19,7 +19,9 @@ import { motion } from "framer-motion";
 import { homeAnimation } from "@/constants/animations/homeAnimation";
 import { servicesAnimation } from "@/constants/animations/servicesAnimation";
 import SwordVoicesCarousel from "@/components/SwordVoicesCarousel";
-
+import { whatIsSwordvoiceAnimation } from "@/constants/animations/whatIsSwordvoiceAnimation";
+import { ourSwordvoicesAnimation } from "@/constants/animations/ourSwordvoicesAnimation";
+import { ourPathAnimation } from "@/constants/animations/ourPathAnimation";
 
 export default function Home() {
   const pathAvailables = useMemo(
@@ -71,12 +73,7 @@ export default function Home() {
       </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <motion.div
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: true }}
-        className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20"
-      >
+      <motion.div className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <motion.div className="relative" variants={servicesAnimation.title}>
             <Typography
@@ -89,7 +86,13 @@ export default function Home() {
           </motion.div>
           {services.map(({ title, description, Icon }, index) => {
             return (
-              <div key={`services-${index}`} className="overflow-hidden">
+              <motion.div
+                initial="offscreen"
+                whileInView="onscreen"
+                viewport={{ once: true }}
+                key={`services-${index}`}
+                className="overflow-hidden"
+              >
                 <motion.div
                   key={`services-${index}`}
                   variants={
@@ -106,15 +109,19 @@ export default function Home() {
                     icon={<Icon />}
                   />
                 </motion.div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
         <motion.div
-          variants={servicesAnimation.registerButton}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
           className="flex justify-center w-full pt-12"
         >
-          <Button label="Registrarme" />
+          <motion.div variants={servicesAnimation.registerButton}>
+            <Button label="Registrarme" />
+          </motion.div>
         </motion.div>
       </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
@@ -123,42 +130,85 @@ export default function Home() {
         id="meet-us"
         className="px-12 py-12 sm:px-20 md:px-32 md:py-32 h-auto xl:min-h-screen bg-whatIsSwordvoices w-full bg-cover bg-bottom bg-no-repeat flex justify-end items-center"
       >
-        <div className="w-full lg:w-[45%]">
-          <Typography variant="h1" className="mb-8 font-sedgwick">
-            ¿Qué es <br />
-            <span className="text-primary">Swordvoice</span>
-            <span className="text-secondary"> Academy</span>?
-          </Typography>
-          <Typography variant="h6" className="mb-4">
-            Hola, somos <span className="font-bold">Swordvoice academy</span> y
-            si buscas cursos online tradicionales{" "}
-            <span className="font-bold">NO</span> estás en el lugar correcto.
-          </Typography>
-          <Typography variant="h6">
-            Nosotros ofrecemos un modelo diferente, un modelo de mentorías.
-            Sabemos que la informacion está disponible en la Web, pero{" "}
-            <span className="font-bold">¿por dónde empezar?</span>. Tu{" "}
-            <span className="font-bold">MENTOR</span> asignado te proveerá de
-            los recursos y el plan que debes seguir para que no pierdas tiempo.
-          </Typography>
-        </div>
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          className="w-full lg:w-[45%] overflow-x-hidden pt-1"
+        >
+          <motion.div
+            className="w-full"
+            variants={whatIsSwordvoiceAnimation.elementInRight}
+          >
+            <Typography variant="h1" className="mb-8 font-sedgwick">
+              ¿Qué es <br />
+              <span className="text-primary">Swordvoice</span>
+              <span className="text-secondary"> Academy</span>?
+            </Typography>
+          </motion.div>
+          <motion.div
+            variants={whatIsSwordvoiceAnimation.text}
+            transition={{ delay: 1 }}
+          >
+            <Typography variant="h6" className="mb-4">
+              Hola, somos <span className="font-bold">Swordvoice academy</span>{" "}
+              y si buscas cursos online tradicionales{" "}
+              <span className="font-bold">NO</span> estás en el lugar correcto.
+            </Typography>
+            <Typography variant="h6">
+              Nosotros ofrecemos un modelo diferente, un modelo de mentorías.
+              Sabemos que la informacion está disponible en la Web, pero{" "}
+              <span className="font-bold">¿por dónde empezar?</span>. Tu{" "}
+              <span className="font-bold">MENTOR</span> asignado te proveerá de
+              los recursos y el plan que debes seguir para que no pierdas
+              tiempo.
+            </Typography>
+          </motion.div>
+        </motion.div>
       </div>
       {/* Fourth Page */}
       <div className="h-[58px] bg-[black] w-full"></div>
-      <div className="h-auto xl:min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
-        <Typography variant="h1" className="text-center font-sedgwick">
-          Nuestras <span className="text-primary">Swordvoices</span>
-        </Typography>
-        <SwordVoicesCarousel />
-      </div>
+      <motion.div className="h-auto xl:min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          className="w-full overflow-hidden pt-1"
+        >
+          <motion.div variants={ourSwordvoicesAnimation.title}>
+            <Typography variant="h1" className="text-center font-sedgwick">
+              Nuestras <span className="text-primary">Swordvoices</span>
+            </Typography>
+          </motion.div>
+        </motion.div>
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          variants={ourSwordvoicesAnimation.show}
+          transition={{
+            delay: 0.8,
+          }}
+          className="w-full"
+        >
+          <SwordVoicesCarousel />
+        </motion.div>
+      </motion.div>
       <div className="h-[58px] bg-[black] w-full relative top-3"></div>
       {/* Fifth Page */}
       <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full ">
-        <div className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat bg-center">
-          <Typography variant="h1" className="text-center font-sedgwick">
-            Nuestros <span className="text-primary">Paths</span>
-          </Typography>
-        </div>
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat bg-center overflow-hidden"
+        >
+          <motion.div variants={ourPathAnimation.title}>
+            <Typography variant="h1" className="text-center font-sedgwick">
+              Nuestros <span className="text-primary">Paths</span>
+            </Typography>
+          </motion.div>
+        </motion.div>
         <div className="w-full px-4 bg-white py-10 md:py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center">
             {pathAvailables.map(({ name, description, Icon }, index) => (
