@@ -71,12 +71,7 @@ export default function Home() {
       </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <motion.div
-        initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: true }}
-        className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20"
-      >
+      <motion.div className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <motion.div className="relative" variants={servicesAnimation.title}>
             <Typography
@@ -89,7 +84,13 @@ export default function Home() {
           </motion.div>
           {services.map(({ title, description, Icon }, index) => {
             return (
-              <div key={`services-${index}`} className="overflow-hidden">
+              <motion.div
+                initial="offscreen"
+                whileInView="onscreen"
+                viewport={{ once: true }}
+                key={`services-${index}`}
+                className="overflow-hidden"
+              >
                 <motion.div
                   key={`services-${index}`}
                   variants={
@@ -106,15 +107,19 @@ export default function Home() {
                     icon={<Icon />}
                   />
                 </motion.div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
         <motion.div
-          variants={servicesAnimation.registerButton}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
           className="flex justify-center w-full pt-12"
         >
-          <Button label="Registrarme" />
+          <motion.div variants={servicesAnimation.registerButton}>
+            <Button label="Registrarme" />
+          </motion.div>
         </motion.div>
       </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
