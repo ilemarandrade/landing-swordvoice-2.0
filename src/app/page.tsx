@@ -20,6 +20,7 @@ import { homeAnimation } from "@/constants/animations/homeAnimation";
 import { servicesAnimation } from "@/constants/animations/servicesAnimation";
 import SwordVoicesCarousel from "@/components/SwordVoicesCarousel";
 import { whatIsSwordvoiceAnimation } from "@/constants/animations/whatIsSwordvoiceAnimation";
+import { ourSwordvoicesAnimation } from "@/constants/animations/ourSwordvoicesAnimation";
 
 export default function Home() {
   const pathAvailables = useMemo(
@@ -166,12 +167,32 @@ export default function Home() {
       </div>
       {/* Fourth Page */}
       <div className="h-[58px] bg-[black] w-full"></div>
-      <div className="h-auto xl:min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
-        <Typography variant="h1" className="text-center font-sedgwick">
-          Nuestras <span className="text-primary">Swordvoices</span>
-        </Typography>
-        <SwordVoicesCarousel />
-      </div>
+      <motion.div className="h-auto xl:min-h-screen bg-ourSwordVoices w-full bg-cover bg-bottom bg-no-repeat pt-12">
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          className="w-full overflow-hidden pt-1"
+        >
+          <motion.div variants={ourSwordvoicesAnimation.title}>
+            <Typography variant="h1" className="text-center font-sedgwick">
+              Nuestras <span className="text-primary">Swordvoices</span>
+            </Typography>
+          </motion.div>
+        </motion.div>
+        <motion.div
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true }}
+          variants={ourSwordvoicesAnimation.show}
+          transition={{
+            delay: 0.8,
+          }}
+          className="w-full"
+        >
+          <SwordVoicesCarousel />
+        </motion.div>
+      </motion.div>
       <div className="h-[58px] bg-[black] w-full relative top-3"></div>
       {/* Fifth Page */}
       <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full ">
