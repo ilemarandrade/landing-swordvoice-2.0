@@ -22,8 +22,17 @@ import SwordVoicesCarousel from "@/components/SwordVoicesCarousel";
 import { whatIsSwordvoiceAnimation } from "@/constants/animations/whatIsSwordvoiceAnimation";
 import { ourSwordvoicesAnimation } from "@/constants/animations/ourSwordvoicesAnimation";
 import { ourPathAnimation } from "@/constants/animations/ourPathAnimation";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
 export default function Home() {
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
+
   const pathAvailables = useMemo(
     () => paths.filter(({ isAvailable }) => isAvailable),
     [],
@@ -33,6 +42,10 @@ export default function Home() {
     () => paths.filter(({ isAvailable }) => !isAvailable),
     [],
   );
+
+  const onSubmit: SubmitHandler<any> = (values) => {
+    console.log("sending");
+  };
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -244,17 +257,57 @@ export default function Home() {
         id="contact_us"
         className="h-auto xl:min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2"
       >
-        <div className="flex items-center flex-col mb-8 md:mb-0">
+        <form
+          className="flex items-center flex-col mb-8 md:mb-0"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="mb-8 flex justify-center">
             <Logo className="w-[80%] md:w-auto" />
           </div>
-          <Input label="Nombre y Apellido" />
-          <Input label="Correo electrónico" />
-          <Textarea label="Mensaje" />
+          <Controller
+            name="name"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => {
+              return (
+                <Input
+                  label="Nombre y Apellido"
+                  onChange={onChange}
+                  value={value}
+                />
+              );
+            }}
+          />
+          <Controller
+            name="email"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <Input
+                  label="Correo electrónico"
+                  onChange={onChange}
+                  value={value}
+                />
+              );
+            }}
+          />
+          <Controller
+            name="message"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <Textarea label="Mensaje" onChange={onChange} value={value} />
+              );
+            }}
+          />
           <div className="w-full flex justify-end max-w-md mt-2">
-            <button className="text-primary font-bold">ENVIAR</button>
+            <button className="text-primary font-bold" type="submit">
+              ENVIAR
+            </button>
           </div>
-        </div>
+        </form>
         <div className="flex flex-col items-center p-4">
           <Typography
             variant="h1"
