@@ -23,15 +23,18 @@ import { whatIsSwordvoiceAnimation } from "@/constants/animations/whatIsSwordvoi
 import { ourSwordvoicesAnimation } from "@/constants/animations/ourSwordvoicesAnimation";
 import { ourPathAnimation } from "@/constants/animations/ourPathAnimation";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import toast from "react-hot-toast";
+import useSendEmailOfContact from "@/constants/hooks/api/useSendEmailOfContact";
 
 export default function Home() {
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
       email: "",
       message: "",
     },
   });
+  const { sendEmail } = useSendEmailOfContact();
 
   const pathAvailables = useMemo(
     () => paths.filter(({ isAvailable }) => isAvailable),
@@ -43,8 +46,19 @@ export default function Home() {
     [],
   );
 
-  const onSubmit: SubmitHandler<any> = (values) => {
-    console.log("sending");
+  const onSubmit: SubmitHandler<any> = async ({ email, name, message }) => {
+    sendEmail(
+      { email, name, message },
+      {
+        onSuccess: () => {
+          toast.success("Envío exitoso");
+          reset();
+        },
+        onError: () => {
+          toast.error("Ha ocurrido un error");
+        },
+      },
+    );
   };
 
   return (

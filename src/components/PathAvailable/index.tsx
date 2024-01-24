@@ -1,6 +1,6 @@
 "use client";
 
-import { useIsMobile } from "@/constants/Hooks/useIsMobile";
+import { useIsMobile } from "@/constants/hooks/useIsMobile";
 import { Typography } from "../Typography";
 import { motion } from "framer-motion";
 import { ourPathAnimation } from "@/constants/animations/ourPathAnimation";
