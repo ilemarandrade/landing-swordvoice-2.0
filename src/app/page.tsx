@@ -25,6 +25,19 @@ import { ourPathAnimation } from "@/constants/animations/ourPathAnimation";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import useSendEmailOfContact from "@/constants/hooks/api/useSendEmailOfContact";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    name: yup.string().required(),
+    email: yup
+      .string()
+      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+      .required(),
+    message: yup.string().required(),
+  })
+  .required();
 
 export default function Home() {
   const { control, handleSubmit, reset } = useForm({
@@ -33,8 +46,9 @@ export default function Home() {
       email: "",
       message: "",
     },
+    resolver: yupResolver(schema),
   });
-  const { sendEmail } = useSendEmailOfContact();
+  const { sendEmail, isLoading } = useSendEmailOfContact();
 
   const pathAvailables = useMemo(
     () => paths.filter(({ isAvailable }) => isAvailable),
@@ -288,6 +302,7 @@ export default function Home() {
                   label="Nombre y Apellido"
                   onChange={onChange}
                   value={value}
+                  isValid={!error?.message}
                 />
               );
             }}
@@ -296,12 +311,13 @@ export default function Home() {
             name="email"
             control={control}
             rules={{ required: true }}
-            render={({ field: { onChange, value } }) => {
+            render={({ field: { onChange, value }, fieldState: { error } }) => {
               return (
                 <Input
                   label="Correo electrónico"
                   onChange={onChange}
                   value={value}
+                  isValid={!error?.message}
                 />
               );
             }}
@@ -310,14 +326,23 @@ export default function Home() {
             name="message"
             control={control}
             rules={{ required: true }}
-            render={({ field: { onChange, value } }) => {
+            render={({ field: { onChange, value }, fieldState: { error } }) => {
               return (
-                <Textarea label="Mensaje" onChange={onChange} value={value} />
+                <Textarea
+                  label="Mensaje"
+                  onChange={onChange}
+                  value={value}
+                  isValid={!error?.message}
+                />
               );
             }}
           />
           <div className="w-full flex justify-end max-w-md mt-2">
-            <button className="text-primary font-bold" type="submit">
+            <button
+              className="text-primary font-bold"
+              type="submit"
+              disabled={isLoading}
+            >
               ENVIAR
             </button>
           </div>

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 interface IStatusCallbacks {
   onSuccess: () => void;
   onError: () => void;
@@ -14,10 +16,13 @@ type ISendEmail = (
 ) => Promise<void>;
 
 const useSendEmailOfContact = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const sendEmail: ISendEmail = async (
     { name, email, message },
     { onSuccess, onError },
   ) => {
+    setIsLoading(true);
     try {
       await fetch("/api/sendEmail", {
         method: "POST",
@@ -31,9 +36,11 @@ const useSendEmailOfContact = () => {
     } catch (e) {
       onError();
     }
+    setIsLoading(false);
   };
   return {
     sendEmail,
+    isLoading,
   };
 };
 
