@@ -3,7 +3,7 @@ const swordvoices = [
         photo: "/swordvoices/jainer.jpeg",
         name: "Jainer Munoz",
         description:
-          "CEO, Consultor IT con 10+ años de experiencia, 5 años de desarrollo web moderno y gestión de equipos. Gran trabajador en entornos de equipo multiculturales.",
+          "CEO, Consultor IT y negocios con 10+ años de experiencia, 8 años de desarrollo web moderno y gestión de equipos en entornos multiculturales.",
         rol: "Full Stack Engineer",
         linkedin: "https://www.linkedin.com/in/jainer-munoz/",
         github: "https://github.com/Yireh2016",
@@ -33,7 +33,7 @@ const swordvoices = [
       photo: "/swordvoices/chellys.jpg",
       name: "Chellys Castillo",
       description:
-        "Mentora, eficiente en el desarrollo de interfaces de usuarios, minusiosa y creativa en el diseño pixel to pixel y responsivo de apps.",
+        `Mentora, eficiente en el desarrollo de interfaces de usuarios, minusiosa y creativa en el diseño "pixel to pixel" y responsivo de apps.`,
       rol: "Frontend Deveveloper",
       linkedin: "https://www.linkedin.com/in/chellys-castillo/",
       github: "https://github.com/chellysA",
