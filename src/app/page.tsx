@@ -7,7 +7,7 @@ import PathAvailable from "@/components/PathAvailable";
 import Services from "@/components/Services";
 import services from "@/constants/services";
 import paths from "@/constants/paths";
-import { useMemo} from "react";
+import { useMemo } from "react";
 import { Typography } from "@/components/Typography";
 import World from "@/assets/icons/World";
 import Link from "next/link";
@@ -114,7 +114,7 @@ export default function Home() {
       </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-     <motion.div
+      <motion.div
         id="services"
         className="h-auto xl:min-h-screen bg-ourServices bg-cover w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20"
       >
