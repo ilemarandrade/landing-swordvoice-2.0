@@ -1,3 +1,4 @@
+"use client"
 import Logo from "@/assets/icons/Logo";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
@@ -5,7 +6,7 @@ import PathAvailable from "@/components/PathAvailable";
 import Services from "@/components/Services";
 import services from "@/constants/services";
 import paths from "@/constants/paths";
-import { useMemo} from "react";
+import { useEffect, useMemo, useState} from "react";
 import { Typography } from "@/components/Typography";
 import World from "@/assets/icons/World";
 import Link from "next/link";
@@ -14,9 +15,12 @@ import Textarea from "@/components/Textarea";
 import InstagramIcon from "@/assets/icons/InstagramIcon";
 import WorldIcon from "@/assets/icons/WorldIcon";
 import SwordVoicesCarousel from "@/components/SwordVoicesCarousel";
+import HouseIcon from "@/assets/icons/HouseIcon"
+import { useBackToTopButton } from "@/constants/Hooks/useBackToTopButton";
 
 
 export default function Home() {
+  const showBackToTopButton = useBackToTopButton()
 
   const pathAvailables = useMemo(
     () => paths.filter(({ isAvailable }) => isAvailable),
@@ -27,6 +31,14 @@ export default function Home() {
     () => paths.filter(({ isAvailable }) => !isAvailable),
     [],
   );
+
+  const handleBackToTop = () => {
+    window.scroll({
+    top: 0, 
+    left: 0, 
+    behavior: 'smooth' 
+  });
+  };
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -174,6 +186,14 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* Back to top button */}
+      <div className="fixed bottom-0 right-5 mb-10 mr-4">
+          {showBackToTopButton && (
+          <button onClick={handleBackToTop}>
+            <HouseIcon/>
+          </button>
+          )}
+        </div>
     </main>
   );
 }
