@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
+import { Toaster } from "react-hot-toast";
 
 import "./globals.css";
 
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${sedgwick.variable}`}>
+        <Toaster position="top-right" />
         {children}
       </body>
     </html>
