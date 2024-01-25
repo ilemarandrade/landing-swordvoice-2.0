@@ -48,7 +48,7 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <div className="h-auto xl:min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
+      <div className="h-auto xl:min-h-screen bg-ourServices bg-cover w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <div className="relative">
             <Typography
@@ -108,7 +108,7 @@ export default function Home() {
       </div>
       <div className="h-[58px] bg-[black] w-full relative top-3"></div>
       {/* Fifth Page */}
-      <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full ">
+      <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full">
         <div className="w-full p-12 bg-ourPathsBackground bg-cover bg-no-repeat bg-center">
           <Typography variant="h1" className="text-center font-sedgwick">
             Nuestros <span className="text-primary">Paths</span>
@@ -141,9 +141,10 @@ export default function Home() {
       {/* Footer */}
       <div
         id="contact_us"
-        className="h-auto xl:min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2"
+        className="h-auto xl:min-h-screen w-full p-12 grid grid-cols-1 md:grid-cols-2 bg-contactUs bg-cover relative"
       >
-        <div className="flex items-center flex-col mb-8 md:mb-0">
+        <div className="absolute inset-0 z-1 bg-black opacity-55"></div>
+        <div className="flex items-center flex-col mb-8 md:mb-0 z-20">
           <div className="mb-8 flex justify-center">
             <Logo className="w-[80%] md:w-auto" />
           </div>
@@ -154,7 +155,7 @@ export default function Home() {
             <button className="text-primary font-bold">ENVIAR</button>
           </div>
         </div>
-        <div className="flex flex-col items-center p-4">
+        <div className="flex flex-col items-center p-4 z-10">
           <Typography
             variant="h1"
             className="text-center mb-8 text-secondary hidden md:block font-sedgwick"
