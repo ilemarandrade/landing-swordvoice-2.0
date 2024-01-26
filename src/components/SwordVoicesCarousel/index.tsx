@@ -31,7 +31,7 @@ const SwordVoicesModule =()=>{
           settings: {
             slidesToShow: 3,
             slidesToScroll: 1,
-            infinite: false
+            autoplay: true
           },
         },
         {
@@ -39,6 +39,7 @@ const SwordVoicesModule =()=>{
           settings: {
             slidesToShow: 2,
             slidesToScroll: 1,
+            autoplay: true
           },
         },
         {
@@ -46,10 +47,11 @@ const SwordVoicesModule =()=>{
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1,
+            autoplay: true
           },
         },
       ],
-      autoplay: true,
+      autoplay: false,
       autoplaySpeed: 3000,
       pauseOnHover: true,
     };
@@ -65,7 +67,7 @@ const SwordVoicesModule =()=>{
               name={swordvoice.name}
               photo={swordvoice.photo}
               rol={swordvoice.rol}
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation"
+              description={swordvoice.description}
             />
           ))}
         </Slider>

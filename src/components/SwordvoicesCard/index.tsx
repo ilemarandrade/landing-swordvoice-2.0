@@ -42,14 +42,14 @@ const SwordvoicesCard = ({
           {name}
         </Typography>
       </div>
-      <div className="h-[50%] p-4">
+      <div className="h-[50%] min-h-[236px] p-4">
         <Typography variant="h6" className="text-black font-bold mb-2">
           {rol}
         </Typography>
         <Typography variant="small" className="text-black">
           {description}
         </Typography>
-        <div className="flex justify-start items-center mt-4">
+        <div className="flex justify-start items-center mt-4 absolute bottom-10">
           <Link href={linkedin}>
             <LinkedinIcon width={32} height={32} color="#0A66C2" />
           </Link>

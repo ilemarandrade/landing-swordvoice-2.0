@@ -17,6 +17,8 @@ const config: Config = {
           "url('/backgrounds/whatIsSwordvoicesBackground.jpg')",
         ourSwordVoices: "url('/backgrounds/ourSwordVoicesBackground.jpg')",
         ourPathsBackground: "url('/backgrounds/ourPathsBackground.jpg')",
+        ourServices: "url('/backgrounds/ourServices.jpg')",
+        contactUs: "url('/backgrounds/contactUs.jpg')"
       },
       colors: {
         primary: "#FF7A00",
