@@ -6,7 +6,7 @@ import PathAvailable from "@/components/PathAvailable";
 import Services from "@/components/Services";
 import services from "@/constants/services";
 import paths from "@/constants/paths";
-import { useEffect, useMemo, useState} from "react";
+import {useMemo} from "react";
 import { Typography } from "@/components/Typography";
 import World from "@/assets/icons/World";
 import Link from "next/link";
@@ -19,13 +19,13 @@ import { homeAnimation } from "@/constants/animations/homeAnimation";
 import { servicesAnimation } from "@/constants/animations/servicesAnimation";
 import SwordVoicesCarousel from "@/components/SwordVoicesCarousel";
 import HouseIcon from "@/assets/icons/HouseIcon"
-import { useBackToTopButton } from "@/constants/hooks/useBackToTopButton";
+import { useBackToTopButton } from "@/app/hooks/useBackToTopButton";
 import { whatIsSwordvoiceAnimation } from "@/constants/animations/whatIsSwordvoiceAnimation";
 import { ourSwordvoicesAnimation } from "@/constants/animations/ourSwordvoicesAnimation";
 import { ourPathAnimation } from "@/constants/animations/ourPathAnimation";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
-import useSendEmailOfContact from "@/constants/hooks/api/useSendEmailOfContact";
+import useSendEmailOfContact from "@/app/hooks/api/useSendEmailOfContact";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -41,7 +41,7 @@ const schema = yup
   .required();
 
 export default function Home() {
-  const showBackToTopButton = useBackToTopButton()
+  const {showBackToTopButton, handleBackToTop, elementWhereButtonAppears} = useBackToTopButton()
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
@@ -116,7 +116,7 @@ export default function Home() {
       </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <motion.div
+      <motion.div ref={elementWhereButtonAppears}
         id="services"
         className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20"
       >
@@ -371,8 +371,8 @@ export default function Home() {
       </div>
       {/* Back to top button */}
       <div className="fixed bottom-0 right-5 mb-10 mr-4">
-          {showBackToTopButton.showBackToTopButton && (
-          <button onClick={showBackToTopButton.handleBackToTop}>
+          {showBackToTopButton && (
+          <button onClick={handleBackToTop}>
             <HouseIcon/>
           </button>
           )}
