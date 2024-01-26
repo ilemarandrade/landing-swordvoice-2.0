@@ -6,7 +6,7 @@ import PathAvailable from "@/components/PathAvailable";
 import Services from "@/components/Services";
 import services from "@/constants/services";
 import paths from "@/constants/paths";
-import {useMemo} from "react";
+import { useMemo } from "react";
 import { Typography } from "@/components/Typography";
 import World from "@/assets/icons/World";
 import Link from "next/link";
@@ -118,7 +118,7 @@ export default function Home() {
       {/* Second Page */}
       <motion.div ref={elementWhereButtonAppears}
         id="services"
-        className="min-h-screen bg-[black] w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20"
+        className="h-auto xl:min-h-screen bg-ourServices bg-cover w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 ">
           <motion.div className="relative" variants={servicesAnimation.title}>
@@ -245,7 +245,7 @@ export default function Home() {
       </motion.div>
       <div className="h-[58px] bg-[black] w-full relative top-3"></div>
       {/* Fifth Page */}
-      <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full ">
+      <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full">
         <motion.div
           initial="offscreen"
           whileInView="onscreen"
@@ -285,10 +285,11 @@ export default function Home() {
       {/* Footer */}
       <div
         id="contact_us"
-        className="h-auto xl:min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2"
+        className="h-auto xl:min-h-screen w-full p-12 grid grid-cols-1 md:grid-cols-2 bg-contactUs bg-cover relative"
       >
+        <div className="absolute inset-0 z-1 bg-black opacity-55"></div>
         <form
-          className="flex items-center flex-col mb-8 md:mb-0"
+          className="flex items-center flex-col mb-8 md:mb-0 z-20"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="mb-8 flex justify-center">
@@ -349,7 +350,7 @@ export default function Home() {
             </button>
           </div>
         </form>
-        <div className="flex flex-col items-center p-4">
+        <div className="flex flex-col items-center p-4 z-10">
           <Typography
             variant="h1"
             className="text-center mb-8 text-secondary hidden md:block font-sedgwick"
