@@ -32,14 +32,6 @@ export default function Home() {
     [],
   );
 
-  const handleBackToTop = () => {
-    window.scroll({
-    top: 0, 
-    left: 0, 
-    behavior: 'smooth' 
-  });
-  };
-
   return (
     <main className="flex min-h-screen flex-col">
       <Navbar />
@@ -188,8 +180,8 @@ export default function Home() {
       </div>
       {/* Back to top button */}
       <div className="fixed bottom-0 right-5 mb-10 mr-4">
-          {showBackToTopButton && (
-          <button onClick={handleBackToTop}>
+          {showBackToTopButton.showBackToTopButton && (
+          <button onClick={showBackToTopButton.handleBackToTop}>
             <HouseIcon/>
           </button>
           )}
