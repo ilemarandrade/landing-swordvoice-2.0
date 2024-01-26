@@ -243,7 +243,7 @@ export default function Home() {
       </motion.div>
       <div className="h-[58px] bg-[black] w-full relative top-3"></div>
       {/* Fifth Page */}
-      <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full ">
+      <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full">
         <motion.div
           initial="offscreen"
           whileInView="onscreen"
