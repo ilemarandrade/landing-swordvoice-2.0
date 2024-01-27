@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import Logo from "@/assets/icons/Logo";
 import Button from "@/components/Button";
 import Navbar from "@/components/Navbar";
@@ -19,12 +18,14 @@ import { motion } from "framer-motion";
 import { homeAnimation } from "@/constants/animations/homeAnimation";
 import { servicesAnimation } from "@/constants/animations/servicesAnimation";
 import SwordVoicesCarousel from "@/components/SwordVoicesCarousel";
+import HouseIcon from "@/assets/icons/HouseIcon"
+import { useBackToTopButton } from "@/app/hooks/useBackToTopButton";
 import { whatIsSwordvoiceAnimation } from "@/constants/animations/whatIsSwordvoiceAnimation";
 import { ourSwordvoicesAnimation } from "@/constants/animations/ourSwordvoicesAnimation";
 import { ourPathAnimation } from "@/constants/animations/ourPathAnimation";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
-import useSendEmailOfContact from "@/constants/hooks/api/useSendEmailOfContact";
+import useSendEmailOfContact from "@/app/hooks/api/useSendEmailOfContact";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -40,6 +41,7 @@ const schema = yup
   .required();
 
 export default function Home() {
+  const {showBackToTopButton, handleBackToTop, elementWhereButtonAppears} = useBackToTopButton()
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
@@ -114,7 +116,7 @@ export default function Home() {
       </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
       {/* Second Page */}
-      <motion.div
+      <motion.div ref={elementWhereButtonAppears}
         id="services"
         className="h-auto xl:min-h-screen bg-ourServices bg-cover w-full p-4 md:px-8 lg:px-[100px] lg:pb-12 lg:pt-20"
       >
@@ -368,6 +370,14 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* Back to top button */}
+      <div className="fixed bottom-0 right-5 mb-10 mr-4">
+          {showBackToTopButton && (
+          <button onClick={handleBackToTop}>
+            <HouseIcon/>
+          </button>
+          )}
+        </div>
     </main>
   );
 }

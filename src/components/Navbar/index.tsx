@@ -3,7 +3,7 @@ import routes from "@/constants/routes";
 import Logo from "@/assets/icons/Logo";
 import { MouseEvent, useEffect, useState } from "react";
 import Hamburguer from "@/assets/icons/Hamburguer";
-import { useIsMobile } from "@/constants/hooks/useIsMobile";
+import { useIsMobile } from "@/app/hooks/useIsMobile";
 import { Typography } from "../Typography";
 import { motion } from "framer-motion";
 import { navAnimation } from "@/constants/animations/navAnimation";
