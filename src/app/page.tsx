@@ -6,7 +6,7 @@ import PathAvailable from "@/components/PathAvailable";
 import Services from "@/components/Services";
 import services from "@/constants/services";
 import paths from "@/constants/paths";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Typography } from "@/components/Typography";
 import World from "@/assets/icons/World";
 import Link from "next/link";
@@ -77,6 +77,14 @@ export default function Home() {
       },
     );
   };
+
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col">
