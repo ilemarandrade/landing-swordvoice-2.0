@@ -11,30 +11,29 @@ import LogoSwordvoice from "@/assets/icons/LogoSwordvoice";
 
 const MotionLogo = motion(Logo);
 const MotionLogoSV = motion(LogoSwordvoice);
-interface NavItem {
+interface INavItem {
   label: string;
   href: string;
 }
-interface Nav {
-  positionWhereLogoChange: RefObject<HTMLDivElement>;
+interface INav {
+  changeLogo: boolean;
 }
-const links: NavItem[] = [
+const links: INavItem[] = [
   { href: routes.SERVICES, label: "Servicios" },
   { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.OUR_PATHS, label: "Nuestro path" },
   { href: routes.CONTACT_US, label: "Contáctanos" },
 ];
 
-const linksResponsive: NavItem[] = [
+const linksResponsive: INavItem[] = [
   { href: routes.HOME, label: "Home" },
   { href: routes.SERVICES, label: "Servicios" },
   { href: routes.MEET_US, label: "Conócenos" },
   { href: routes.OUR_PATHS, label: "Nuestro path" },
   { href: routes.CONTACT_US, label: "Contáctanos" },
 ];
-const Navbar = (positionWhereLogoChange: Nav) => {
+const Navbar = (changeLogo: INav) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [changeLogo, setChangeLogo] = useState(true);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -42,10 +41,6 @@ const Navbar = (positionWhereLogoChange: Nav) => {
       setShowMenu(false);
     }
   }, [isMobile, showMenu]);
-
-  useEffect(() => {
-    setChangeLogo(!changeLogo);
-  }, [positionWhereLogoChange]);
 
   const handleClick = (
     event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,
@@ -78,7 +73,7 @@ const Navbar = (positionWhereLogoChange: Nav) => {
           : `bg-center after:inset-0 after:absolute after:bg-blue300 bg-[url('/backgrounds/homeBackground.jpg')] flex-col items-center w-screen h-full`
       }`}
     >
-      {!changeLogo ? (
+      {!changeLogo.changeLogo ? (
         <AnimatePresence>
           <MotionLogo
             className="w-[50%] md:w-[20%] mx-4 my-8 z-10"
@@ -86,7 +81,7 @@ const Navbar = (positionWhereLogoChange: Nav) => {
               duration: 0.5,
               ease: [0, 0.71, 0.2, 1.1],
             }}
-            initial={{ x: -200 }}
+            initial={{ x: -300 }}
             animate={{ x: 0 }}
             exit={{ x: -200 }}
           />
@@ -110,7 +105,7 @@ const Navbar = (positionWhereLogoChange: Nav) => {
         variants={navAnimation.nav}
         className="hidden md:flex mx-8 mt-5 gap-[40px] py-4"
       >
-        {links.map((link: NavItem, index: number) => (
+        {links.map((link: INavItem, index: number) => (
           <a
             href={link.href}
             key={index}
@@ -141,7 +136,7 @@ const Navbar = (positionWhereLogoChange: Nav) => {
         </div>
         {showMenu && (
           <div className="flex flex-col items-center mt-4">
-            {linksResponsive.map((link: NavItem, index: number) => (
+            {linksResponsive.map((link: INavItem, index: number) => (
               <a
                 href={link.href}
                 key={index}

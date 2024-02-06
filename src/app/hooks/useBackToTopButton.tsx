@@ -15,7 +15,7 @@ export const useBackToTopButton = () => {
   const checkScrollTop = () => {
     const positionWhereButtonAppears =
       elementWhereButtonAppears.current?.offsetTop;
-      
+
     if (!positionWhereButtonAppears) {
       return;
     }
@@ -29,7 +29,7 @@ export const useBackToTopButton = () => {
   useEffect(() => {
     window.addEventListener("scroll", checkScrollTop);
     return () => window.removeEventListener("scroll", checkScrollTop);
-  }, [showBackToTopButton]);
+  }, []);
 
   return { showBackToTopButton, handleBackToTop, elementWhereButtonAppears };
 };
