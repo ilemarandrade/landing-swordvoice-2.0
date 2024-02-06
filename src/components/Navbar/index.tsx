@@ -1,19 +1,23 @@
 "use client";
 import routes from "@/constants/routes";
 import Logo from "@/assets/icons/Logo";
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, RefObject, useEffect, useState } from "react";
 import Hamburguer from "@/assets/icons/Hamburguer";
 import { useIsMobile } from "@/app/hooks/useIsMobile";
 import { Typography } from "../Typography";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { navAnimation } from "@/constants/animations/navAnimation";
+import LogoSwordvoice from "@/assets/icons/LogoSwordvoice";
 
 const MotionLogo = motion(Logo);
+const MotionLogoSV = motion(LogoSwordvoice);
 interface NavItem {
   label: string;
   href: string;
 }
-
+interface Nav {
+  positionWhereLogoChange: RefObject<HTMLDivElement>;
+}
 const links: NavItem[] = [
   { href: routes.SERVICES, label: "Servicios" },
   { href: routes.MEET_US, label: "Conócenos" },
@@ -28,8 +32,9 @@ const linksResponsive: NavItem[] = [
   { href: routes.OUR_PATHS, label: "Nuestro path" },
   { href: routes.CONTACT_US, label: "Contáctanos" },
 ];
-const Navbar = () => {
+const Navbar = (positionWhereLogoChange: Nav) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [changeLogo, setChangeLogo] = useState(true);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -37,6 +42,10 @@ const Navbar = () => {
       setShowMenu(false);
     }
   }, [isMobile, showMenu]);
+
+  useEffect(() => {
+    setChangeLogo(!changeLogo);
+  }, [positionWhereLogoChange]);
 
   const handleClick = (
     event: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>,
@@ -69,14 +78,34 @@ const Navbar = () => {
           : `bg-center after:inset-0 after:absolute after:bg-blue300 bg-[url('/backgrounds/homeBackground.jpg')] flex-col items-center w-screen h-full`
       }`}
     >
-      <MotionLogo
-        className="w-[50%] md:w-[20%] mx-4 my-8 z-10"
-        variants={navAnimation.logo}
-        transition={{
-          duration: 0.5,
-          ease: [0, 0.71, 0.2, 1.1],
-        }}
-      />
+      {!changeLogo ? (
+        <AnimatePresence>
+          <MotionLogo
+            className="w-[50%] md:w-[20%] mx-4 my-8 z-10"
+            transition={{
+              duration: 0.5,
+              ease: [0, 0.71, 0.2, 1.1],
+            }}
+            initial={{ x: -200 }}
+            animate={{ x: 0 }}
+            exit={{ x: -200 }}
+          />
+        </AnimatePresence>
+      ) : (
+        <AnimatePresence>
+          <MotionLogoSV
+            className="m-8 z-10"
+            transition={{
+              duration: 0.5,
+              ease: [0, 0.71, 0.2, 1.1],
+            }}
+            initial={{ x: -370, opacity: 1 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -370, opacity: 0 }}
+          />
+        </AnimatePresence>
+      )}
+
       <motion.div
         variants={navAnimation.nav}
         className="hidden md:flex mx-8 mt-5 gap-[40px] py-4"
@@ -101,7 +130,7 @@ const Navbar = () => {
       <div
         className={`md:hidden ${
           showMenu &&
-          `z-10 border-2 border-blue200 border-b-transparent rounded-t-[10px] p-10 flex flex-col items-center`
+          `z-30 border-2 border-blue200 border-b-transparent rounded-t-[10px] p-10 flex flex-col items-center`
         }`}
       >
         <div className={`${!showMenu && `absolute right-4 top-8`}`}>
