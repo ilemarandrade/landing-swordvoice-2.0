@@ -1,10 +1,19 @@
-const LogoSwordvoice = () => (
+import * as React from "react";
+
+const LogoSwordvoice: React.ForwardRefRenderFunction<
+  any,
+  {
+    className: string;
+  }
+> = (props, ref) => (
   <svg
+    ref={ref}
     width={77}
     height={87}
     viewBox="0 0 77 87"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <g clipPath="url(#clip0_991_1080)">
       <path
@@ -48,4 +57,4 @@ const LogoSwordvoice = () => (
     </defs>
   </svg>
 );
-export default LogoSwordvoice;
+export default React.forwardRef(LogoSwordvoice);

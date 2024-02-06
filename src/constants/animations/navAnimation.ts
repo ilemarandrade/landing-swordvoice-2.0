@@ -14,13 +14,4 @@ export const navAnimation: INavAnimation = {
       top: "0px",
     },
   },
-  logo: {
-    offscreen: {
-      position: "relative",
-      left: "-200vh",
-    },
-    onscreen: {
-      left: 0,
-    },
-  },
 };
