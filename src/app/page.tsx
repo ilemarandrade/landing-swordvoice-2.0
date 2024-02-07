@@ -245,7 +245,7 @@ export default function Home() {
           <SwordVoicesCarousel />
         </motion.div>
       </motion.div>
-      <div className="h-[58px] bg-[black] w-full relative top-3"></div>
+      <div className="h-[58px] bg-[black] w-full relative top-2"></div>
       {/* Fifth Page */}
       <div id="our_paths" className="h-auto xl:min-h-screen bg-white w-full">
         <motion.div
