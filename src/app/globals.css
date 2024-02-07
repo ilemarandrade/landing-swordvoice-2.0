@@ -9,7 +9,8 @@
 }
 
 body {
-  color: white
+  color: white;
+  background-color: black;
 }
 
 .slick-active > .dots {
