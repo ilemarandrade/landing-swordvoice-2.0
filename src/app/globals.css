@@ -8,6 +8,11 @@
   }
 }
 
+body {
+  color: white;
+  background-color: black;
+}
+
 .slick-active > .dots {
   background-color: #ff7a00;
 }
