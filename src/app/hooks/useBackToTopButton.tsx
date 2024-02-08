@@ -19,7 +19,7 @@ export const useBackToTopButton = () => {
     if (!positionWhereButtonAppears) {
       return;
     }
-    if (window.scrollY > positionWhereButtonAppears) {
+    if (window.scrollY + 85 > positionWhereButtonAppears) {
       setShowBackToTopButton(true);
     } else {
       setShowBackToTopButton(false);
