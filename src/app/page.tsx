@@ -139,7 +139,7 @@ export default function Home() {
         </div>
       </div>
       {/* Footer */}
-      <div className="min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2">
+      <div className="min-h-screen bg-[black] w-full p-12 grid grid-cols-1 md:grid-cols-2 z-1">
         <div className="flex items-center flex-col mb-8 md:mb-0">
           <div className="mb-8">
             <Logo />
