@@ -67,7 +67,7 @@ const Navbar = (changeLogo: INav) => {
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ once: true }}
-      className={`z-10 bg-blurry fixed flex justify-center ${
+      className={`z-30 bg-blurry fixed flex justify-center ${
         !showMenu
           ? `w-full md:justify-between h-[85px] `
           : `bg-center after:inset-0 after:absolute after:bg-blue300 bg-[url('/backgrounds/homeBackground.jpg')] flex-col items-center w-screen h-full`
