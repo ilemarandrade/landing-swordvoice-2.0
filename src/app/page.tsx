@@ -381,7 +381,7 @@ export default function Home() {
         </div>
       </div>
       {/* Back to top button */}
-      <div className="fixed bottom-0 right-5 mb-10 mr-4">
+      <div className="fixed bottom-0 right-5 mb-10 mr-4 z-30">
         {showBackToTopButton && (
           <button onClick={handleBackToTop}>
             <HouseIcon />
