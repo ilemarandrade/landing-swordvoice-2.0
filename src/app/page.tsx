@@ -28,6 +28,7 @@ import toast from "react-hot-toast";
 import useSendEmailOfContact from "@/app/hooks/api/useSendEmailOfContact";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import routes from "@/constants/routes";
 
 const schema = yup
   .object({
@@ -120,7 +121,9 @@ export default function Home() {
           </motion.div>
         </motion.div>
         <motion.div variants={homeAnimation.registerButton}>
-          <Button label="Registrarme" />
+          <Link href={routes.CONTACT_US}>
+            <Button label="Registrarme" />
+          </Link>
         </motion.div>
       </motion.div>
       <div className="h-[58px] bg-[black] w-full"></div>
@@ -176,7 +179,9 @@ export default function Home() {
           className="flex justify-center w-full pt-12"
         >
           <motion.div variants={servicesAnimation.registerButton}>
-            <Button label="Registrarme" />
+            <Link href={routes.CONTACT_US}>
+              <Button label="Registrarme" />
+            </Link>
           </motion.div>
         </motion.div>
       </motion.div>
