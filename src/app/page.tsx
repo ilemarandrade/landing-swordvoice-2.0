@@ -376,12 +376,12 @@ export default function Home() {
             <World />
           </div>
           <div className="flex justify-center items-center w-100">
-            <Link href="" className="p-1 mr-1">
+            {/* <Link href="" className="p-1 mr-1">
               <InstagramIcon />
             </Link>
             <Link href="">
               <WorldIcon />
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
