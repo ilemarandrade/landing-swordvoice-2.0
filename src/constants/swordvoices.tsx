@@ -7,7 +7,7 @@ const swordvoices = [
     rol: "Full Stack Engineer",
     linkedin: "https://www.linkedin.com/in/jainer-munoz/",
     github: "https://github.com/Yireh2016",
-    portfolio: "https://www.swordvoice.com/",
+    portfolio: "https://swordvoice.com/",
   },
   {
     photo: "/swordvoices/ilemar.jpg",
