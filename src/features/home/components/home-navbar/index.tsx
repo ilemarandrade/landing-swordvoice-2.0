@@ -1,5 +1,5 @@
 "use client";
-import { Navbar } from "@/common/components/organisms/Navbar";
+import { Navbar } from "@/common/components/navbar";
 import { SERVICES_SECTION_ID } from "@/features/home/constants/sections";
 import { useIsPastSection } from "@/features/home/hooks/useIsPastSection";
 

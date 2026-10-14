@@ -4,7 +4,7 @@ import { type MouseEvent, useEffect, useState } from "react";
 import Hamburguer from "@/common/assets/icons/Hamburguer";
 import Logo from "@/common/assets/icons/Logo";
 import LogoSwordvoice from "@/common/assets/icons/LogoSwordvoice";
-import { NavLink } from "@/common/components/molecules/NavLink";
+import { NavLink } from "@/common/components/navbar/nav-link";
 import { navAnimation } from "@/common/constants/animations/navAnimation";
 import { mobileNavLinks, navLinks } from "@/common/constants/navLinks";
 import { useIsMobile } from "@/common/hooks/useIsMobile";

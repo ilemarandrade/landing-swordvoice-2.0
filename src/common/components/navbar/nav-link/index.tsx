@@ -1,5 +1,5 @@
 import type { MouseEvent } from "react";
-import { Typography } from "@/common/components/atoms/Typography";
+import { Typography } from "@/common/components/typography";
 import type { NavItem } from "@/common/constants/navLinks";
 
 type NavLinkProps = {

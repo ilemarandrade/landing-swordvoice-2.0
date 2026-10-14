@@ -1,34 +1,29 @@
 import { useId, type ComponentPropsWithRef } from "react";
-import { Typography } from "@/common/components/atoms/Typography";
+import { Typography } from "@/common/components/typography";
 
-type TextareaProps = Omit<ComponentPropsWithRef<"textarea">, "className"> & {
+type InputProps = Omit<ComponentPropsWithRef<"input">, "className"> & {
   label: string;
   error?: string;
 };
 
-export function Textarea({
-  label,
-  error,
-  id,
-  ...textareaProps
-}: TextareaProps) {
+export function Input({ label, error, id, ...inputProps }: InputProps) {
   const generatedId = useId();
-  const textareaId = id ?? generatedId;
-  const errorId = `${textareaId}-error`;
+  const inputId = id ?? generatedId;
+  const errorId = `${inputId}-error`;
 
   return (
     <div className="flex-col flex w-full mb-4 max-w-md">
-      <Typography as="label" htmlFor={textareaId} className="mb-3">
+      <Typography as="label" htmlFor={inputId} className="mb-3">
         {label}
       </Typography>
-      <textarea
-        id={textareaId}
+      <input
+        id={inputId}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId : undefined}
-        className={`w-full p-3 rounded text-black resize-none h-[150px] ${
+        className={`w-full p-3 rounded text-black ${
           error ? "border-red-600 border-2" : ""
         }`}
-        {...textareaProps}
+        {...inputProps}
       />
       {error && (
         <Typography

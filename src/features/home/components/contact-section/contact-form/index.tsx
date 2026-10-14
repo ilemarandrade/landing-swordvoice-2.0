@@ -1,7 +1,7 @@
 "use client";
 import Logo from "@/common/assets/icons/Logo";
-import { Input } from "@/common/components/atoms/Input";
-import { Textarea } from "@/common/components/atoms/Textarea";
+import { Input } from "@/common/components/input";
+import { Textarea } from "@/common/components/textarea";
 import { useContactForm } from "@/features/home/hooks/useContactForm";
 
 export function ContactForm() {

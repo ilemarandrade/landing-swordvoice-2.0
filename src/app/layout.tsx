@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
-import { Providers } from "@/common/components/organisms/Providers";
+import { Providers } from "@/common/providers";
 
 import "./globals.css";
 

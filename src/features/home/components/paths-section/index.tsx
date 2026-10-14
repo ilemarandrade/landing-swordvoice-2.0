@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { Typography } from "@/common/components/atoms/Typography";
-import { PathAvailable } from "@/features/home/components/molecules/PathAvailable";
+import { Typography } from "@/common/components/typography";
+import { PathAvailable } from "@/features/home/components/paths-section/path-available";
 import { ourPathAnimation } from "@/features/home/constants/animations/ourPathAnimation";
 import { availablePaths, upcomingPaths } from "@/features/home/constants/paths";
 

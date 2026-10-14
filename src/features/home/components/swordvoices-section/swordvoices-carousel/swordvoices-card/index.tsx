@@ -3,7 +3,7 @@ import Link from "next/link";
 import LinkedinIcon from "@/common/assets/icons/LinkedinIcon";
 import GithubIcon from "@/common/assets/icons/GithubIcon";
 import PageIcon from "@/common/assets/icons/PageIcon";
-import { Typography } from "@/common/components/atoms/Typography";
+import { Typography } from "@/common/components/typography";
 
 type SwordvoicesCardProps = {
   photo: string;

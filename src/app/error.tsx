@@ -1,6 +1,6 @@
 "use client";
-import { Button } from "@/common/components/atoms/Button";
-import { Typography } from "@/common/components/atoms/Typography";
+import { Button } from "@/common/components/button";
+import { Typography } from "@/common/components/typography";
 
 type ErrorPageProps = {
   error: Error & { digest?: string };

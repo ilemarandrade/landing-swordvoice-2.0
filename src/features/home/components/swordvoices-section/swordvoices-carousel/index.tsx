@@ -2,7 +2,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { SwordvoicesCard } from "@/features/home/components/molecules/SwordvoicesCard";
+import { SwordvoicesCard } from "@/features/home/components/swordvoices-section/swordvoices-carousel/swordvoices-card";
 import { swordvoices } from "@/features/home/constants/swordvoices";
 
 const settings = {

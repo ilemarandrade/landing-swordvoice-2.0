@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { Typography } from "@/common/components/atoms/Typography";
+import { Typography } from "@/common/components/typography";
 import { whatIsSwordvoiceAnimation } from "@/features/home/constants/animations/whatIsSwordvoiceAnimation";
 
 export function AboutSection() {

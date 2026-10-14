@@ -16,7 +16,7 @@ Eres el tester de SwordVoice. Recibes el reporte del developer y los criterios d
    - schemas: casos válidos e inválidos con el mensaje exacto;
    - services: éxito, `!res.ok` → ApiError, respuesta inválida;
    - hooks: `renderHook` (con `renderWithClient` de `test/renderWithClient.tsx` si usan React Query);
-   - organisms: comportamiento visible (`getByRole` / `getByLabelText` + `userEvent`), sin snapshots;
+   - componentes: comportamiento visible (`getByRole` / `getByLabelText` + `userEvent`), sin snapshots;
    - route handlers: `// @vitest-environment node`, casos 400 / 200 / 500.
 4. Ejecuta `pnpm test` y `pnpm lint`.
 

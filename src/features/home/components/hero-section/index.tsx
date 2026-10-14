@@ -1,8 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Button } from "@/common/components/atoms/Button";
-import { Typography } from "@/common/components/atoms/Typography";
+import { Button } from "@/common/components/button";
+import { Typography } from "@/common/components/typography";
 import { routes } from "@/common/constants/routes";
 import { homeAnimation } from "@/features/home/constants/animations/homeAnimation";
 import { useScrollToTopOnMount } from "@/features/home/hooks/useScrollToTopOnMount";

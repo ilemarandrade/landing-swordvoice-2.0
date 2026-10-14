@@ -104,7 +104,7 @@
       "rules": { "no-restricted-globals": "off" }
     },
     {
-      "files": ["src/common/config/env.ts"],
+      "files": ["src/common/config/env.ts", "src/common/config/publicEnv.ts"],
       "rules": { "no-restricted-properties": "off" }
     }
   ]

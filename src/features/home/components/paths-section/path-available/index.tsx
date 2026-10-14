@@ -2,7 +2,7 @@
 
 import type { ComponentType } from "react";
 import { motion } from "framer-motion";
-import { Typography } from "@/common/components/atoms/Typography";
+import { Typography } from "@/common/components/typography";
 import { useIsMobile } from "@/common/hooks/useIsMobile";
 import { ourPathAnimation } from "@/features/home/constants/animations/ourPathAnimation";
 

@@ -1,10 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Button } from "@/common/components/atoms/Button";
-import { Typography } from "@/common/components/atoms/Typography";
+import { Button } from "@/common/components/button";
+import { Typography } from "@/common/components/typography";
 import { routes } from "@/common/constants/routes";
-import { ServiceItem } from "@/features/home/components/molecules/ServiceItem";
+import { ServiceItem } from "@/features/home/components/services-section/service-item";
 import { servicesAnimation } from "@/features/home/constants/animations/servicesAnimation";
 import { SERVICES_SECTION_ID } from "@/features/home/constants/sections";
 import { services } from "@/features/home/constants/services";

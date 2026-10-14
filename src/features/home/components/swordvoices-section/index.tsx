@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { Typography } from "@/common/components/atoms/Typography";
-import { SwordVoicesCarousel } from "@/features/home/components/organisms/SwordVoicesCarousel";
+import { Typography } from "@/common/components/typography";
+import { SwordVoicesCarousel } from "@/features/home/components/swordvoices-section/swordvoices-carousel";
 import { ourSwordvoicesAnimation } from "@/features/home/constants/animations/ourSwordvoicesAnimation";
 
 export function SwordvoicesSection() {

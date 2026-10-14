@@ -1,6 +1,6 @@
 import World from "@/common/assets/icons/World";
-import { Typography } from "@/common/components/atoms/Typography";
-import { ContactForm } from "@/features/home/components/organisms/ContactForm";
+import { Typography } from "@/common/components/typography";
+import { ContactForm } from "@/features/home/components/contact-section/contact-form";
 
 export function ContactSection() {
   return (

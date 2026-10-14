@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { Typography } from "@/common/components/atoms/Typography";
+import { Typography } from "@/common/components/typography";
 
 type ServiceItemProps = {
   icon: ReactElement;

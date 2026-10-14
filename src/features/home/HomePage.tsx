@@ -1,12 +1,12 @@
-import { SectionDivider } from "@/features/home/components/atoms/SectionDivider";
-import { AboutSection } from "@/features/home/components/organisms/AboutSection";
-import { BackToTopButton } from "@/features/home/components/organisms/BackToTopButton";
-import { ContactSection } from "@/features/home/components/organisms/ContactSection";
-import { HeroSection } from "@/features/home/components/organisms/HeroSection";
-import { HomeNavbar } from "@/features/home/components/organisms/HomeNavbar";
-import { PathsSection } from "@/features/home/components/organisms/PathsSection";
-import { ServicesSection } from "@/features/home/components/organisms/ServicesSection";
-import { SwordvoicesSection } from "@/features/home/components/organisms/SwordvoicesSection";
+import { SectionDivider } from "@/features/home/components/section-divider";
+import { AboutSection } from "@/features/home/components/about-section";
+import { BackToTopButton } from "@/features/home/components/back-to-top-button";
+import { ContactSection } from "@/features/home/components/contact-section";
+import { HeroSection } from "@/features/home/components/hero-section";
+import { HomeNavbar } from "@/features/home/components/home-navbar";
+import { PathsSection } from "@/features/home/components/paths-section";
+import { ServicesSection } from "@/features/home/components/services-section";
+import { SwordvoicesSection } from "@/features/home/components/swordvoices-section";
 
 export function HomePage() {
   return (
