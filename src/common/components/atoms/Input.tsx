@@ -1,32 +1,40 @@
-"use client";
-
+import { useId, type ComponentPropsWithRef } from "react";
 import { Typography } from "@/common/components/atoms/Typography";
 
-type InputProps = {
+type InputProps = Omit<ComponentPropsWithRef<"input">, "className"> & {
   label: string;
-  value?: string;
-  onChange?: (newValue: string) => void;
-  isValid?: boolean;
+  error?: string;
 };
 
-export function Input({
-  label,
-  onChange,
-  value = "",
-  isValid = true,
-}: InputProps) {
+export function Input({ label, error, id, ...inputProps }: InputProps) {
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+  const errorId = `${inputId}-error`;
+
   return (
     <div className="flex-col flex w-full mb-4 max-w-md">
-      <Typography as="label" className="mb-3">
+      <Typography as="label" htmlFor={inputId} className="mb-3">
         {label}
       </Typography>
       <input
-        value={value}
+        id={inputId}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? errorId : undefined}
         className={`w-full p-3 rounded text-black ${
-          isValid ? "" : `border-red-600 border-2`
+          error ? "border-red-600 border-2" : ""
         }`}
-        onChange={onChange && ((e) => onChange(e.target.value))}
+        {...inputProps}
       />
+      {error && (
+        <Typography
+          as="span"
+          variant="small"
+          id={errorId}
+          className="mt-1 text-red-400"
+        >
+          {error}
+        </Typography>
+      )}
     </div>
   );
 }

@@ -16,6 +16,8 @@ type TypographyProps = {
   children: React.ReactNode;
   className?: string;
   as?: ElementType;
+  htmlFor?: string;
+  id?: string;
 };
 
 const tags: Record<Variant, ElementType> = {
@@ -47,9 +49,15 @@ export const Typography = ({
   children,
   className,
   as,
+  htmlFor,
+  id,
 }: TypographyProps) => {
   const sizeClasses = sizes[variant];
   const Tag = as || tags[variant];
 
-  return <Tag className={`${sizeClasses} ${className ?? ""}`}>{children}</Tag>;
+  return (
+    <Tag id={id} htmlFor={htmlFor} className={`${sizeClasses} ${className ?? ""}`}>
+      {children}
+    </Tag>
+  );
 };

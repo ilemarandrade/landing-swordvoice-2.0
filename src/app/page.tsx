@@ -1,5 +1,4 @@
 "use client";
-import Logo from "@/common/assets/icons/Logo";
 import { Button } from "@/common/components/atoms/Button";
 import { Navbar } from "@/common/components/organisms/Navbar";
 import { PathAvailable } from "@/features/home/components/molecules/PathAvailable";
@@ -10,8 +9,6 @@ import { useEffect, useMemo } from "react";
 import { Typography } from "@/common/components/atoms/Typography";
 import World from "@/common/assets/icons/World";
 import Link from "next/link";
-import { Input } from "@/common/components/atoms/Input";
-import { Textarea } from "@/common/components/atoms/Textarea";
 import { motion } from "framer-motion";
 import { homeAnimation } from "@/features/home/constants/animations/homeAnimation";
 import { servicesAnimation } from "@/features/home/constants/animations/servicesAnimation";
@@ -21,36 +18,12 @@ import { useBackToTopButton } from "@/features/home/hooks/useBackToTopButton";
 import { whatIsSwordvoiceAnimation } from "@/features/home/constants/animations/whatIsSwordvoiceAnimation";
 import { ourSwordvoicesAnimation } from "@/features/home/constants/animations/ourSwordvoicesAnimation";
 import { ourPathAnimation } from "@/features/home/constants/animations/ourPathAnimation";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import toast from "react-hot-toast";
-import useSendEmailOfContact from "@/app/hooks/api/useSendEmailOfContact";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { routes } from "@/common/constants/routes";
-
-const schema = yup
-  .object({
-    name: yup.string().required(),
-    email: yup
-      .string()
-      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-      .required(),
-    message: yup.string().required(),
-  })
-  .required();
+import { ContactForm } from "@/features/home/components/organisms/ContactForm";
 
 export default function Home() {
   const { showBackToTopButton, handleBackToTop, elementWhereButtonAppears } =
     useBackToTopButton();
-  const { control, handleSubmit, reset } = useForm({
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
-    resolver: yupResolver(schema),
-  });
-  const { sendEmail, isLoading } = useSendEmailOfContact();
 
   const pathAvailables = useMemo(
     () => paths.filter(({ isAvailable }) => isAvailable),
@@ -61,21 +34,6 @@ export default function Home() {
     () => paths.filter(({ isAvailable }) => !isAvailable),
     [],
   );
-
-  const onSubmit: SubmitHandler<any> = async ({ email, name, message }) => {
-    sendEmail(
-      { email, name, message },
-      {
-        onSuccess: () => {
-          toast.success("Envío exitoso");
-          reset();
-        },
-        onError: () => {
-          toast.error("Ha ocurrido un error");
-        },
-      },
-    );
-  };
 
   useEffect(() => {
     window.scroll({
@@ -304,68 +262,7 @@ export default function Home() {
         className="h-auto xl:min-h-screen w-full p-12 grid grid-cols-1 md:grid-cols-2 bg-contactUs bg-cover relative"
       >
         <div className="absolute inset-0 z-1 bg-black opacity-55"></div>
-        <form
-          className="flex items-center flex-col mb-8 md:mb-0 z-20"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="mb-8 flex justify-center">
-            <Logo className="w-[80%] md:w-auto" />
-          </div>
-          <Controller
-            name="name"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value }, fieldState: { error } }) => {
-              return (
-                <Input
-                  label="Nombre y Apellido"
-                  onChange={onChange}
-                  value={value}
-                  isValid={!error?.message}
-                />
-              );
-            }}
-          />
-          <Controller
-            name="email"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value }, fieldState: { error } }) => {
-              return (
-                <Input
-                  label="Correo electrónico"
-                  onChange={onChange}
-                  value={value}
-                  isValid={!error?.message}
-                />
-              );
-            }}
-          />
-          <Controller
-            name="message"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value }, fieldState: { error } }) => {
-              return (
-                <Textarea
-                  label="Mensaje"
-                  onChange={onChange}
-                  value={value}
-                  isValid={!error?.message}
-                />
-              );
-            }}
-          />
-          <div className="w-full flex justify-end max-w-md mt-2">
-            <button
-              className="text-primary font-bold"
-              type="submit"
-              disabled={isLoading}
-            >
-              ENVIAR
-            </button>
-          </div>
-        </form>
+        <ContactForm />
         <div className="flex flex-col items-center p-4 z-10">
           <Typography
             variant="h1"
