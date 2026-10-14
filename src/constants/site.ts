@@ -1,3 +1,3 @@
-const SITE_URL = "https://www.swordvoice.com";
+const SITE_URL = "https://swordvoice.com";
 
 export default SITE_URL;
