@@ -11,12 +11,7 @@ import {
 const defaultValues: ContactFormValues = { name: "", email: "", message: "" };
 
 export function useContactForm() {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<ContactFormValues>({
+  const { control, handleSubmit, reset } = useForm<ContactFormValues>({
     defaultValues,
     resolver: zodResolver(contactSchema),
   });
@@ -32,5 +27,5 @@ export function useContactForm() {
     });
   });
 
-  return { register, errors, onSubmit, isSubmitting: isPending };
+  return { control, onSubmit, isSubmitting: isPending };
 }

@@ -1,11 +1,10 @@
 "use client";
 import Logo from "@/common/assets/icons/Logo";
-import { Input } from "@/common/components/input";
-import { Textarea } from "@/common/components/textarea";
+import { InputController } from "@/common/components/input-controller";
 import { useContactForm } from "@/features/home/hooks/useContactForm";
 
 export function ContactForm() {
-  const { register, errors, onSubmit, isSubmitting } = useContactForm();
+  const { control, onSubmit, isSubmitting } = useContactForm();
 
   return (
     <form
@@ -16,23 +15,24 @@ export function ContactForm() {
       <div className="mb-8 flex justify-center">
         <Logo className="w-[80%] md:w-auto" />
       </div>
-      <Input
+      <InputController
+        control={control}
+        name="name"
         label="Nombre y Apellido"
         autoComplete="name"
-        error={errors.name?.message}
-        {...register("name")}
       />
-      <Input
+      <InputController
+        control={control}
+        name="email"
         label="Correo electrónico"
         type="email"
         autoComplete="email"
-        error={errors.email?.message}
-        {...register("email")}
       />
-      <Textarea
+      <InputController
+        control={control}
+        name="message"
         label="Mensaje"
-        error={errors.message?.message}
-        {...register("message")}
+        multiline
       />
       <div className="w-full flex justify-end max-w-md mt-2">
         <button
