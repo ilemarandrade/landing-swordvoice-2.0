@@ -1,34 +1,32 @@
 "use client";
-import Logo from "@/assets/icons/Logo";
-import Button from "@/components/Button";
-import Navbar from "@/components/Navbar";
-import PathAvailable from "@/components/PathAvailable";
-import Services from "@/components/Services";
-import services from "@/constants/services";
-import paths from "@/constants/paths";
+import Logo from "@/common/assets/icons/Logo";
+import { Button } from "@/common/components/atoms/Button";
+import { Navbar } from "@/common/components/organisms/Navbar";
+import { PathAvailable } from "@/features/home/components/molecules/PathAvailable";
+import { ServiceItem } from "@/features/home/components/molecules/ServiceItem";
+import { services } from "@/features/home/constants/services";
+import { paths } from "@/features/home/constants/paths";
 import { useEffect, useMemo } from "react";
-import { Typography } from "@/components/Typography";
-import World from "@/assets/icons/World";
+import { Typography } from "@/common/components/atoms/Typography";
+import World from "@/common/assets/icons/World";
 import Link from "next/link";
-import Input from "@/components/Input";
-import Textarea from "@/components/Textarea";
-import InstagramIcon from "@/assets/icons/InstagramIcon";
-import WorldIcon from "@/assets/icons/WorldIcon";
+import { Input } from "@/common/components/atoms/Input";
+import { Textarea } from "@/common/components/atoms/Textarea";
 import { motion } from "framer-motion";
-import { homeAnimation } from "@/constants/animations/homeAnimation";
-import { servicesAnimation } from "@/constants/animations/servicesAnimation";
-import SwordVoicesCarousel from "@/components/SwordVoicesCarousel";
-import HouseIcon from "@/assets/icons/HouseIcon";
-import { useBackToTopButton } from "@/app/hooks/useBackToTopButton";
-import { whatIsSwordvoiceAnimation } from "@/constants/animations/whatIsSwordvoiceAnimation";
-import { ourSwordvoicesAnimation } from "@/constants/animations/ourSwordvoicesAnimation";
-import { ourPathAnimation } from "@/constants/animations/ourPathAnimation";
+import { homeAnimation } from "@/features/home/constants/animations/homeAnimation";
+import { servicesAnimation } from "@/features/home/constants/animations/servicesAnimation";
+import { SwordVoicesCarousel } from "@/features/home/components/organisms/SwordVoicesCarousel";
+import HouseIcon from "@/common/assets/icons/HouseIcon";
+import { useBackToTopButton } from "@/features/home/hooks/useBackToTopButton";
+import { whatIsSwordvoiceAnimation } from "@/features/home/constants/animations/whatIsSwordvoiceAnimation";
+import { ourSwordvoicesAnimation } from "@/features/home/constants/animations/ourSwordvoicesAnimation";
+import { ourPathAnimation } from "@/features/home/constants/animations/ourPathAnimation";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import useSendEmailOfContact from "@/app/hooks/api/useSendEmailOfContact";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import routes from "@/constants/routes";
+import { routes } from "@/common/constants/routes";
 
 const schema = yup
   .object({
@@ -162,7 +160,7 @@ export default function Home() {
                   transition={{ delay: 0.5 + index / 10 }}
                   className="relative"
                 >
-                  <Services
+                  <ServiceItem
                     title={title}
                     description={description}
                     icon={<Icon className={""} />}
@@ -275,14 +273,17 @@ export default function Home() {
         </motion.div>
         <div className="w-full px-4 bg-white py-10 md:py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center">
-            {pathAvailables.map(({ name, description, Icon }, index) => (
-              <PathAvailable
-                key={`path-${index}`}
-                name={name}
-                description={description}
-                Icon={Icon}
-              />
-            ))}
+            {pathAvailables.map(
+              ({ name, description, Icon }, index) =>
+                Icon && (
+                  <PathAvailable
+                    key={`path-${index}`}
+                    name={name}
+                    description={description}
+                    Icon={Icon}
+                  />
+                ),
+            )}
           </div>
         </div>
         <div className="w-full flex justify-center pb-12">

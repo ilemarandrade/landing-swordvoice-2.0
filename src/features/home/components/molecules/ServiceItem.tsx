@@ -1,13 +1,13 @@
-import { ReactElement } from "react";
-import { Typography } from "../Typography";
+import type { ReactElement } from "react";
+import { Typography } from "@/common/components/atoms/Typography";
 
-interface IServices {
+type ServiceItemProps = {
   icon: ReactElement;
   title: string;
   description: string;
-}
+};
 
-const Services: React.FC<IServices> = ({ icon, title, description }) => {
+export function ServiceItem({ icon, title, description }: ServiceItemProps) {
   return (
     <div className="flex mb-8 gap-3 md:gap-8">
       <div className="md:flex-1 flex justify-center lg:items-center scale-75">
@@ -21,6 +21,4 @@ const Services: React.FC<IServices> = ({ icon, title, description }) => {
       </div>
     </div>
   );
-};
-
-export default Services;
+}

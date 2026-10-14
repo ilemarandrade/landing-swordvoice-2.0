@@ -1,20 +1,20 @@
 "use client";
 
-import { Typography } from "../Typography";
+import { Typography } from "@/common/components/atoms/Typography";
 
-interface IProps {
+type InputProps = {
   label: string;
   value?: string;
   onChange?: (newValue: string) => void;
   isValid?: boolean;
-}
+};
 
-const Input: React.FC<IProps> = ({
+export function Input({
   label,
   onChange,
   value = "",
   isValid = true,
-}) => {
+}: InputProps) {
   return (
     <div className="flex-col flex w-full mb-4 max-w-md">
       <Typography as="label" className="mb-3">
@@ -29,6 +29,4 @@ const Input: React.FC<IProps> = ({
       />
     </div>
   );
-};
-
-export default Input;
+}

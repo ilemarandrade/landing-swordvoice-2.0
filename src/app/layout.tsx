@@ -7,7 +7,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 const sedgwick = localFont({
-  src: "../assets/font/SedgwickAve-Regular.ttf",
+  src: "../common/assets/font/SedgwickAve-Regular.ttf",
   variable: "--font-sedgwick",
 });
 

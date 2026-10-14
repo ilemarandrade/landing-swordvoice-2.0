@@ -11,12 +11,12 @@ type Variant =
   //   | "body-small"
   | "small";
 
-interface Props {
+type TypographyProps = {
   variant?: Variant;
   children: React.ReactNode;
   className?: string;
   as?: ElementType;
-}
+};
 
 const tags: Record<Variant, ElementType> = {
   h1: "h1",
@@ -47,9 +47,9 @@ export const Typography = ({
   children,
   className,
   as,
-}: Props) => {
+}: TypographyProps) => {
   const sizeClasses = sizes[variant];
   const Tag = as || tags[variant];
 
-  return <Tag className={`${sizeClasses} ${className}`}>{children}</Tag>;
+  return <Tag className={`${sizeClasses} ${className ?? ""}`}>{children}</Tag>;
 };

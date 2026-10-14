@@ -1,7 +1,15 @@
-import IniciatedPath from "@/assets/icons/IniciatedPathIcon";
-import WandererPathIcon from "@/assets/icons/WandererPathIcon";
+import type { ComponentType } from "react";
+import IniciatedPath from "@/common/assets/icons/IniciatedPathIcon";
+import WandererPathIcon from "@/common/assets/icons/WandererPathIcon";
 
-const paths = [
+type Path = {
+  name: string;
+  description: string;
+  Icon?: ComponentType<{ width?: number }>;
+  isAvailable: boolean;
+};
+
+export const paths: Path[] = [
   {
     name: "Iniciated",
     description:
@@ -19,21 +27,17 @@ const paths = [
   {
     name: "Warrior",
     description: "",
-    Icon: "",
     isAvailable: false,
   },
   {
     name: "Master",
     description: "",
-    Icon: "",
     isAvailable: false,
   },
   {
     name: "Anciant",
     description: "",
-    Icon: "",
     isAvailable: false,
   },
 ];
 
-export default paths;

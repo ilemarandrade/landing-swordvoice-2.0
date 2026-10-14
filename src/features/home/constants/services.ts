@@ -1,12 +1,12 @@
-import FolderIcon from "@/assets/icons/FolderIcon";
-import LinkedinIcon from "@/assets/icons/LinkedinIcon";
-import LogoSwordvoice from "@/assets/icons/LogoSwordvoice";
-import UserBadgeIcon from "@/assets/icons/UserBadgeIcon";
-import UserCircleIcon from "@/assets/icons/UserCircleIcon";
-import UserInComputer from "@/assets/icons/UserInComputerIcon";
-import UsersIcon from "@/assets/icons/UsersIcon";
+import FolderIcon from "@/common/assets/icons/FolderIcon";
+import LinkedinIcon from "@/common/assets/icons/LinkedinIcon";
+import LogoSwordvoice from "@/common/assets/icons/LogoSwordvoice";
+import UserBadgeIcon from "@/common/assets/icons/UserBadgeIcon";
+import UserCircleIcon from "@/common/assets/icons/UserCircleIcon";
+import UserInComputer from "@/common/assets/icons/UserInComputerIcon";
+import UsersIcon from "@/common/assets/icons/UsersIcon";
 
-const services = [
+export const services = [
   {
     title: "Guía",
     description: "Te enlazamos con muchos reclutadores de todo el mundo",
@@ -46,4 +46,3 @@ const services = [
   },
 ];
 
-export default services;

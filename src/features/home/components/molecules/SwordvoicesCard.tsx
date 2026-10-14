@@ -1,21 +1,21 @@
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
-import LinkedinIcon from "@/assets/icons/LinkedinIcon";
-import GithubIcon from "@/assets/icons/GithubIcon";
-import PageIcon from "@/assets/icons/PageIcon";
-import { Typography } from "../Typography";
+import LinkedinIcon from "@/common/assets/icons/LinkedinIcon";
+import GithubIcon from "@/common/assets/icons/GithubIcon";
+import PageIcon from "@/common/assets/icons/PageIcon";
+import { Typography } from "@/common/components/atoms/Typography";
 
-interface SwordvoicesProps {
-  photo: any;
+type SwordvoicesCardProps = {
+  photo: string;
   name: string;
   description: string;
   rol: string;
   linkedin: string;
   github: string;
   portfolio: string;
-}
+};
 
-const SwordvoicesCard = ({
+export function SwordvoicesCard({
   photo,
   name,
   description,
@@ -23,7 +23,7 @@ const SwordvoicesCard = ({
   linkedin,
   portfolio,
   github,
-}: SwordvoicesProps) => {
+}: SwordvoicesCardProps) {
   return (
     <div className="min-h-[450px] max-h-[520px] min-w-[240px] max-w-[300px] bg-white rounded-[18px] m-6 z-1">
       <div className="relative h-[50%] overflow-hidden">
@@ -63,5 +63,4 @@ const SwordvoicesCard = ({
       </div>
     </div>
   );
-};
-export default SwordvoicesCard;
+}

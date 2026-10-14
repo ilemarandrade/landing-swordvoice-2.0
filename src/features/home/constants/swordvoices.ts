@@ -1,4 +1,4 @@
-const swordvoices = [
+export const swordvoices = [
   {
     photo: "/swordvoices/jainer.jpeg",
     name: "Jainer Munoz",
@@ -40,4 +40,3 @@ const swordvoices = [
   },
 ];
 
-export default swordvoices;

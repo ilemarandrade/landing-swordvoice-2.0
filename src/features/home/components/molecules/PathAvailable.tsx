@@ -1,16 +1,18 @@
 "use client";
 
-import { useIsMobile } from "@/app/hooks/useIsMobile";
-import { Typography } from "../Typography";
+import type { ComponentType } from "react";
 import { motion } from "framer-motion";
-import { ourPathAnimation } from "@/constants/animations/ourPathAnimation";
-interface IProps {
-  Icon: any;
+import { Typography } from "@/common/components/atoms/Typography";
+import { useIsMobile } from "@/common/hooks/useIsMobile";
+import { ourPathAnimation } from "@/features/home/constants/animations/ourPathAnimation";
+
+type PathAvailableProps = {
+  Icon: ComponentType<{ width?: number }>;
   name: string;
   description: string;
-}
+};
 
-const PathAvailable: React.FC<IProps> = ({ Icon, name, description }) => {
+export function PathAvailable({ Icon, name, description }: PathAvailableProps) {
   const isMobile = useIsMobile();
 
   return (
@@ -34,6 +36,4 @@ const PathAvailable: React.FC<IProps> = ({ Icon, name, description }) => {
       </div>
     </motion.div>
   );
-};
-
-export default PathAvailable;
+}

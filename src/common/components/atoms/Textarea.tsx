@@ -1,20 +1,20 @@
 "use client";
 
-import { Typography } from "../Typography";
+import { Typography } from "@/common/components/atoms/Typography";
 
-interface IProps {
+type TextareaProps = {
   label: string;
   onChange?: (newValue: string) => void;
   value?: string;
   isValid?: boolean;
-}
+};
 
-const Textarea: React.FC<IProps> = ({
+export function Textarea({
   label,
   onChange,
   value = "",
   isValid = true,
-}) => {
+}: TextareaProps) {
   return (
     <div className="flex-col flex w-full mb-4 max-w-md">
       <Typography as="label" className="mb-3">
@@ -29,6 +29,4 @@ const Textarea: React.FC<IProps> = ({
       />
     </div>
   );
-};
-
-export default Textarea;
+}
