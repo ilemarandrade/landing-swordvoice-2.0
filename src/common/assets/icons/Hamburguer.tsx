@@ -1,5 +1,6 @@
+import type { SVGProps } from "react";
 
-const Hamburguer = (props: any) => (
+const Hamburguer = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width={44}
     height={44}

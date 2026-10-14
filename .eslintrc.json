@@ -1,3 +1,111 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "plugins": ["boundaries"],
+  "settings": {
+    "import/resolver": {
+      "typescript": { "alwaysTryTypes": true, "project": "./tsconfig.json" }
+    },
+    "boundaries/include": ["src/**/*"],
+    "boundaries/elements": [
+      { "type": "app", "pattern": "src/app", "mode": "folder" },
+      {
+        "type": "feature",
+        "pattern": "src/features/*",
+        "mode": "folder",
+        "capture": ["feature"]
+      },
+      { "type": "common", "pattern": "src/common", "mode": "folder" }
+    ]
+  },
+  "rules": {
+    "boundaries/element-types": [
+      "error",
+      {
+        "default": "disallow",
+        "rules": [
+          { "from": "app", "allow": ["app", "feature", "common"] },
+          {
+            "from": "feature",
+            "allow": [["feature", { "feature": "${from.feature}" }], "common"]
+          },
+          { "from": "common", "allow": ["common"] }
+        ]
+      }
+    ],
+    "boundaries/entry-point": [
+      "error",
+      {
+        "default": "disallow",
+        "rules": [
+          { "target": ["app", "common"], "allow": "**" },
+          { "target": ["feature"], "allow": ["index.ts", "server/index.ts"] }
+        ]
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "yup",
+            "message": "Usa zod (docs/architecture/conventions.md §4.3)."
+          }
+        ]
+      }
+    ],
+    "no-restricted-globals": [
+      "error",
+      {
+        "name": "fetch",
+        "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
+      }
+    ],
+    "no-restricted-properties": [
+      "error",
+      {
+        "object": "process",
+        "property": "env",
+        "message": "Usa getServerEnv() de @/common/config/env (conventions §4.6)."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.ts", "src/**/*.tsx"],
+      "excludedFiles": [
+        "src/app/api/**",
+        "src/features/*/server/**",
+        "**/*.test.ts",
+        "**/*.test.tsx"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "yup",
+                "message": "Usa zod (docs/architecture/conventions.md §4.3)."
+              }
+            ],
+            "patterns": [
+              {
+                "group": ["@/features/*/server", "@/features/*/server/*"],
+                "message": "server/ solo se importa desde src/app/api (conventions §3)."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/common/api/**", "src/features/*/server/**"],
+      "rules": { "no-restricted-globals": "off" }
+    },
+    {
+      "files": ["src/common/config/env.ts"],
+      "rules": { "no-restricted-properties": "off" }
+    }
+  ]
 }

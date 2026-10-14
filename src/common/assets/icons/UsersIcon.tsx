@@ -1,4 +1,6 @@
-const UsersIcon = (props: any) => (
+import type { SVGProps } from "react";
+
+const UsersIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width={85}
     height={65}

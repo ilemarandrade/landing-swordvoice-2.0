@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const LogoSwordvoice: React.ForwardRefRenderFunction<
-  any,
+  SVGSVGElement,
   {
     className: string;
   }
