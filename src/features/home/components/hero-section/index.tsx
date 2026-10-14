@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { Button } from "@/common/components/button";
+import { ButtonLink } from "@/common/components/button-link";
 import { Typography } from "@/common/components/typography";
 import { routes } from "@/common/constants/routes";
 import { homeAnimation } from "@/features/home/constants/animations/homeAnimation";
@@ -41,9 +40,11 @@ export function HeroSection() {
         </motion.div>
       </motion.div>
       <motion.div variants={homeAnimation.registerButton}>
-        <Link href={routes.CONTACT_US}>
-          <Button label="Registrarme" />
-        </Link>
+        <ButtonLink
+          href={routes.REGISTER}
+          label="Registrarme"
+          className="mt-4"
+        />
       </motion.div>
     </motion.div>
   );
