@@ -41,3 +41,6 @@ export const paths: Path[] = [
   },
 ];
 
+
+export const availablePaths = paths.filter(({ isAvailable }) => isAvailable);
+export const upcomingPaths = paths.filter(({ isAvailable }) => !isAvailable);
