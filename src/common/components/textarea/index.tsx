@@ -1,8 +1,8 @@
-import { useId, type ComponentPropsWithRef } from "react";
+import { useId, type ComponentPropsWithRef, type ReactNode } from "react";
 import { Typography } from "@/common/components/typography";
 
 type TextareaProps = Omit<ComponentPropsWithRef<"textarea">, "className"> & {
-  label: string;
+  label: ReactNode;
   error?: string;
 };
 

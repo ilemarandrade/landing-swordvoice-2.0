@@ -71,7 +71,7 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 - Siempre `react-hook-form` + `zodResolver`. Prohibido yup.
 - Schema en `schemas/<nombre>.schema.ts`; tipo `export type XxxFormValues = z.infer<typeof xxxSchema>`. Mensajes en español dentro del schema. Strings con `.trim()` y `.max()`.
 - La lógica va en `useXxxForm`, que devuelve `{ control, onSubmit, isSubmitting }` (ver `src/features/home/hooks/useContactForm.ts`).
-- Todo campo se renderiza con `InputController` (`src/common/components/input-controller/index.tsx`): usa `useController` de react-hook-form por dentro y recibe solo lo que define el input — `control`, `name`, `label` y opcionales `type`, `autoComplete`, `placeholder`, `multiline` (textarea). El error del schema lo muestra solo.
+- Todo campo se renderiza con `InputController` (`src/common/components/input-controller/index.tsx`): usa `useController` de react-hook-form por dentro y recibe solo lo que define el input — `control`, `name`, `label` y opcionales `type`, `autoComplete`, `placeholder`, `description` (texto de ayuda bajo el campo), `multiline` (textarea) y `options` (grupo de radios). `type="password"` añade el botón ver/ocultar; `type="checkbox"` guarda un boolean. El error del schema lo muestra solo.
 - Prohibido usar `register`, `Controller` o `Input`/`Textarea` directamente en un formulario. Si necesitas otro tipo de campo (select, checkbox…), extiende `InputController` en `common/components/input-controller/` en vez de hacerlo en la feature.
 - Ejemplo: `<InputController control={control} name="email" label="Correo electrónico" type="email" />` (ver `src/features/home/components/contact-section/contact-form/index.tsx`).
 
