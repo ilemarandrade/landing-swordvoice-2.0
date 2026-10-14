@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { useSessionStore } from "@/common/store/useSessionStore";
 import {
   registerSchema,
@@ -20,11 +21,18 @@ export function useRegisterForm() {
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting },
+    trigger,
+    formState: { isSubmitting, isSubmitted },
   } = useForm<RegisterFormValues>({
     defaultValues,
     resolver: zodResolver(registerSchema),
   });
+  const password = useWatch({ control, name: "password" });
+
+  // Tras un envío fallido, corregir `password` debe actualizar el error de `confirmPassword`.
+  useEffect(() => {
+    if (isSubmitted) void trigger("confirmPassword");
+  }, [password, isSubmitted, trigger]);
 
   // Sin backend todavía (roadmap feature 1): abre la sesión local y el
   // SessionGuard del grupo (auth) redirige al dashboard.

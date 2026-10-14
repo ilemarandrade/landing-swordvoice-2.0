@@ -25,6 +25,7 @@ export const useSessionStore = create<SessionState>()(
     }),
     {
       name: "sv-session",
+      version: 1,
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ user: state.user }),
     },

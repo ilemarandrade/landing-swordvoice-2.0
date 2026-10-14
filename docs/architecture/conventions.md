@@ -89,7 +89,7 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 
 ### 4.6 Errores y entorno
 - `ApiError` es el único error de red. En las mutations: `onError: notifyError` (de `@/common/errors/notifyError`). Nunca un `toast.error` suelto para errores.
-- Un `error.tsx` por segmento de ruta.
+- `src/app/error.tsx` cubre todos los segmentos hijos (incluidos los grupos `(marketing)`, `(auth)`, `(app)`). Añade un `error.tsx` propio solo cuando un segmento necesite una pantalla de error distinta.
 - Variables de servidor: añade la clave al schema de `src/common/config/env.ts` (server-only) y léela con `getServerEnv()` dentro de la función que la usa (nunca a nivel de módulo).
 - Variables `NEXT_PUBLIC_*`: NUNCA en `env.ts` (es server-only y rompe el build si lo importa un componente cliente). Van en `src/common/config/publicEnv.ts`, sin `import "server-only"`, leyendo cada variable de forma literal para que Next la incruste: `export const publicEnv = z.object({ NEXT_PUBLIC_X: z.string() }).parse({ NEXT_PUBLIC_X: process.env.NEXT_PUBLIC_X })`. Ese archivo ya está permitido en ESLint.
 - Prohibido `process.env` en cualquier otro lugar.

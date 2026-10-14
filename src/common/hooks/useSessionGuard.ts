@@ -6,8 +6,8 @@ import { useSessionStore } from "@/common/store/useSessionStore";
 export type SessionAccess = "private" | "guest";
 
 const subscribeToHydration = (onChange: () => void) =>
-  useSessionStore.persist.onFinishHydration(onChange);
-const getIsHydrated = () => useSessionStore.persist.hasHydrated();
+  useSessionStore.persist?.onFinishHydration(onChange) ?? (() => {});
+const getIsHydrated = () => useSessionStore.persist?.hasHydrated() ?? true;
 // En el servidor no hay localStorage: se asume "aún no hidratado".
 const getServerIsHydrated = () => false;
 

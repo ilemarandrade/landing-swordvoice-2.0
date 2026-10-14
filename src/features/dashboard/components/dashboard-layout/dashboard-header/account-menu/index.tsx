@@ -16,20 +16,19 @@ export function AccountMenu() {
       >
         {initials}
       </button>
-      {isOpen && (
-        <div
-          id="account-menu"
-          className="absolute right-0 top-14 z-20 w-48 rounded-xl border border-white/15 bg-black p-2"
+      <div
+        id="account-menu"
+        hidden={!isOpen}
+        className="absolute right-0 top-14 z-20 w-48 rounded-xl border border-white/15 bg-black p-2"
+      >
+        <button
+          type="button"
+          onClick={signOut}
+          className="min-h-11 w-full rounded-lg px-3 text-left hover:bg-white/10"
         >
-          <button
-            type="button"
-            onClick={signOut}
-            className="min-h-11 w-full rounded-lg px-3 text-left hover:bg-white/10"
-          >
-            Cerrar sesión
-          </button>
-        </div>
-      )}
+          Cerrar sesión
+        </button>
+      </div>
     </div>
   );
 }

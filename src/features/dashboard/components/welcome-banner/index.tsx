@@ -12,7 +12,7 @@ export function WelcomeBanner() {
       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/20" />
       <div className="relative flex w-full flex-wrap items-end justify-between gap-5 p-5 md:p-9">
         <div className="flex max-w-xl flex-col gap-2.5">
-          <h2 className="font-sedgwick text-[32px] leading-tight md:text-5xl">
+          <h2 className="font-sedgwick break-words text-[32px] leading-tight md:text-5xl">
             Hola, <span className="text-primary">{user?.name}</span>
           </h2>
           <p className="text-[17px] leading-normal text-[#E6E6EE]">
