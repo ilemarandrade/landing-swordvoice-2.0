@@ -6,9 +6,11 @@ import { RankCard } from "@/features/dashboard/components/dashboard-sidebar/rank
 import { SidebarNavItem } from "@/features/dashboard/components/dashboard-sidebar/sidebar-nav-item";
 import { dashboardNav } from "@/features/dashboard/constants/dashboardNav";
 import { useActiveNavItem } from "@/features/dashboard/hooks/useActiveNavItem";
+import { useMyPathHref } from "@/features/dashboard/hooks/useMyPathHref";
 
 export function DashboardSidebar() {
   const { activeItem } = useActiveNavItem();
+  const { myPathHref } = useMyPathHref();
 
   return (
     <aside className="flex min-w-0 flex-col gap-2 border-white/10 bg-black/90 md:w-60 md:flex-none md:border-r md:pb-6">
@@ -28,7 +30,7 @@ export function DashboardSidebar() {
         {dashboardNav.map((item) => (
           <SidebarNavItem
             key={item.id}
-            item={item}
+            item={item.id === "path" ? { ...item, href: myPathHref } : item}
             isActive={item.id === activeItem.id}
           />
         ))}

@@ -4,6 +4,10 @@ import { dashboardNav } from "@/features/dashboard/constants/dashboardNav";
 export function useActiveNavItem() {
   const pathname = usePathname();
   const activeItem =
-    dashboardNav.find((item) => item.href === pathname) ?? dashboardNav[0];
+    dashboardNav.find(
+      (item) =>
+        item.href === pathname ||
+        (item.activePrefix !== undefined && pathname.startsWith(item.activePrefix)),
+    ) ?? dashboardNav[0];
   return { activeItem };
 }
