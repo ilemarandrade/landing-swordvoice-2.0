@@ -6,4 +6,5 @@ export const apiClient = axios.create({
   baseURL: publicEnv.NEXT_PUBLIC_API_URL,
   timeout: 10_000,
   headers: { "Accept-Language": "es" },
+  adapter: "fetch",
 });

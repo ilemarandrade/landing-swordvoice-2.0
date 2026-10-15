@@ -12,7 +12,7 @@ export function TrialStep({ item }: TrialStepProps) {
 
   return (
     <li className="relative pb-4">
-      <span aria-hidden="true" className={`absolute -left-[35px] top-0 h-full w-1 rounded ${isDone ? "bg-secondary" : "bg-white/15"}`} />
+      <span aria-hidden="true" className={`absolute -left-[34px] top-0 h-full w-1 rounded ${isDone ? "bg-secondary" : "bg-white/15"}`} />
       <span aria-hidden="true" className={`absolute -left-[54px] top-4 grid h-10 w-10 place-items-center rounded-full border-2 border-secondary ${isDone ? "bg-secondary text-black" : "bg-black text-secondary"}`}>
         {isDone ? <CheckIcon width={18} /> : <SwordsIcon />}
       </span>

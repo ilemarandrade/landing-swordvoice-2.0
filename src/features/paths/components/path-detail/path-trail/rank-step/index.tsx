@@ -5,7 +5,7 @@ type RankStepProps = { pathName: string; requiredCount: number; isComplete: bool
 export function RankStep({ pathName, requiredCount, isComplete }: RankStepProps) {
   return (
     <li className="relative pb-16 pt-2">
-      <span aria-hidden="true" className={`absolute -left-[35px] top-0 h-full w-1 rounded ${isComplete ? "bg-secondary" : "bg-white/15"}`} />
+      <span aria-hidden="true" className={`absolute -left-[34px] top-0 h-full w-1 rounded ${isComplete ? "bg-secondary" : "bg-white/15"}`} />
       <span aria-hidden="true" className={`absolute -left-[50px] top-1 grid h-8 w-8 place-items-center rounded border-2 border-primary ${isComplete ? "bg-primary text-black" : "bg-black text-primary"}`}>
         <CrownIcon />
       </span>

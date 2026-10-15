@@ -4,5 +4,9 @@ import { useSessionStore } from "@/common/store/useSessionStore";
 
 export function useMyPathHref() {
   const path = useSessionStore((state) => state.user?.path ?? null);
-  return { myPathHref: `${routes.DASHBOARD_PATHS}/${path ?? LEARNING_PATH_IDS[0]}` };
+  const slug =
+    path && (LEARNING_PATH_IDS as readonly string[]).includes(path)
+      ? path
+      : LEARNING_PATH_IDS[0];
+  return { myPathHref: `${routes.DASHBOARD_PATHS}/${slug}` };
 }

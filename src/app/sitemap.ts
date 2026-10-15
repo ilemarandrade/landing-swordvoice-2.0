@@ -4,6 +4,9 @@ import { routes } from "@/common/constants/routes";
 import { SITE_URL } from "@/common/constants/site";
 import { getPaths } from "@/features/paths";
 
+// Los datos vienen de la API en cada petición (axios no lo detecta Next).
+export const dynamic = "force-dynamic";
+
 type SitemapPage = {
   path: string;
   priority: number;

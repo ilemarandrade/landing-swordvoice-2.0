@@ -15,6 +15,9 @@ import {
   pathsQueryOptions,
 } from "@/features/paths";
 
+// Los datos vienen de la API en cada petición (axios no lo detecta Next).
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const queryClient = getQueryClient();
   // prefetchQuery no lanza: si la API falla, la sección muestra su error en el cliente.
