@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { TermsPage } from "@/features/legal";
+import { LegalDocument, terms } from "@/features/legal";
 
 export const metadata: Metadata = { title: "Términos y condiciones" };
 
-export default function Page() {
-  return <TermsPage />;
+export default function TermsPage() {
+  return <LegalDocument content={terms} />;
 }

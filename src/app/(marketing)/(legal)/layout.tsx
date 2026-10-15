@@ -1,6 +1,11 @@
 import type { ReactNode } from "react";
-import { LegalLayout } from "@/features/legal";
+import { Navbar } from "@/common/components/navbar";
 
-export default function LegalRouteLayout({ children }: { children: ReactNode }) {
-  return <LegalLayout>{children}</LegalLayout>;
+export default function LegalLayout({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex min-h-screen flex-col bg-white">
+      <Navbar changeLogo />
+      {children}
+    </div>
+  );
 }

@@ -1,3 +1,3 @@
-export { LegalLayout } from "@/features/legal/components/legal-layout";
-export { PrivacyPage } from "@/features/legal/PrivacyPage";
-export { TermsPage } from "@/features/legal/TermsPage";
+export { LegalDocument } from "@/features/legal/components/legal-document";
+export { privacy } from "@/features/legal/constants/privacy";
+export { terms } from "@/features/legal/constants/terms";
