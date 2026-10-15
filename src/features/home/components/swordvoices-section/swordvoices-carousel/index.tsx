@@ -18,7 +18,7 @@ const settings = {
         width: "20px",
         height: "20px",
       }}
-      className="border-primary border-[3px] rounded-full bg-white dots"
+      className="border-primary border-[3px] rounded-full bg-white dots mt-4"
     ></div>
   ),
   autoplaySpeed: 3000,
@@ -38,7 +38,11 @@ export function SwordVoicesCarousel() {
       className="my-slider mb-24 mt-10 mx-4 [&_.slick-track]:flex [&_.slick-slide]:h-auto [&_.slick-slide>div]:h-full"
     >
       {swordvoices.map((swordvoice) => (
-        <SwordvoicesCard key={swordvoice.name} swordvoice={swordvoice} />
+        <SwordvoicesCard
+          key={swordvoice.name}
+          swordvoice={swordvoice}
+          className="mx-6"
+        />
       ))}
     </Slider>
   );

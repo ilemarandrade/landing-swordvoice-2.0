@@ -11,7 +11,8 @@ const DESKTOP_SLIDES = 4;
 function subscribe(onChange: () => void) {
   const lists = BREAKPOINTS.map(({ query }) => window.matchMedia(query));
   lists.forEach((list) => list.addEventListener("change", onChange));
-  return () => lists.forEach((list) => list.removeEventListener("change", onChange));
+  return () =>
+    lists.forEach((list) => list.removeEventListener("change", onChange));
 }
 
 function getSlidesToShow() {

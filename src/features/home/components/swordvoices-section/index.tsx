@@ -19,7 +19,8 @@ export function SwordvoicesSection() {
               Nuestras <span className="text-primary">Swordvoices</span>
             </Typography>
             <p className="mx-auto mb-8 mt-3 max-w-[560px] text-center text-[17px] leading-relaxed text-[#E6E6EE]">
-              Mentores que ya recorrieron el camino que estás empezando. Te asignamos uno según tu path.
+              Mentores que ya recorrieron el camino que estás empezando. Te
+              asignamos uno según tu path.
             </p>
           </motion.div>
         </motion.div>
@@ -33,7 +34,7 @@ export function SwordvoicesSection() {
           }}
           className="w-full"
         >
-          <div className="mx-auto max-w-[1200px]">
+          <div className="mx-auto">
             <SwordVoicesCarousel />
           </div>
         </motion.div>
