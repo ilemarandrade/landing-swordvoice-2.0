@@ -7,7 +7,8 @@ Ejemplo canónico de punta a punta: el formulario de contacto de `src/features/h
 ## 1. Estructura
 
 ```
-src/app/                 Solo routing de Next (page, layout, error, route). Sin lógica.
+src/app/                 Rutas de Next: cada segmento compone su UI con los archivos especiales
+                         (layout, page, error, not-found, loading, route…). Ver §4.8.
 src/features/<page>/     Una carpeta por página/dominio.
   components/            Una carpeta kebab-case por componente con su index.tsx (ver §4.1)
   hooks/                 Lógica del módulo + useXxxQuery / useXxxMutation
@@ -17,8 +18,7 @@ src/features/<page>/     Una carpeta por página/dominio.
   store/                 Slice Zustand (solo si §4.5 lo justifica)
   constants/             Incluye queryKeys.ts cuando haya queries
   utils/
-  <Page>Page.tsx         Compone las secciones (components/). Sin estado ni efectos.
-  index.ts               API pública (lo que consume app/)
+  index.ts               API pública: secciones, componentes y constantes que componen las rutas de app/
 src/common/              Lo compartido: components, providers, hooks, api, store, config, errors, utils, constants, assets
   providers/             Providers de React (QueryClient, Toaster…) que usa app/layout.tsx
 ```
@@ -54,7 +54,7 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 - Componentes base (un elemento visual, sin lógica de negocio): `src/common/components/input/index.tsx`.
 - Componente con hijos: `src/common/components/navbar/index.tsx` → `navbar/nav-link/index.tsx`; `src/features/home/components/contact-section/index.tsx` → `contact-section/contact-form/index.tsx`.
 - Los componentes usan hooks de su feature; nunca `services` ni `fetch`.
-- **`<Page>Page.tsx`**: solo compone. Ej.: `src/features/home/HomePage.tsx`.
+- Las features NO definen páginas ni layouts (`XxxPage`, `XxxLayout`): exportan secciones y componentes, y la ruta los compone en `src/app` (§4.8).
 - Export nombrado en PascalCase (`export function ContactForm`), props en `type XxxProps`. Más de 150 líneas → divide en hijos.
 - Import por carpeta: `@/features/home/components/contact-section/contact-form` (sin `/index`).
 - Solo Tailwind. `"use client"` solo en el componente más bajo que lo necesite (usa hooks, eventos o framer-motion).
@@ -100,6 +100,25 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 - Componentes en `<carpeta-kebab-case>/index.tsx`; el resto en `camelCase.ts`; schemas en `*.schema.ts`; tests en `*.test.ts(x)` junto al archivo (`contact-form/index.test.tsx`).
 - Exports nombrados (salvo los archivos que Next exige con export default en `app/`).
 - Textos de UI en español.
+
+### 4.8 Rutas (App Router)
+Next.js 15.5. Referencia: https://nextjs.org/docs/app/getting-started/project-structure
+
+- **`layout.tsx` es el marco del segmento**: renderiza directamente lo que comparten sus rutas (navbar, `<main>`, footer, guard de sesión) y recibe `children`. No envuelvas un componente `XxxLayout` de una feature. Ej.: `src/app/(auth)/layout.tsx`.
+- **`page.tsx` compone la ruta**: importa las secciones desde `@/features/<x>` y las ordena; exporta `metadata` (o `generateMetadata` si depende de `params`). Sin estado ni efectos. Ej.: `src/app/(auth)/iniciar-sesion/page.tsx`.
+- `page.tsx` y `layout.tsx` son **Server Components**: nunca `"use client"`. La interactividad va en un componente cliente de la feature o de `common`.
+- **Route groups `(nombre)`** para compartir un layout entre rutas sin cambiar la URL; se pueden anidar (`(marketing)/(legal)`). Una carpeta sin `page.tsx` ni `route.ts` no es ruta.
+- **Archivos especiales**, solo cuando aportan:
+  - `error.tsx` (cliente): `src/app/error.tsx` cubre todos los segmentos hijos. Añade uno propio solo si un segmento necesita otra pantalla de error.
+  - `global-error.tsx` (cliente): reemplaza al layout raíz si este falla; trae su propio `<html lang="es">` y `<body>` e importa `globals.css`.
+  - `not-found.tsx`: `src/app/not-found.tsx` atiende URLs inexistentes y las llamadas a `notFound()`.
+  - `loading.tsx`: solo en segmentos con trabajo asíncrono en el servidor (fetch en un Server Component). No sirve para estado de cliente.
+  - `template.tsx` solo si el estado debe reiniciarse en cada navegación; `default.tsx` solo con rutas paralelas (`@slot`).
+  - `route.ts` solo en `src/app/api/**` (§4.4).
+- **Metadata**: con la Metadata API (`metadata` / `generateMetadata`) en `layout.tsx` o `page.tsx`, nunca con `<head>` ni `<title>` manuales. El título usa la plantilla del layout raíz (`%s · Swordvoice Academy`), así que la página solo da su parte. Las rutas privadas declaran `robots: { index: false, follow: false }` en el layout de su grupo. `sitemap.ts`, `robots.ts`, `favicon.ico` y `opengraph-image.*` viven en `src/app`.
+- **Parámetros dinámicos**: en Next 15 `params` y `searchParams` son `Promise`: `const { slug } = await params`.
+- **Navegación y recursos**: `next/link` para links internos; `redirect()` y `notFound()` de `next/navigation` en el servidor, `useRouter` solo en handlers de cliente; `next/image` para imágenes (el lint prohíbe `<img>`); fuentes con `next/font` en el layout raíz.
+- **Middleware**: `src/middleware.ts` (en Next 15 todavía no se llama `proxy.ts`).
 
 ## 5. Tests (Vitest + React Testing Library)
 - Junto al código: `x.ts` → `x.test.ts`.

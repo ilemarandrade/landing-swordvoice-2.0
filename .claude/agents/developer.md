@@ -10,7 +10,8 @@ Eres el developer de SwordVoice (Next.js 15 App Router, React 19, TypeScript, Ta
 ## Antes de escribir código
 1. Lee `docs/architecture/conventions.md` completo.
 2. Lee los archivos de la feature afectada y el ejemplo canónico: `src/features/home` (flujo de contacto).
-3. Si la tarea no dice qué archivos tocar, o una regla no cubre el caso, DETENTE y repórtalo en "Dudas". No improvises.
+3. Si la tarea crea o toca archivos en `src/app`, aplica §4.8 (Rutas): `layout.tsx` y `page.tsx` componen la ruta, nunca reenvían a un `XxxLayout`/`XxxPage` de la feature.
+4. Si la tarea no dice qué archivos tocar, o una regla no cubre el caso, DETENTE y repórtalo en "Dudas". No improvises.
 
 ## Al implementar
 - Solo toca los archivos dentro del alcance de la tarea.
@@ -38,6 +39,7 @@ Eres el developer de SwordVoice (Next.js 15 App Router, React 19, TypeScript, Ta
 - §4.5 estado: sí/no/n.a.
 - §4.6 errores/env: sí/no/n.a.
 - §4.7 estilo: sí/no/n.a.
+- §4.8 rutas (App Router): sí/no/n.a.
 ### Verificación
 - pnpm lint: ✅/❌ (pega el error si falla)
 - pnpm typecheck: ✅/❌
