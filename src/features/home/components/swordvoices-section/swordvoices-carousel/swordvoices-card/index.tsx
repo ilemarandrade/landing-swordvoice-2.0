@@ -1,66 +1,30 @@
-import Image from "next/image";
-import Link from "next/link";
-import LinkedinIcon from "@/common/assets/icons/LinkedinIcon";
-import GithubIcon from "@/common/assets/icons/GithubIcon";
-import PageIcon from "@/common/assets/icons/PageIcon";
-import { Typography } from "@/common/components/typography";
+import type { Swordvoice } from "@/features/home/constants/swordvoices";
+import { SocialLinks } from "@/features/home/components/swordvoices-section/swordvoices-carousel/swordvoices-card/social-links";
+import { SwordvoicePhoto } from "@/features/home/components/swordvoices-section/swordvoices-carousel/swordvoices-card/swordvoice-photo";
 
-type SwordvoicesCardProps = {
-  photo: string;
-  name: string;
-  description: string;
-  rol: string;
-  linkedin: string;
-  github: string;
-  portfolio: string;
-};
+type SwordvoicesCardProps = { swordvoice: Swordvoice };
 
-export function SwordvoicesCard({
-  photo,
-  name,
-  description,
-  rol,
-  linkedin,
-  portfolio,
-  github,
-}: SwordvoicesCardProps) {
+export function SwordvoicesCard({ swordvoice }: SwordvoicesCardProps) {
+  const { name, role, photo, experience, bio, tags, links } = swordvoice;
+
   return (
-    <div className="min-h-[450px] max-h-[520px] min-w-[240px] max-w-[300px] bg-white rounded-[18px] m-6 z-1">
-      <div className="relative h-[50%] overflow-hidden">
-        <Image
-          alt=""
-          src={photo}
-          width={180}
-          height={100}
-          className="rounded-t-[18px] w-full"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent from-10% via-transparent via-30% to-blue to-100%" />
-        <Typography
-          variant="h5"
-          className="absolute bottom-0 p-4 font-sedgwick"
-        >
-          {name}
-        </Typography>
+    <article className="group mx-3 flex h-full flex-col overflow-hidden rounded-[18px] bg-white text-black transition-transform duration-300 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+      <SwordvoicePhoto name={name} photo={photo} experience={experience} />
+      <div className="flex flex-1 flex-col p-6">
+        <p className="mb-3 text-2xl font-bold">{role}</p>
+        <p className="line-clamp-5 text-sm md:text-base">{bio}</p>
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <li
+              key={tag}
+              className="rounded-full border border-blue px-2.5 py-0.5 text-[11px] uppercase leading-4 tracking-[0.05em] text-blue"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+        <SocialLinks name={name} links={links} />
       </div>
-      <div className="h-[50%] min-h-[236px] p-4">
-        <Typography variant="h6" className="text-black font-bold mb-2">
-          {rol}
-        </Typography>
-        <Typography variant="small" className="text-black">
-          {description}
-        </Typography>
-        <div className="flex justify-start items-center mt-4 absolute bottom-10">
-          <Link href={linkedin}>
-            <LinkedinIcon width={32} height={32} color="#0A66C2" />
-          </Link>
-          <Link href={github} className="p-1 mr-1">
-            <GithubIcon />
-          </Link>
-          <Link href={portfolio}>
-            <PageIcon />
-          </Link>
-        </div>
-      </div>
-    </div>
+    </article>
   );
 }
