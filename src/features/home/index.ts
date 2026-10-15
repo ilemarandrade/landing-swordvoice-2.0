@@ -1,1 +1,9 @@
-export { HomePage } from "@/features/home/HomePage";
+export { AboutSection } from "@/features/home/components/about-section";
+export { BackToTopButton } from "@/features/home/components/back-to-top-button";
+export { ContactSection } from "@/features/home/components/contact-section";
+export { HeroSection } from "@/features/home/components/hero-section";
+export { HomeNavbar } from "@/features/home/components/home-navbar";
+export { PathsSection } from "@/features/home/components/paths-section";
+export { SectionDivider } from "@/features/home/components/section-divider";
+export { ServicesSection } from "@/features/home/components/services-section";
+export { SwordvoicesSection } from "@/features/home/components/swordvoices-section";
