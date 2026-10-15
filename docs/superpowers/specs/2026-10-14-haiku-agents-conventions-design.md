@@ -1,3 +1,5 @@
+> **Histórico.** La organización de rutas de este documento (`XxxPage`, `XxxLayout`, `<Page>Page.tsx`) quedó reemplazada por `docs/architecture/conventions.md` §4.8.
+
 # Agentes Haiku (developer + tester) y convenciones de arquitectura — Diseño
 
 - **Fecha:** 2026-10-14

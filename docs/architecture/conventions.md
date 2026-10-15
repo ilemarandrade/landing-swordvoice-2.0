@@ -9,7 +9,7 @@ Ejemplo canónico de punta a punta: el formulario de contacto de `src/features/h
 ```
 src/app/                 Rutas de Next: cada segmento compone su UI con los archivos especiales
                          (layout, page, error, not-found, loading, route…). Ver §4.8.
-src/features/<page>/     Una carpeta por página/dominio.
+src/features/<dominio>/  Una carpeta por dominio (home, auth, legal, dashboard…).
   components/            Una carpeta kebab-case por componente con su index.tsx (ver §4.1)
   hooks/                 Lógica del módulo + useXxxQuery / useXxxMutation
   services/              Funciones cliente que llaman a request()
@@ -104,18 +104,19 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 ### 4.8 Rutas (App Router)
 Next.js 15.5. Referencia: https://nextjs.org/docs/app/getting-started/project-structure
 
+- Las features no exportan componentes con nombre `XxxPage` ni `XxxLayout` (el lint lo bloquea); un marco reutilizable dentro de una feature se nombra por lo que es (`AuthBottomBar`, `DashboardSidebar`).
 - **`layout.tsx` es el marco del segmento**: renderiza directamente lo que comparten sus rutas (navbar, `<main>`, footer, guard de sesión) y recibe `children`. No envuelvas un componente `XxxLayout` de una feature. Ej.: `src/app/(auth)/layout.tsx`.
-- **`page.tsx` compone la ruta**: importa las secciones desde `@/features/<x>` y las ordena; exporta `metadata` (o `generateMetadata` si depende de `params`). Sin estado ni efectos. Ej.: `src/app/(auth)/iniciar-sesion/page.tsx`.
+- **`page.tsx` compone la ruta**: importa las secciones desde `@/features/<x>` y las ordena; exporta `metadata` (o `generateMetadata` si depende de `params`) cuando la ruta necesita su propio título o descripción; si no, hereda el del layout. Sin estado ni efectos. Ej.: `src/app/(auth)/iniciar-sesion/page.tsx`.
 - `page.tsx` y `layout.tsx` son **Server Components**: nunca `"use client"`. La interactividad va en un componente cliente de la feature o de `common`.
 - **Route groups `(nombre)`** para compartir un layout entre rutas sin cambiar la URL; se pueden anidar (`(marketing)/(legal)`). Una carpeta sin `page.tsx` ni `route.ts` no es ruta.
 - **Archivos especiales**, solo cuando aportan:
   - `error.tsx` (cliente): `src/app/error.tsx` cubre todos los segmentos hijos. Añade uno propio solo si un segmento necesita otra pantalla de error.
-  - `global-error.tsx` (cliente): reemplaza al layout raíz si este falla; trae su propio `<html lang="es">` y `<body>` e importa `globals.css`.
+  - `global-error.tsx` (cliente): reemplaza al layout raíz si este falla; trae su propio `<html lang="es">` y `<body>` e importa `globals.css`. Al ser cliente, la Metadata API no aplica: si necesita título, usa `<title>` dentro de su `<html>`.
   - `not-found.tsx`: `src/app/not-found.tsx` atiende URLs inexistentes y las llamadas a `notFound()`.
   - `loading.tsx`: solo en segmentos con trabajo asíncrono en el servidor (fetch en un Server Component). No sirve para estado de cliente.
   - `template.tsx` solo si el estado debe reiniciarse en cada navegación; `default.tsx` solo con rutas paralelas (`@slot`).
   - `route.ts` solo en `src/app/api/**` (§4.4).
-- **Metadata**: con la Metadata API (`metadata` / `generateMetadata`) en `layout.tsx` o `page.tsx`, nunca con `<head>` ni `<title>` manuales. El título usa la plantilla del layout raíz (`%s · Swordvoice Academy`), así que la página solo da su parte. Las rutas privadas declaran `robots: { index: false, follow: false }` en el layout de su grupo. `sitemap.ts`, `robots.ts`, `favicon.ico` y `opengraph-image.*` viven en `src/app`.
+- **Metadata**: con la Metadata API (`metadata` / `generateMetadata`) en `layout.tsx` o `page.tsx`, nunca con `<head>` ni `<title>` manuales (salvo en `global-error.tsx`). El título usa la plantilla del layout raíz (`%s · Swordvoice Academy`), así que la página solo da su parte. Las rutas privadas declaran `robots: { index: false, follow: false }` en el layout de su grupo. `sitemap.ts`, `robots.ts`, `favicon.ico` y `opengraph-image.*` viven en `src/app`.
 - **Parámetros dinámicos**: en Next 15 `params` y `searchParams` son `Promise`: `const { slug } = await params`.
 - **Navegación y recursos**: `next/link` para links internos; `redirect()` y `notFound()` de `next/navigation` en el servidor, `useRouter` solo en handlers de cliente; `next/image` para imágenes (el lint prohíbe `<img>`); fuentes con `next/font` en el layout raíz.
 - **Middleware**: `src/middleware.ts` (en Next 15 todavía no se llama `proxy.ts`).

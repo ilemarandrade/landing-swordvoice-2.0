@@ -113,14 +113,29 @@
         "no-restricted-syntax": [
           "error",
           {
-            "selector": "ExportNamedDeclaration > FunctionDeclaration[id.name=/(Page|Layout)$/]",
+            "selector": "ExportNamedDeclaration > FunctionDeclaration[id.name=/^[A-Z]\\w*(Page|Layout)$/]",
+            "message": "Las páginas y layouts se componen en src/app/**/page.tsx y layout.tsx (conventions §4.8)."
+          },
+          {
+            "selector": "ExportNamedDeclaration > VariableDeclaration > VariableDeclarator[id.name=/^[A-Z]\\w*(Page|Layout)$/]",
+            "message": "Las páginas y layouts se componen en src/app/**/page.tsx y layout.tsx (conventions §4.8)."
+          },
+          {
+            "selector": "ExportSpecifier[exported.name=/^[A-Z]\\w*(Page|Layout)$/]",
             "message": "Las páginas y layouts se componen en src/app/**/page.tsx y layout.tsx (conventions §4.8)."
           }
         ]
       }
     },
     {
-      "files": ["src/app/**/page.tsx", "src/app/**/layout.tsx"],
+      "files": [
+        "src/app/**/page.tsx",
+        "src/app/**/layout.tsx",
+        "src/app/**/not-found.tsx",
+        "src/app/**/loading.tsx",
+        "src/app/**/template.tsx",
+        "src/app/**/default.tsx"
+      ],
       "rules": {
         "no-restricted-syntax": [
           "error",

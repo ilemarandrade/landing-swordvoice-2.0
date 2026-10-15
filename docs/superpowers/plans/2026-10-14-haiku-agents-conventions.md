@@ -1,3 +1,5 @@
+> **Histórico.** La organización de rutas de este documento (`XxxPage`, `XxxLayout`, `<Page>Page.tsx`) quedó reemplazada por `docs/architecture/conventions.md` §4.8.
+
 # Haiku Agents + Conventions Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
