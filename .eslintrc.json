@@ -106,6 +106,30 @@
     {
       "files": ["src/common/config/env.ts", "src/common/config/publicEnv.ts"],
       "rules": { "no-restricted-properties": "off" }
+    },
+    {
+      "files": ["src/features/**/*.ts", "src/features/**/*.tsx"],
+      "rules": {
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "ExportNamedDeclaration > FunctionDeclaration[id.name=/(Page|Layout)$/]",
+            "message": "Las páginas y layouts se componen en src/app/**/page.tsx y layout.tsx (conventions §4.8)."
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/app/**/page.tsx", "src/app/**/layout.tsx"],
+      "rules": {
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "Program > ExpressionStatement[directive='use client']",
+            "message": "page.tsx y layout.tsx son Server Components: mueve la interactividad a un componente cliente (conventions §4.8)."
+          }
+        ]
+      }
     }
   ]
 }
