@@ -4,10 +4,12 @@ export const routes = {
   MEET_US: "/#meet-us",
   OUR_PATHS: "/#our_paths",
   CONTACT_US: "/#contact_us",
+  PATHS: "/paths",
   LOGIN: "/iniciar-sesion",
   REGISTER: "/registro",
   RECOVER_PASSWORD: "/recuperar-contrasena",
   DASHBOARD: "/dashboard",
+  DASHBOARD_PATHS: "/dashboard/paths",
   TERMS: "/terminos",
   PRIVACY: "/privacidad",
 };
