@@ -1,0 +1,8 @@
+export { AboutSection } from "@/features/home/components/about-section";
+export { BackToTopButton } from "@/features/home/components/back-to-top-button";
+export { ContactSection } from "@/features/home/components/contact-section";
+export { HeroSection } from "@/features/home/components/hero-section";
+export { HomeNavbar } from "@/features/home/components/home-navbar";
+export { SectionDivider } from "@/features/home/components/section-divider";
+export { ServicesSection } from "@/features/home/components/services-section";
+export { SwordvoicesSection } from "@/features/home/components/swordvoices-section";

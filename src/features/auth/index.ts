@@ -1,0 +1,7 @@
+export { AuthBottomBar } from "@/features/auth/components/auth-bottom-bar";
+export { AuthCard } from "@/features/auth/components/auth-card";
+export { AuthIntro } from "@/features/auth/components/auth-intro";
+export { LoginForm } from "@/features/auth/components/login-form";
+export { RecoverPassword } from "@/features/auth/components/recover-password";
+export { RegisterBenefits } from "@/features/auth/components/register-benefits";
+export { RegisterForm } from "@/features/auth/components/register-form";

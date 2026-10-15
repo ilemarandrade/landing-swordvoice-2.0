@@ -1,3 +1,249 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript"
+  ],
+  "plugins": [
+    "boundaries"
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
+    },
+    "boundaries/include": [
+      "src/**/*"
+    ],
+    "boundaries/elements": [
+      {
+        "type": "app",
+        "pattern": "src/app",
+        "mode": "folder"
+      },
+      {
+        "type": "feature",
+        "pattern": "src/features/*",
+        "mode": "folder",
+        "capture": [
+          "feature"
+        ]
+      },
+      {
+        "type": "common",
+        "pattern": "src/common",
+        "mode": "folder"
+      }
+    ]
+  },
+  "rules": {
+    "boundaries/element-types": [
+      "error",
+      {
+        "default": "disallow",
+        "rules": [
+          {
+            "from": "app",
+            "allow": [
+              "app",
+              "feature",
+              "common"
+            ]
+          },
+          {
+            "from": "feature",
+            "allow": [
+              [
+                "feature",
+                {
+                  "feature": "${from.feature}"
+                }
+              ],
+              "common"
+            ]
+          },
+          {
+            "from": "common",
+            "allow": [
+              "common"
+            ]
+          }
+        ]
+      }
+    ],
+    "boundaries/entry-point": [
+      "error",
+      {
+        "default": "disallow",
+        "rules": [
+          {
+            "target": [
+              "app",
+              "common"
+            ],
+            "allow": "**"
+          },
+          {
+            "target": [
+              "feature"
+            ],
+            "allow": [
+              "index.ts",
+              "server/index.ts"
+            ]
+          }
+        ]
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "yup",
+            "message": "Usa zod (docs/architecture/conventions.md §4.3)."
+          },
+          {
+            "name": "axios",
+            "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
+          }
+        ]
+      }
+    ],
+    "no-restricted-globals": [
+      "error",
+      {
+        "name": "fetch",
+        "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
+      }
+    ],
+    "no-restricted-properties": [
+      "error",
+      {
+        "object": "process",
+        "property": "env",
+        "message": "Usa getServerEnv() de @/common/config/env (conventions §4.6)."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+      ],
+      "excludedFiles": [
+        "src/app/api/**",
+        "src/features/*/server/**",
+        "**/*.test.ts",
+        "**/*.test.tsx"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "yup",
+                "message": "Usa zod (docs/architecture/conventions.md §4.3)."
+              },
+              {
+                "name": "axios",
+                "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
+              }
+            ],
+            "patterns": [
+              {
+                "group": [
+                  "@/features/*/server",
+                  "@/features/*/server/*"
+                ],
+                "message": "server/ solo se importa desde src/app/api (conventions §3)."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "src/common/api/**",
+        "src/features/*/server/**"
+      ],
+      "rules": {
+        "no-restricted-globals": "off"
+      }
+    },
+    {
+      "files": [
+        "src/common/config/env.ts",
+        "src/common/config/publicEnv.ts"
+      ],
+      "rules": {
+        "no-restricted-properties": "off"
+      }
+    },
+    {
+      "files": [
+        "src/features/**/*.ts",
+        "src/features/**/*.tsx"
+      ],
+      "rules": {
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "ExportNamedDeclaration > FunctionDeclaration[id.name=/^[A-Z]\\w*(Page|Layout)$/]",
+            "message": "Las páginas y layouts se componen en src/app/**/page.tsx y layout.tsx (conventions §4.8)."
+          },
+          {
+            "selector": "ExportNamedDeclaration > VariableDeclaration > VariableDeclarator[id.name=/^[A-Z]\\w*(Page|Layout)$/]",
+            "message": "Las páginas y layouts se componen en src/app/**/page.tsx y layout.tsx (conventions §4.8)."
+          },
+          {
+            "selector": "ExportSpecifier[exported.name=/^[A-Z]\\w*(Page|Layout)$/]",
+            "message": "Las páginas y layouts se componen en src/app/**/page.tsx y layout.tsx (conventions §4.8)."
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "src/app/**/page.tsx",
+        "src/app/**/layout.tsx",
+        "src/app/**/not-found.tsx",
+        "src/app/**/loading.tsx",
+        "src/app/**/template.tsx",
+        "src/app/**/default.tsx"
+      ],
+      "rules": {
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "Program > ExpressionStatement[directive='use client']",
+            "message": "page.tsx y layout.tsx son Server Components: mueve la interactividad a un componente cliente (conventions §4.8)."
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "src/common/api/**"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "yup",
+                "message": "Usa zod (docs/architecture/conventions.md §4.3)."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }
