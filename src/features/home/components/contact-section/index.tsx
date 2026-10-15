@@ -6,7 +6,7 @@ export function ContactSection() {
   return (
     <div
       id="contact_us"
-      className="h-auto xl:min-h-screen w-full p-12 grid grid-cols-1 md:grid-cols-2 bg-contactUs bg-cover relative"
+      className="h-auto w-full px-12 py-32 grid grid-cols-1 md:grid-cols-2 bg-contactUs bg-cover relative"
     >
       <div className="absolute inset-0 z-1 bg-black opacity-55"></div>
       <ContactForm />
