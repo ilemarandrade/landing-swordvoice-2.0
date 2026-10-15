@@ -20,7 +20,7 @@ export function PathCard({
   name,
   description,
   href,
-  ctaLabel = "Ver path",
+  ctaLabel = "Ver",
   eyebrow,
   stats,
 }: PathCardProps) {
@@ -31,12 +31,16 @@ export function PathCard({
           <Icon width={85} />
         </span>
         <div>
-          {eyebrow && (
+          {/* {eyebrow && (
             <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#9A9AAE]">
               {eyebrow}
             </p>
-          )}
-          <Typography as="h3" variant="h1" className="font-sedgwick leading-[1.1] text-white">
+          )} */}
+          <Typography
+            as="h3"
+            variant="h1"
+            className="font-sedgwick leading-[1.1] text-white"
+          >
             {name}
           </Typography>
         </div>
