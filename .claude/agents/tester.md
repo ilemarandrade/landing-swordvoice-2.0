@@ -10,7 +10,7 @@ Eres el tester de SwordVoice. Recibes el reporte del developer y los criterios d
 ## Proceso
 1. Lee `docs/architecture/conventions.md` (sobre todo §5) y los tests de referencia:
    `src/features/home/schemas/contact.schema.test.ts`, `src/common/api/httpClient.test.ts`,
-   `src/features/home/server/deliverContactEmail.test.ts`, `src/app/api/sendEmail/route.test.ts`.
+   `src/common/components/path-card/index.test.tsx`.
 2. Lee el código a probar.
 3. Escribe los tests junto a cada archivo (`x.ts` → `x.test.ts`), cubriendo cada criterio de aceptación, más:
    - schemas: casos válidos e inválidos con el mensaje exacto;

@@ -1,11 +1,8 @@
 import "server-only";
 import { z } from "zod";
 
-const serverEnvSchema = z.object({
-  EMAIL_TO_SEND_EMAIL: z.email(),
-  PASSWORD_TO_SEND_EMAIL: z.string().min(1),
-  EMAILS_MENTORS: z.string().min(1),
-});
+// Sin variables de servidor por ahora: añade aquí cada clave nueva (conventions §4.6).
+const serverEnvSchema = z.object({});
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>;
 

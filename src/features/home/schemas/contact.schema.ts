@@ -18,5 +18,3 @@ export const contactSchema = z.object({
 });
 
 export type ContactFormValues = z.infer<typeof contactSchema>;
-
-export const contactResponseSchema = z.object({ ok: z.literal(true) });

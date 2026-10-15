@@ -2,7 +2,7 @@
 
 Fuente única de verdad para implementar código en este repo. `pnpm lint` hace cumplir las reglas de estructura (§1, §3); el resto se revisa en code review. Si una regla no cubre tu caso: **detente y pregunta**, no improvises.
 
-Ejemplo canónico de punta a punta: el formulario de contacto de `src/features/home` (schema → service → hooks → componente → route → server).
+Ejemplo canónico de punta a punta: la feature `src/features/paths` (schema → service con `request()` → `queryOptions` → hook → componente → route).
 
 ## 1. Estructura
 
@@ -77,9 +77,9 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 
 ### 4.4 Endpoints
 - Toda llamada HTTP del cliente pasa por `request(path, { method, body, schema })` de `@/common/api/httpClient`. Lanza `ApiError` si `!res.ok` o si la respuesta no cumple el schema.
-- `services/<recurso>Service.ts`: funciones que solo llaman a `request`. Ej.: `src/features/home/services/contactService.ts`.
+- `services/<recurso>Service.ts`: funciones que solo llaman a `request`. Ej.: `src/features/paths/services/pathsService.ts`.
 - `hooks/`: `useQuery` / `useMutation` envolviendo services. Query keys en `constants/queryKeys.ts`: `export const xKeys = { all: ["x"] as const, detail: (id: string) => ["x", id] as const }`.
-- `app/api/**/route.ts`: `safeParse` del body con el MISMO schema → 400 `{ message }`; llama a `features/<x>/server`; 200 con JSON validable por el schema de respuesta; 500 `{ message }` genérico, y el error real solo a `console.error`. Ej.: `src/app/api/sendEmail/route.ts`.
+- `app/api/**/route.ts`: `safeParse` del body con el MISMO schema → 400 `{ message }`; llama a `features/<x>/server`; 200 con JSON validable por el schema de respuesta; 500 `{ message }` genérico, y el error real solo a `console.error`.
 - Prohibido `fetch` fuera de `src/common/api` y `src/features/*/server`.
 
 ### 4.5 Estado
@@ -93,7 +93,6 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 - Variables de servidor: añade la clave al schema de `src/common/config/env.ts` (server-only) y léela con `getServerEnv()` dentro de la función que la usa (nunca a nivel de módulo).
 - Variables `NEXT_PUBLIC_*`: NUNCA en `env.ts` (es server-only y rompe el build si lo importa un componente cliente). Van en `src/common/config/publicEnv.ts`, sin `import "server-only"`, leyendo cada variable de forma literal para que Next la incruste: `export const publicEnv = z.object({ NEXT_PUBLIC_X: z.string() }).parse({ NEXT_PUBLIC_X: process.env.NEXT_PUBLIC_X })`. Ese archivo ya está permitido en ESLint.
 - Prohibido `process.env` en cualquier otro lugar.
-- Texto de usuario que va a HTML (emails): pásalo por `escapeHtml`.
 
 ### 4.7 Estilo
 - TypeScript strict. Prohibidos `any`, `@ts-ignore` y `eslint-disable`.
@@ -127,7 +126,7 @@ Next.js 15.5. Referencia: https://nextjs.org/docs/app/getting-started/project-st
 - Services / httpClient: `vi.spyOn(globalThis, "fetch")` — éxito, `!res.ok`, respuesta inválida (`src/common/api/httpClient.test.ts`).
 - Hooks: `renderHook`; si usan React Query, `renderWithClient` de `test/renderWithClient.tsx`.
 - Componentes: comportamiento visible con `getByRole` / `getByLabelText` + `userEvent`. Sin snapshots.
-- Server y route handlers: `// @vitest-environment node` (`src/app/api/sendEmail/route.test.ts`, `src/features/home/server/deliverContactEmail.test.ts`).
+- Server y route handlers: `// @vitest-environment node`.
 
 ## 6. Comandos
 `pnpm lint` · `pnpm typecheck` · `pnpm test` · `pnpm build` — los cuatro en verde antes de entregar.

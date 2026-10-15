@@ -11,7 +11,7 @@ Landing de SwordVoice en evolución a app de mentorías (roadmap: `docs/roadmap/
 - `pnpm deploy` — build + deploy a Cloudflare
 
 ## Reglas
-Toda implementación sigue `docs/architecture/conventions.md`. Ejemplos canónicos: `src/features/home` (formulario de contacto, de schema a route) y `src/app/(auth)` (rutas: layout + pages que componen, §4.8). Las reglas por ruta de archivo viven en `.claude/rules/`.
+Toda implementación sigue `docs/architecture/conventions.md`. Ejemplos canónicos: `src/features/paths` (de schema a componente con React Query) y `src/app/(auth)` (rutas: layout + pages que componen, §4.8). Las reglas por ruta de archivo viven en `.claude/rules/`.
 
 ## Flujo con agentes
 La sesión principal orquesta; los subagentes `developer` y `tester` (modelo Haiku, en `.claude/agents/`) ejecutan.
