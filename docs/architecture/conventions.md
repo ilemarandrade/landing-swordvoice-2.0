@@ -76,11 +76,12 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 - Ejemplo: `<InputController control={control} name="email" label="Correo electrónico" type="email" />` (ver `src/features/home/components/contact-section/contact-form/index.tsx`).
 
 ### 4.4 Endpoints
-- Toda llamada HTTP del cliente pasa por `request(path, { method, body, schema })` de `@/common/api/httpClient`. Lanza `ApiError` si `!res.ok` o si la respuesta no cumple el schema.
+- Toda llamada HTTP pasa por `request(path, { method, body, params, schema })` de `@/common/api/httpClient`, que usa la instancia única de axios `apiClient` (`@/common/api/axiosInstances`, baseURL `NEXT_PUBLIC_API_URL`), desempaqueta el sobre `{ statusCode, message, data }` y valida `data` con el schema. Lanza `ApiError(status, message, errorCode)` ante error de red, HTTP no-2xx o respuesta inválida.
 - `services/<recurso>Service.ts`: funciones que solo llaman a `request`. Ej.: `src/features/paths/services/pathsService.ts`.
 - `hooks/`: `useQuery` / `useMutation` envolviendo services. Query keys en `constants/queryKeys.ts`: `export const xKeys = { all: ["x"] as const, detail: (id: string) => ["x", id] as const }`.
 - `app/api/**/route.ts`: `safeParse` del body con el MISMO schema → 400 `{ message }`; llama a `features/<x>/server`; 200 con JSON validable por el schema de respuesta; 500 `{ message }` genérico, y el error real solo a `console.error`.
-- Prohibido `fetch` fuera de `src/common/api` y `src/features/*/server`.
+- Prohibido importar `axios` fuera de `src/common/api`, y `fetch` fuera de `src/common/api` y `src/features/*/server` (ESLint).
+- Las queries se definen con `queryOptions` en `hooks/` para reutilizarlas en el hook (cliente) y en el prefetch de `page.tsx` con `getQueryClient()` + `<HydrationBoundary>` (servidor). Ej.: `src/features/paths/hooks/pathQueryOptions.ts`.
 
 ### 4.5 Estado
 - Datos de servidor: SOLO TanStack Query. Nunca se copian a Zustand ni a `useState`.
@@ -91,7 +92,7 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 - `ApiError` es el único error de red. En las mutations: `onError: notifyError` (de `@/common/errors/notifyError`). Nunca un `toast.error` suelto para errores.
 - `src/app/error.tsx` cubre todos los segmentos hijos (incluidos los grupos `(marketing)`, `(auth)`, `(app)`). Añade un `error.tsx` propio solo cuando un segmento necesite una pantalla de error distinta.
 - Variables de servidor: añade la clave al schema de `src/common/config/env.ts` (server-only) y léela con `getServerEnv()` dentro de la función que la usa (nunca a nivel de módulo).
-- Variables `NEXT_PUBLIC_*`: NUNCA en `env.ts` (es server-only y rompe el build si lo importa un componente cliente). Van en `src/common/config/publicEnv.ts`, sin `import "server-only"`, leyendo cada variable de forma literal para que Next la incruste: `export const publicEnv = z.object({ NEXT_PUBLIC_X: z.string() }).parse({ NEXT_PUBLIC_X: process.env.NEXT_PUBLIC_X })`. Ese archivo ya está permitido en ESLint.
+- Variables `NEXT_PUBLIC_*`: NUNCA en `env.ts` (es server-only y rompe el build si lo importa un componente cliente). Van en `src/common/config/publicEnv.ts`, sin `import "server-only"`, leyendo cada variable de forma literal para que Next la incruste: `export const publicEnv = z.object({ NEXT_PUBLIC_X: z.string() }).parse({ NEXT_PUBLIC_X: process.env.NEXT_PUBLIC_X })`. Ese archivo ya está permitido en ESLint. Ej.: `NEXT_PUBLIC_API_URL`.
 - Prohibido `process.env` en cualquier otro lugar.
 
 ### 4.7 Estilo

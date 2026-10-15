@@ -1,21 +1,41 @@
 {
   "root": true,
-  "extends": ["next/core-web-vitals", "next/typescript"],
-  "plugins": ["boundaries"],
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript"
+  ],
+  "plugins": [
+    "boundaries"
+  ],
   "settings": {
     "import/resolver": {
-      "typescript": { "alwaysTryTypes": true, "project": "./tsconfig.json" }
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
     },
-    "boundaries/include": ["src/**/*"],
+    "boundaries/include": [
+      "src/**/*"
+    ],
     "boundaries/elements": [
-      { "type": "app", "pattern": "src/app", "mode": "folder" },
+      {
+        "type": "app",
+        "pattern": "src/app",
+        "mode": "folder"
+      },
       {
         "type": "feature",
         "pattern": "src/features/*",
         "mode": "folder",
-        "capture": ["feature"]
+        "capture": [
+          "feature"
+        ]
       },
-      { "type": "common", "pattern": "src/common", "mode": "folder" }
+      {
+        "type": "common",
+        "pattern": "src/common",
+        "mode": "folder"
+      }
     ]
   },
   "rules": {
@@ -24,12 +44,32 @@
       {
         "default": "disallow",
         "rules": [
-          { "from": "app", "allow": ["app", "feature", "common"] },
+          {
+            "from": "app",
+            "allow": [
+              "app",
+              "feature",
+              "common"
+            ]
+          },
           {
             "from": "feature",
-            "allow": [["feature", { "feature": "${from.feature}" }], "common"]
+            "allow": [
+              [
+                "feature",
+                {
+                  "feature": "${from.feature}"
+                }
+              ],
+              "common"
+            ]
           },
-          { "from": "common", "allow": ["common"] }
+          {
+            "from": "common",
+            "allow": [
+              "common"
+            ]
+          }
         ]
       }
     ],
@@ -38,8 +78,22 @@
       {
         "default": "disallow",
         "rules": [
-          { "target": ["app", "common"], "allow": "**" },
-          { "target": ["feature"], "allow": ["index.ts", "server/index.ts"] }
+          {
+            "target": [
+              "app",
+              "common"
+            ],
+            "allow": "**"
+          },
+          {
+            "target": [
+              "feature"
+            ],
+            "allow": [
+              "index.ts",
+              "server/index.ts"
+            ]
+          }
         ]
       }
     ],
@@ -50,6 +104,10 @@
           {
             "name": "yup",
             "message": "Usa zod (docs/architecture/conventions.md §4.3)."
+          },
+          {
+            "name": "axios",
+            "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
           }
         ]
       }
@@ -72,7 +130,10 @@
   },
   "overrides": [
     {
-      "files": ["src/**/*.ts", "src/**/*.tsx"],
+      "files": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+      ],
       "excludedFiles": [
         "src/app/api/**",
         "src/features/*/server/**",
@@ -87,11 +148,18 @@
               {
                 "name": "yup",
                 "message": "Usa zod (docs/architecture/conventions.md §4.3)."
+              },
+              {
+                "name": "axios",
+                "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
               }
             ],
             "patterns": [
               {
-                "group": ["@/features/*/server", "@/features/*/server/*"],
+                "group": [
+                  "@/features/*/server",
+                  "@/features/*/server/*"
+                ],
                 "message": "server/ solo se importa desde src/app/api (conventions §3)."
               }
             ]
@@ -100,15 +168,28 @@
       }
     },
     {
-      "files": ["src/common/api/**", "src/features/*/server/**"],
-      "rules": { "no-restricted-globals": "off" }
+      "files": [
+        "src/common/api/**",
+        "src/features/*/server/**"
+      ],
+      "rules": {
+        "no-restricted-globals": "off"
+      }
     },
     {
-      "files": ["src/common/config/env.ts", "src/common/config/publicEnv.ts"],
-      "rules": { "no-restricted-properties": "off" }
+      "files": [
+        "src/common/config/env.ts",
+        "src/common/config/publicEnv.ts"
+      ],
+      "rules": {
+        "no-restricted-properties": "off"
+      }
     },
     {
-      "files": ["src/features/**/*.ts", "src/features/**/*.tsx"],
+      "files": [
+        "src/features/**/*.ts",
+        "src/features/**/*.tsx"
+      ],
       "rules": {
         "no-restricted-syntax": [
           "error",
@@ -142,6 +223,24 @@
           {
             "selector": "Program > ExpressionStatement[directive='use client']",
             "message": "page.tsx y layout.tsx son Server Components: mueve la interactividad a un componente cliente (conventions §4.8)."
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "src/common/api/**"
+      ],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "yup",
+                "message": "Usa zod (docs/architecture/conventions.md §4.3)."
+              }
+            ]
           }
         ]
       }

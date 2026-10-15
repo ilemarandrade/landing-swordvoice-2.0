@@ -1,5 +1,7 @@
+import { isAxiosError, type AxiosResponse } from "axios";
 import { z } from "zod";
 import { ApiError } from "@/common/api/ApiError";
+import { apiClient } from "@/common/api/axiosInstances";
 import {
   GENERIC_ERROR_MESSAGE,
   INVALID_RESPONSE_MESSAGE,
@@ -11,49 +13,58 @@ type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 type RequestOptions<TSchema extends z.ZodType> = {
   method?: HttpMethod;
   body?: unknown;
+  params?: Record<string, string | number>;
   schema: TSchema;
 };
 
 export async function request<TSchema extends z.ZodType>(
   path: string,
-  { method = "GET", body, schema }: RequestOptions<TSchema>,
+  { method = "GET", body, params, schema }: RequestOptions<TSchema>,
 ): Promise<z.infer<TSchema>> {
-  const hasBody = body !== undefined;
-  let response: Response;
+  let response: AxiosResponse<unknown>;
   try {
-    response = await fetch(path, {
+    response = await apiClient.request<unknown>({
+      url: path,
       method,
-      headers: hasBody ? { "Content-Type": "application/json" } : undefined,
-      body: hasBody ? JSON.stringify(body) : undefined,
+      data: body,
+      params,
     });
-  } catch {
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      const { status, data } = error.response;
+      throw new ApiError(
+        status,
+        readString(data, "message") ?? GENERIC_ERROR_MESSAGE,
+        readString(data, "errorCode"),
+      );
+    }
     throw new ApiError(0, NETWORK_ERROR_MESSAGE);
   }
 
-  const data: unknown = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    throw new ApiError(
-      response.status,
-      readMessage(data) ?? GENERIC_ERROR_MESSAGE,
-    );
-  }
-
-  const parsed = schema.safeParse(data);
+  const parsed = schema.safeParse(unwrapEnvelope(response.data));
   if (!parsed.success) {
     throw new ApiError(response.status, INVALID_RESPONSE_MESSAGE);
   }
   return parsed.data;
 }
 
-function readMessage(data: unknown): string | undefined {
+// La API responde { statusCode, message, data }: se valida solo `data`.
+function unwrapEnvelope(payload: unknown): unknown {
   if (
-    typeof data === "object" &&
-    data !== null &&
-    "message" in data &&
-    typeof data.message === "string"
+    typeof payload === "object" &&
+    payload !== null &&
+    "statusCode" in payload &&
+    "data" in payload
   ) {
-    return data.message;
+    return payload.data;
+  }
+  return payload;
+}
+
+function readString(data: unknown, key: string): string | undefined {
+  if (typeof data === "object" && data !== null && key in data) {
+    const value: unknown = (data as Record<string, unknown>)[key];
+    return typeof value === "string" ? value : undefined;
   }
   return undefined;
 }
