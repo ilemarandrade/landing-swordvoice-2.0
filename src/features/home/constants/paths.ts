@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import IniciatedPath from "@/common/assets/icons/IniciatedPathIcon";
+import InitiatedPathIcon from "@/common/assets/icons/InitiatedPathIcon";
 import WandererPathIcon from "@/common/assets/icons/WandererPathIcon";
 
 type Path = {
@@ -11,10 +11,10 @@ type Path = {
 
 export const paths: Path[] = [
   {
-    name: "Iniciated",
+    name: "Initiated",
     description:
       "Serás un jr Frontend Developer. Podrás crear interfaces de usuario interactivas e integrarlas con servicios propios o de terceros.",
-    Icon: IniciatedPath,
+    Icon: InitiatedPathIcon,
     isAvailable: true,
   },
   {

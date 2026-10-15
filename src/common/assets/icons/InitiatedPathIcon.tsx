@@ -3,7 +3,7 @@ interface IProps {
   width?: number;
 }
 
-const IniciatedPath: React.FC<IProps> = ({ width = 122 }) => (
+const InitiatedPathIcon: React.FC<IProps> = ({ width = 122 }) => (
   <svg
     width={width}
     height="auto"
@@ -22,4 +22,4 @@ const IniciatedPath: React.FC<IProps> = ({ width = 122 }) => (
   </svg>
 );
 
-export default IniciatedPath;
+export default InitiatedPathIcon;

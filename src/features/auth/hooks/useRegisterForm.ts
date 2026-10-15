@@ -12,7 +12,7 @@ const defaultValues: RegisterFormValues = {
   email: "",
   password: "",
   confirmPassword: "",
-  path: "iniciated",
+  path: "initiated",
   acceptTerms: false,
 };
 
