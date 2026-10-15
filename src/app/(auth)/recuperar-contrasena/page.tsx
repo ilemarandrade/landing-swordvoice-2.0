@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { RecoverPasswordPage } from "@/features/auth";
+import { RecoverPassword } from "@/features/auth";
 
 export const metadata: Metadata = { title: "Recuperar contraseña" };
 
-export default function Page() {
-  return <RecoverPasswordPage />;
+export default function RecoverPasswordPage() {
+  return <RecoverPassword />;
 }
