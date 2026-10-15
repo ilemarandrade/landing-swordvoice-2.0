@@ -2,8 +2,8 @@
 import Link from "next/link";
 import LogoSwordvoice from "@/common/assets/icons/LogoSwordvoice";
 import { routes } from "@/common/constants/routes";
-import { RankCard } from "@/features/dashboard/components/dashboard-layout/dashboard-sidebar/rank-card";
-import { SidebarNavItem } from "@/features/dashboard/components/dashboard-layout/dashboard-sidebar/sidebar-nav-item";
+import { RankCard } from "@/features/dashboard/components/dashboard-sidebar/rank-card";
+import { SidebarNavItem } from "@/features/dashboard/components/dashboard-sidebar/sidebar-nav-item";
 import { dashboardNav } from "@/features/dashboard/constants/dashboardNav";
 import { useActiveNavItem } from "@/features/dashboard/hooks/useActiveNavItem";
 

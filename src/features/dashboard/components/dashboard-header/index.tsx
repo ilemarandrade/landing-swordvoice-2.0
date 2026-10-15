@@ -1,5 +1,5 @@
 "use client";
-import { AccountMenu } from "@/features/dashboard/components/dashboard-layout/dashboard-header/account-menu";
+import { AccountMenu } from "@/features/dashboard/components/dashboard-header/account-menu";
 import { useActiveNavItem } from "@/features/dashboard/hooks/useActiveNavItem";
 
 export function DashboardHeader() {
