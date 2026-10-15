@@ -1,5 +1,6 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import { type MouseEvent, useEffect, useState } from "react";
 import Hamburguer from "@/common/assets/icons/Hamburguer";
 import Logo from "@/common/assets/icons/Logo";
@@ -7,6 +8,7 @@ import LogoSwordvoice from "@/common/assets/icons/LogoSwordvoice";
 import { NavLink } from "@/common/components/navbar/nav-link";
 import { navAnimation } from "@/common/constants/animations/navAnimation";
 import { mobileNavLinks, navLinks } from "@/common/constants/navLinks";
+import { routes } from "@/common/constants/routes";
 import { useIsMobile } from "@/common/hooks/useIsMobile";
 
 const MotionLogo = motion(Logo);
@@ -30,14 +32,15 @@ export function Navbar({ changeLogo }: NavbarProps) {
     event: MouseEvent<HTMLAnchorElement>,
     anchor: string,
   ) => {
+    const target = document.querySelector<HTMLElement>(
+      anchor === "/" ? "#home" : anchor.slice(1),
+    );
+    // Fuera de la landing la sección no existe: navegación normal a "/#seccion".
+    if (!target) return;
     event.preventDefault();
     if (isMobile) {
       setShowMenu(false);
     }
-    const target = document.querySelector<HTMLElement>(
-      anchor === "/" ? "#home" : anchor.slice(1),
-    );
-    if (!target) return;
     const navbarOffset = isMobile ? 110 : 85;
     window.scrollTo({
       top: target.offsetTop - navbarOffset,
@@ -50,39 +53,45 @@ export function Navbar({ changeLogo }: NavbarProps) {
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ once: true }}
-      className={`z-30 bg-blurry fixed flex justify-center ${
+      className={`z-30 bg-blurry fixed top-0 left-0 flex justify-center ${
         !showMenu
           ? `w-full md:justify-between h-[85px] `
           : `bg-center after:inset-0 after:absolute after:bg-blue300 bg-[url('/backgrounds/homeBackground.jpg')] flex-col items-center w-screen h-full`
       }`}
     >
-      {!changeLogo ? (
-        <AnimatePresence>
-          <MotionLogo
-            className="w-[50%] md:w-[20%] mx-4 my-8 z-10"
-            transition={{
-              duration: 0.5,
-              ease: [0, 0.71, 0.2, 1.1],
-            }}
-            initial={{ x: -300 }}
-            animate={{ x: 0 }}
-            exit={{ x: -200 }}
-          />
-        </AnimatePresence>
-      ) : (
-        <AnimatePresence>
-          <MotionLogoSV
-            className="m-8 z-10"
-            transition={{
-              duration: 0.5,
-              ease: [0, 0.71, 0.2, 1.1],
-            }}
-            initial={{ x: -370, opacity: 1 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -370, opacity: 0 }}
-          />
-        </AnimatePresence>
-      )}
+      <Link
+        href={routes.HOME}
+        aria-label="Ir al inicio"
+        className={`z-10 flex ${!changeLogo ? "mx-4 my-8 w-[50%] md:w-[20%]" : ""}`}
+      >
+        {!changeLogo ? (
+          <AnimatePresence>
+            <MotionLogo
+              className="w-full"
+              transition={{
+                duration: 0.5,
+                ease: [0, 0.71, 0.2, 1.1],
+              }}
+              initial={{ x: -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: -200 }}
+            />
+          </AnimatePresence>
+        ) : (
+          <AnimatePresence>
+            <MotionLogoSV
+              className="m-8 z-10"
+              transition={{
+                duration: 0.5,
+                ease: [0, 0.71, 0.2, 1.1],
+              }}
+              initial={{ x: -370, opacity: 1 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -370, opacity: 0 }}
+            />
+          </AnimatePresence>
+        )}
+      </Link>
 
       <motion.div
         variants={navAnimation.nav}
