@@ -13,9 +13,6 @@ type PathHeroProps = {
 
 export function PathHero({ path, trail, hasProgress }: PathHeroProps) {
   const Icon = getPathIcon(path.slug);
-  const eyebrow = `${path.description ?? path.name} · v${path.version}${
-    path.isCurrent ? "" : " · versión anterior"
-  }`;
 
   return (
     <header className="bg-ourPathsBackground bg-cover bg-center">

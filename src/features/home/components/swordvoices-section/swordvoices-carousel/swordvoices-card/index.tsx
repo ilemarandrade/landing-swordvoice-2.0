@@ -8,7 +8,7 @@ export function SwordvoicesCard({
   swordvoice,
   className = "",
 }: SwordvoicesCardProps) {
-  const { name, role, photo, experience, bio, tags, links } = swordvoice;
+  const { name, role, photo, experience, bio, links } = swordvoice;
 
   return (
     <article

@@ -25,10 +25,10 @@ describe("PathCard", () => {
     ).toBeInTheDocument();
   });
 
-  it("links to href with the default 'Ver path' label", () => {
+  it("links to href with the default 'Ver' label", () => {
     render(<PathCard {...props} />);
 
-    const link = screen.getByRole("link", { name: "Ver path" });
+    const link = screen.getByRole("link", { name: "Ver" });
     expect(link).toHaveAttribute("href", "/paths/fundamentos");
   });
 
@@ -38,7 +38,7 @@ describe("PathCard", () => {
     const link = screen.getByRole("link", { name: "Empezar" });
     expect(link).toHaveAttribute("href", "/paths/fundamentos");
     expect(
-      screen.queryByRole("link", { name: "Ver path" }),
+      screen.queryByRole("link", { name: "Ver" }),
     ).not.toBeInTheDocument();
   });
 
