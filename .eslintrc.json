@@ -104,10 +104,6 @@
           {
             "name": "yup",
             "message": "Usa zod (docs/architecture/conventions.md §4.3)."
-          },
-          {
-            "name": "axios",
-            "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
           }
         ]
       }
@@ -148,10 +144,6 @@
               {
                 "name": "yup",
                 "message": "Usa zod (docs/architecture/conventions.md §4.3)."
-              },
-              {
-                "name": "axios",
-                "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
               }
             ],
             "patterns": [

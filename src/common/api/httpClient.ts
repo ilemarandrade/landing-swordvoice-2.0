@@ -1,12 +1,13 @@
-import { isAxiosError, type AxiosResponse } from "axios";
 import { z } from "zod";
 import { ApiError } from "@/common/api/ApiError";
-import { apiClient } from "@/common/api/axiosInstances";
+import { publicEnv } from "@/common/config/publicEnv";
 import {
   GENERIC_ERROR_MESSAGE,
   INVALID_RESPONSE_MESSAGE,
   NETWORK_ERROR_MESSAGE,
 } from "@/common/constants/messages";
+
+const REQUEST_TIMEOUT_MS = 10_000;
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -21,31 +22,50 @@ export async function request<TSchema extends z.ZodType>(
   path: string,
   { method = "GET", body, params, schema }: RequestOptions<TSchema>,
 ): Promise<z.infer<TSchema>> {
-  let response: AxiosResponse<unknown>;
+  const search = params
+    ? new URLSearchParams(
+        Object.fromEntries(Object.entries(params).map(([key, value]) => [key, String(value)])),
+      ).toString()
+    : "";
+  const url = `${publicEnv.NEXT_PUBLIC_API_URL}${path}${search ? `?${search}` : ""}`;
+
+  const headers: Record<string, string> = { "Accept-Language": "es" };
+  if (body !== undefined) headers["Content-Type"] = "application/json";
+
+  let response: Response;
   try {
-    response = await apiClient.request<unknown>({
-      url: path,
+    response = await fetch(url, {
       method,
-      data: body,
-      params,
+      headers,
+      body: body === undefined ? undefined : JSON.stringify(body),
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
-  } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      const { status, data } = error.response;
-      throw new ApiError(
-        status,
-        readString(data, "message") ?? GENERIC_ERROR_MESSAGE,
-        readString(data, "errorCode"),
-      );
-    }
+  } catch {
     throw new ApiError(0, NETWORK_ERROR_MESSAGE);
   }
 
-  const parsed = schema.safeParse(unwrapEnvelope(response.data));
+  const data = await readJson(response);
+  if (!response.ok) {
+    throw new ApiError(
+      response.status,
+      readString(data, "message") ?? GENERIC_ERROR_MESSAGE,
+      readString(data, "errorCode"),
+    );
+  }
+
+  const parsed = schema.safeParse(unwrapEnvelope(data));
   if (!parsed.success) {
     throw new ApiError(response.status, INVALID_RESPONSE_MESSAGE);
   }
   return parsed.data;
+}
+
+async function readJson(response: Response): Promise<unknown> {
+  try {
+    return await response.json();
+  } catch {
+    return undefined;
+  }
 }
 
 // La API responde { statusCode, message, data }: se valida solo `data`.
