@@ -6,19 +6,21 @@ Sub-proyecto 4 de 5 de la integración "Cuentas, roles por path y perfil". Depen
 
 ## Objetivo
 
-Que cada persona vea y edite su perfil (`GET`/`PATCH /profiles/me`) en `/dashboard/profile`, y suba o quite su foto (subida directa a Cloudflare R2 con URL prefirmada), con la foto visible también en el avatar del header.
+Que cada persona vea y edite su perfil (`GET`/`PATCH /profiles/me`) en `/dashboard/profile`, y suba o cambie su foto (subida directa a Cloudflare R2 con URL prefirmada), con la foto visible también en el avatar del header.
 
 ## Decisiones del usuario
 
 - El perfil es una página: `/dashboard/profile`, enlazada desde el menú de cuenta y desde la barra lateral.
 - Título profesional y descripción corta solo para cuentas con `MENTOR` en al menos un path.
 - Una foto grande se reduce en el navegador (lado mayor ≤ 512 px, WebP) antes de subirla.
+- Solo se ofrece **cambiar** la foto, no quitarla: la API muestra la foto subida, si no el avatar del proveedor, si no `null`, y al subir una nueva borra la anterior. Consecuencia aceptada: tras subir una foto ya no se vuelve al avatar del proveedor ni a "sin foto".
 - Rutas nuevas en inglés; sistema de diseño existente.
 
 ## Fuera de alcance
 
 - Cambiar el correo (no hay endpoint).
 - Recortar la foto (crop) o elegir el encuadre.
+- Quitar la foto (`DELETE /profiles/me/photo` existe pero la web no lo usa).
 - "No aparecer en la landing" y orden de mentores (feature 1-B, sin endpoint).
 - Certificaciones, logros y stack del perfil (no están en `ProfileResponseDto`).
 
@@ -31,8 +33,8 @@ Que cada persona vea y edite su perfil (`GET`/`PATCH /profiles/me`) en `/dashboa
 - Reglas: `name` 1–80 (trim); `bio` 1–500 (trim); `githubUrl` ≤300 `^https://github\.com/[A-Za-z0-9-]+/?$`; `linkedinUrl` ≤300 `^https://(www\.)?linkedin\.com/in/[A-Za-z0-9_%-]+/?$`; `portfolioUrl` ≤300, URL `https`; `freeCodeCampUsername` `^[a-zA-Z0-9_-]{3,30}$` (se guarda en minúsculas); `professionalTitle` 1–80 (trim); `shortDescription` 1–280 (trim). 409 `FREECODECAMP_USERNAME_TAKEN`.
 - `POST /profiles/me/photo/upload-url` `{ contentType: "image/jpeg" | "image/png" | "image/webp", size: 1–2097152 }` → `data: { uploadUrl, key, expiresIn: 300 }`.
 - `PUT` a `uploadUrl` con el mismo `Content-Type` y exactamente `size` bytes.
-- `PUT /profiles/me/photo` `{ key: ^profiles/<uuid>/<uuid>.(jpg|png|webp)$ }` → `data: Profile`. Errores: 400 `INVALID_PHOTO_KEY`, 400 `PHOTO_NOT_UPLOADED`, 503 `STORAGE_UNAVAILABLE`.
-- `DELETE /profiles/me/photo` → `data: Profile` (si hay avatar del proveedor OAuth, vuelve a `photoUrl`).
+- `PUT /profiles/me/photo` `{ key: ^profiles/<uuid>/<uuid>.(jpg|png|webp)$ }` → `data: Profile`; la foto anterior se borra en el servidor. Errores: 400 `INVALID_PHOTO_KEY`, 400 `PHOTO_NOT_UPLOADED`, 503 `STORAGE_UNAVAILABLE`.
+- `photoUrl`: foto subida → si no, avatar del proveedor OAuth → si no, `null`.
 
 ## 2. Pantalla y navegación
 
@@ -41,7 +43,7 @@ Que cada persona vea y edite su perfil (`GET`/`PATCH /profiles/me`) en `/dashboa
 - Menú de cuenta: link "Mi perfil" (`next/link`) encima de "Cerrar sesión".
 - Avatar del header: `photoUrl` del perfil con `next/image` (redondo); sin foto, las iniciales como hoy.
 - Pantalla (feature `src/features/profile`): título "Mi perfil" y dos tarjetas con el estilo de card del dashboard (`rounded-[18px] border border-white/15 bg-[#000E2799]`):
-  1. **Foto**: avatar grande; "Cambiar foto"; "Quitar foto" solo si la foto es una **subida** (ver §4); overlay "Subiendo…" durante la subida.
+  1. **Foto**: avatar grande (o iniciales si `photoUrl` es `null`); botón "Cambiar foto" (o "Subir foto" sin foto); overlay "Subiendo…" durante la subida.
   2. **Datos**: Nombre*, Correo (solo lectura, de `me.email`), Bio (textarea), GitHub, LinkedIn, Portafolio, Usuario de freeCodeCamp; si `me.pathRoles` tiene algún `MENTOR`, sección "Perfil de mentor" con Título profesional y Descripción corta (textarea, ayuda "Se muestra en la landing"). Botón "Guardar cambios" deshabilitado sin cambios o mientras guarda.
 - Todo campo con `InputController` (`multiline` para textareas).
 
@@ -66,8 +68,6 @@ Que cada persona vea y edite su perfil (`GET`/`PATCH /profiles/me`) en `/dashboa
 - `features/profile/utils/resizeImage.ts`: `resizeImage(file): Promise<Blob>` — `createImageBitmap(file)`; canvas con el lado mayor ≤ 512 px conservando proporción; `toBlob("image/webp", 0.85)`; si el tipo devuelto no es jpeg/png/webp, reintenta `toBlob("image/jpeg", 0.85)`. Redibujar descarta EXIF (incluido GPS). Falla de decodificación → `InvalidImageError`.
 - `src/common/api/uploadToSignedUrl.ts`: `uploadToSignedUrl(url, blob)` — `fetch(url, { method: "PUT", headers: { "Content-Type": blob.type }, body: blob })`; respuesta no OK → error. **No** usa `apiClient`: sin `Authorization` ni `baseURL` (romperían la firma). El navegador fija `Content-Length`.
 - `useChangePhotoMutation`: resize → `POST upload-url` (`{ contentType: blob.type, size: blob.size }`) → `uploadToSignedUrl` → `PUT /profiles/me/photo` `{ key }` → `setQueryData` + toast "Foto actualizada".
-- `useRemovePhotoMutation`: `DELETE /profiles/me/photo` → `setQueryData` + toast "Foto eliminada".
-- `features/profile/utils/isUploadedPhoto.ts`: `true` si la ruta de `photoUrl` termina en `/profiles/<uuid>/<uuid>.(jpg|png|webp)` (formato de las claves de R2). La respuesta no distingue foto subida de avatar OAuth; sin esto, "Quitar foto" aparecería para un avatar de Google que no se puede quitar.
 - Errores (todos con `notifyError`): archivo no decodificable o de otro tipo → "Elige una imagen JPG, PNG o WebP" (sin llamar a la API); fallo del `PUT` a R2, `PHOTO_NOT_UPLOADED` o `INVALID_PHOTO_KEY` → "No pudimos subir la foto. Inténtalo de nuevo."; `STORAGE_UNAVAILABLE` y el resto → mensaje de la API. Tras un error se limpia el `<input type="file">` para poder elegir el mismo archivo.
 - La foto se pinta con `next/image` (`images.unoptimized` ya está activo: no hace falta `remotePatterns`).
 
@@ -75,13 +75,12 @@ Que cada persona vea y edite su perfil (`GET`/`PATCH /profiles/me`) en `/dashboa
 
 - `profileForm.schema`: cada regla con su mensaje exacto; vacío válido en los opcionales; nombre vacío inválido.
 - `toProfilePatch`: solo modificados; vaciado → `null`; `name` nunca `null`; sin campos de mentor si no es mentor.
-- `isUploadedPhoto`: URL de R2 → `true`; avatar de Google/GitHub → `false`; `null` → `false`.
 - `useProfileQuery` y las mutations: éxito, `ApiError`, respuesta inválida; cambio de nombre invalida `["auth","me"]`; 409 no notifica.
 - `resizeImage` (con `createImageBitmap` y canvas mockeados): lado mayor 512, proporción, fallback a JPEG, error de decodificación.
 - `uploadToSignedUrl`: `PUT` sin `Authorization` y con el `Content-Type` exacto; respuesta no OK → error.
 - `useChangePhotoMutation`: orden de los 3 pasos; si falla el `PUT` a R2 no se confirma; mensaje de error correcto.
-- Componentes: campos de mentor solo con `MENTOR`; 409 bajo el campo; "Quitar foto" solo con foto subida; botones deshabilitados durante la subida; avatar del header con foto o iniciales.
+- Componentes: campos de mentor solo con `MENTOR`; 409 bajo el campo; no hay botón de quitar foto; "Subir foto" vs "Cambiar foto" según `photoUrl`; botón deshabilitado durante la subida; avatar del header con foto o iniciales.
 
 ## 6. Criterio de cierre
 
-`pnpm lint`, `pnpm typecheck`, `pnpm test` y `pnpm build` en verde; en local contra la API con R2 configurado (bucket público y CORS que permita `PUT` con `Content-Type` desde `http://localhost:3000`): editar y vaciar campos persiste tras recargar; cambiar el nombre actualiza el saludo; subir una foto de > 2 MB funciona y aparece en el header; quitarla vuelve a las iniciales (o al avatar OAuth).
+`pnpm lint`, `pnpm typecheck`, `pnpm test` y `pnpm build` en verde; en local contra la API con R2 configurado (bucket público y CORS que permita `PUT` con `Content-Type` desde `http://localhost:3000`): editar y vaciar campos persiste tras recargar; cambiar el nombre actualiza el saludo; subir una foto de > 2 MB funciona y aparece en el header; subir otra la reemplaza.
