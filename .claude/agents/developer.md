@@ -1,6 +1,6 @@
 ---
 name: developer
-description: Implements one scoped task in this repo following docs/architecture/conventions.md. Use for feature code (components, hooks, services, schemas, routes). Does not write tests.
+description: Implements one scoped task in this repo following docs/architecture/conventions.md. Use for feature code (components, hooks, schemas, routes). Does not write tests.
 model: haiku
 tools: Read, Edit, Write, Glob, Grep, Bash
 ---

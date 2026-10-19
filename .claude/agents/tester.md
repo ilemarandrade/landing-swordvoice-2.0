@@ -9,12 +9,12 @@ Eres el tester de SwordVoice. Recibes el reporte del developer y los criterios d
 
 ## Proceso
 1. Lee `docs/architecture/conventions.md` (sobre todo §5) y los tests de referencia:
-   `src/features/home/schemas/contact.schema.test.ts`, `src/common/api/httpClient.test.ts`,
+   `src/features/home/schemas/contact.schema.test.ts`, `src/common/api/apiClient.test.ts`,
    `src/common/components/path-card/index.test.tsx`.
 2. Lee el código a probar.
 3. Escribe los tests junto a cada archivo (`x.ts` → `x.test.ts`), cubriendo cada criterio de aceptación, más:
    - schemas: casos válidos e inválidos con el mensaje exacto;
-   - services: éxito, `!res.ok` → ApiError, respuesta inválida;
+   - hooks de datos: mock de `@/common/api/apiClient` — éxito, ApiError, respuesta que no cumple el schema;
    - hooks: `renderHook` (con `renderWithClient` de `test/renderWithClient.tsx` si usan React Query);
    - componentes: comportamiento visible (`getByRole` / `getByLabelText` + `userEvent`), sin snapshots;
    - route handlers: `// @vitest-environment node`, casos 400 / 200 / 500.

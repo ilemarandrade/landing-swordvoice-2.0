@@ -104,6 +104,10 @@
           {
             "name": "yup",
             "message": "Usa zod (docs/architecture/conventions.md §4.3)."
+          },
+          {
+            "name": "axios",
+            "message": "Usa apiClient de @/common/api/apiClient (conventions §4.4)."
           }
         ]
       }
@@ -112,7 +116,7 @@
       "error",
       {
         "name": "fetch",
-        "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
+        "message": "Usa apiClient de @/common/api/apiClient (conventions §4.4)."
       }
     ],
     "no-restricted-properties": [
@@ -144,6 +148,10 @@
               {
                 "name": "yup",
                 "message": "Usa zod (docs/architecture/conventions.md §4.3)."
+              },
+              {
+                "name": "axios",
+                "message": "Usa apiClient de @/common/api/apiClient (conventions §4.4)."
               }
             ],
             "patterns": [
