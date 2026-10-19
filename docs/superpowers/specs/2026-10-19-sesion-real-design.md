@@ -44,10 +44,10 @@ Reemplazar la sesión falsa (`useSessionStore`, Zustand + localStorage con `{ na
 - Todo acceso a `localStorage` va en `try/catch`: si el navegador lo bloquea, no hay sesión y la app no se rompe.
 
 ### `src/common/api/refreshSession.ts` (nuevo)
-- `refreshSession(usedRefreshToken): Promise<string>` devuelve el access token nuevo.
+- `refreshSession(usedAccessToken: string | undefined, requestTokens: (refreshToken: string) => Promise<AuthTokens>): Promise<void>`; deja el par nuevo en el storage. `requestTokens` lo pasa `apiClient` (llama a `/auth/refresh`), así no hay import circular.
 - Una sola promesa en vuelo por pestaña: llamadas concurrentes comparten la misma.
-- Entre pestañas: `navigator.locks.request("sv-auth-refresh", …)`. Dentro del lock vuelve a leer el storage; si el refresh token guardado ya no es `usedRefreshToken` (otra pestaña rotó), devuelve ese access token sin llamar a la API. Si `navigator.locks` no existe, solo se deduplica en la pestaña.
-- Llama a `/auth/refresh` con la misma instancia `apiClient`, marcando la petición para que el interceptor no intente renovar sobre ella.
+- Entre pestañas: `navigator.locks.request("sv-auth-refresh", …)`. Dentro del lock vuelve a leer el storage; si el access token guardado ya no es `usedAccessToken` (otra pestaña o petición ya rotó), termina sin llamar a la API. Si `navigator.locks` no existe, solo se deduplica en la pestaña.
+- El interceptor nunca intenta renovar sobre `/auth/login`, `/auth/refresh` ni `/auth/logout`.
 - 401 → `clearTokens()` + toast "Tu sesión expiró, inicia sesión de nuevo" y rechaza. Red o 5xx (status 0 o ≥ 500) → **no** borra los tokens y rechaza con el `ApiError`.
 
 ### `src/common/api/apiClient.ts` (cambia)
@@ -56,10 +56,12 @@ Reemplazar la sesión falsa (`useSessionStore`, Zustand + localStorage con `{ na
 - `unwrapEnvelope` y `toApiError` no cambian.
 
 ### `src/common/hooks/useSession.ts` (nuevo)
-- `useSyncExternalStore(subscribe, () => getTokens() !== null, () => false)` → `{ isAuthenticated }`. En el servidor se asume sin sesión.
+- `useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)` → `{ status: "unknown" | "authenticated" | "anonymous" }`. En el servidor y durante la hidratación es `"unknown"`, para que ninguna ruta redirija antes de leer el storage.
+- `useMeQuery` usa `enabled: status === "authenticated"`.
+- Login exitoso: `queryClient.clear()` antes de `saveTokens`, para que no quede en caché el usuario anterior.
 
 ### `src/common/hooks/useMeQuery.ts` (nuevo)
-- Servicio `getMe()` → `apiClient.get("/auth/me")` + `userSchema.parse`; query key `["auth", "me"]`; `enabled: isAuthenticated`.
+- Servicio `getMe()` → `apiClient.get("/auth/me")` + `userSchema.parse`; query key `["auth", "me"]`; `enabled: status === "authenticated"`.
 - En `common/` porque lo usan el guard (common) y el dashboard (feature).
 
 ### `src/common/hooks/useSessionGuard.ts` y `SessionGuard` (cambian)
