@@ -62,7 +62,9 @@ export function Navbar({ changeLogo }: NavbarProps) {
       <Link
         href={routes.HOME}
         aria-label="Ir al inicio"
-        className={`z-10 flex ${!changeLogo ? "mx-4 my-8 w-[50%] md:w-[20%]" : ""}`}
+        className={`z-10 flex ${
+          !changeLogo ? "mx-4 my-8 w-[50%] md:w-[20%]" : ""
+        }`}
       >
         {!changeLogo ? (
           <AnimatePresence>
@@ -80,7 +82,7 @@ export function Navbar({ changeLogo }: NavbarProps) {
         ) : (
           <AnimatePresence>
             <MotionLogoSV
-              className="m-8 z-10"
+              className="m-8 z-10 h-16"
               transition={{
                 duration: 0.5,
                 ease: [0, 0.71, 0.2, 1.1],
