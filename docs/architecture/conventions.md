@@ -2,7 +2,7 @@
 
 Fuente única de verdad para implementar código en este repo. `pnpm lint` hace cumplir las reglas de estructura (§1, §3); el resto se revisa en code review. Si una regla no cubre tu caso: **detente y pregunta**, no improvises.
 
-Ejemplo canónico de punta a punta: la feature `src/features/paths` (schema → service con `request()` → `queryOptions` → hook → componente → route).
+Ejemplo canónico de punta a punta: la feature `src/features/paths` (schema → service con `request()` → `queryOptions` → hook → componente cliente → route).
 
 ## 1. Estructura
 
@@ -76,12 +76,15 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 - Ejemplo: `<InputController control={control} name="email" label="Correo electrónico" type="email" />` (ver `src/features/home/components/contact-section/contact-form/index.tsx`).
 
 ### 4.4 Endpoints
-- Toda llamada HTTP pasa por `request(path, { method, body, params, schema })` de `@/common/api/httpClient`, que usa la instancia única de axios `apiClient` (`@/common/api/axiosInstances`, baseURL `NEXT_PUBLIC_API_URL`), desempaqueta el sobre `{ statusCode, message, data }` y valida `data` con el schema. Lanza `ApiError(status, message, errorCode)` ante error de red, HTTP no-2xx o respuesta inválida.
+- **Por ahora todas las peticiones a la API se hacen desde el cliente** con TanStack Query: ni `page.tsx`, ni `generateMetadata`, ni `sitemap.ts` llaman a la API, y no se usa prefetch ni `<HydrationBoundary>`. Flujo: schema → service → `queryOptions` → hook → componente cliente → `page.tsx` lo compone.
+- Toda llamada HTTP pasa por `request(path, { method, body, params, schema })` de `@/common/api/httpClient`, que usa `fetch` nativo contra `NEXT_PUBLIC_API_URL` (timeout de 10 s), desempaqueta el sobre `{ statusCode, message, data }` y valida `data` con el schema. Lanza `ApiError(status, message, errorCode)` ante error de red, HTTP no-2xx o respuesta inválida.
 - `services/<recurso>Service.ts`: funciones que solo llaman a `request`. Ej.: `src/features/paths/services/pathsService.ts`.
 - `hooks/`: `useQuery` / `useMutation` envolviendo services. Query keys en `constants/queryKeys.ts`: `export const xKeys = { all: ["x"] as const, detail: (id: string) => ["x", id] as const }`.
 - `app/api/**/route.ts`: `safeParse` del body con el MISMO schema → 400 `{ message }`; llama a `features/<x>/server`; 200 con JSON validable por el schema de respuesta; 500 `{ message }` genérico, y el error real solo a `console.error`.
-- Prohibido importar `axios` fuera de `src/common/api`, y `fetch` fuera de `src/common/api` y `src/features/*/server` (ESLint).
-- Las queries se definen con `queryOptions` en `hooks/` para reutilizarlas en el hook (cliente) y en el prefetch de `page.tsx` con `getQueryClient()` + `<HydrationBoundary>` (servidor). Ej.: `src/features/paths/hooks/pathQueryOptions.ts`.
+- Prohibido usar `fetch` fuera de `src/common/api` y `src/features/*/server` (ESLint).
+- Las queries se definen con `queryOptions` (solo `queryKey` + `queryFn`) en `hooks/` para reutilizarlas en el hook y en `useQueries`. Ej.: `src/features/paths/hooks/pathQueryOptions.ts`.
+- La política global vive en `createQueryClient()` (`src/common/api/queryClient.ts`), que `Providers` instancia una vez con `useState`: `staleTime` de 60 s y sin reintentos ante 4xx. No repitas `retry` ni `staleTime` en cada query salvo que esa query necesite otra cosa.
+- Los estados derivados de un error (p. ej. `isNotFound` ante un 404) los calcula el hook, no el componente. Ej.: `src/features/paths/hooks/usePathDetailQuery.ts`.
 
 ### 4.5 Estado
 - Datos de servidor: SOLO TanStack Query. Nunca se copian a Zustand ni a `useState`.
