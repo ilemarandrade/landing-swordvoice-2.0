@@ -5,7 +5,7 @@ import { PathsError } from "@/features/paths/components/paths-error";
 import { PathsSkeleton } from "@/features/paths/components/paths-skeleton";
 import { getPathIcon } from "@/features/paths/constants/pathIcons";
 import { usePathDetailsQueries } from "@/features/paths/hooks/usePathDetailQuery";
-import { usePathsQuery } from "@/features/paths/hooks/usePathsQuery";
+import { usePathsQuery } from "@/common/hooks/usePathsQuery";
 
 export function PathsSection() {
   const { data, isPending, isError, refetch } = usePathsQuery();

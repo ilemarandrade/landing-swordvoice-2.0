@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { routes } from "@/common/constants/routes";
-import { usePathsQuery } from "@/features/paths/hooks/usePathsQuery";
+import { usePathsQuery } from "@/common/hooks/usePathsQuery";
 
 export function useFirstPathRedirect() {
   const router = useRouter();

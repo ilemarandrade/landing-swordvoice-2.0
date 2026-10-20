@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/common/api/apiClient";
 import { paginatedSchema } from "@/common/api/envelope";
-import { pathSummarySchema } from "@/features/paths/schemas/path.schema";
+import { pathSummarySchema } from "@/common/api/pathSummary.schema";
 
 // La landing y las pestañas muestran todos los paths: se piden de una vez.
 const PATHS_LIMIT = 100;

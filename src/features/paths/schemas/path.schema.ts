@@ -39,14 +39,6 @@ export const topicSchema = z.object({
   subtopics: z.array(subtopicSchema),
 });
 
-export const pathSummarySchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  slug: z.string(),
-  description: z.string().nullable(),
-  currentVersion: z.number(),
-});
-
 export const pathDetailSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -68,6 +60,5 @@ export type RequiredCertification = z.infer<typeof requiredCertificationSchema>;
 export type TopicCertification = z.infer<typeof topicCertificationSchema>;
 export type Subtopic = z.infer<typeof subtopicSchema>;
 export type Topic = z.infer<typeof topicSchema>;
-export type PathSummary = z.infer<typeof pathSummarySchema>;
 export type PathDetail = z.infer<typeof pathDetailSchema>;
 export type PathProgress = z.infer<typeof pathProgressSchema>;

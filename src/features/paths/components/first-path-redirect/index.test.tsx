@@ -5,7 +5,7 @@ import { renderWithClient } from "../../../../../test/renderWithClient";
 import { ApiError } from "@/common/api/ApiError";
 import { apiClient } from "@/common/api/apiClient";
 import { FirstPathRedirect } from "@/features/paths/components/first-path-redirect";
-import type { PathSummary } from "@/features/paths/schemas/path.schema";
+import type { PathSummary } from "@/common/api/pathSummary.schema";
 
 const router = vi.hoisted(() => ({ replace: vi.fn() }));
 

@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { apiClient } from "@/common/api/apiClient";
-import { usePathsQuery } from "@/features/paths/hooks/usePathsQuery";
+import { usePathsQuery } from "@/common/hooks/usePathsQuery";
 
 vi.mock("@/common/api/apiClient", () => ({
   apiClient: { get: vi.fn() },
