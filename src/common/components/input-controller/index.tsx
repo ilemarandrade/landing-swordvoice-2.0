@@ -81,7 +81,7 @@ export function InputController<TValues extends FieldValues>({
   };
 
   if (multiline) {
-    return <Textarea {...shared} />;
+    return <Textarea {...shared} description={description} />;
   }
   return (
     <Input
