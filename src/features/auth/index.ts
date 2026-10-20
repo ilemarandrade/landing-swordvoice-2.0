@@ -5,5 +5,6 @@ export { LoginForm } from "@/features/auth/components/login-form";
 export { RecoverPassword } from "@/features/auth/components/recover-password";
 export { RegisterBenefits } from "@/features/auth/components/register-benefits";
 export { RegisterForm } from "@/features/auth/components/register-form";
+export { ResetPassword } from "@/features/auth/components/reset-password";
 export { VerifyEmail } from "@/features/auth/components/verify-email";
 export { readToken } from "@/features/auth/utils/readToken";
