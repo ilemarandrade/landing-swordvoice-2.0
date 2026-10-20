@@ -4,6 +4,7 @@ import { routes } from "@/common/constants/routes";
 import {
   AuthCard,
   AuthIntro,
+  OAuthButtons,
   RegisterBenefits,
   RegisterForm,
 } from "@/features/auth";
@@ -43,6 +44,7 @@ export default function RegisterPage() {
           </>
         }
       >
+        <OAuthButtons />
         <RegisterForm />
       </AuthCard>
     </>

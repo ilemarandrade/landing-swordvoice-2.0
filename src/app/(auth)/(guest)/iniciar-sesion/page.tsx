@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { routes } from "@/common/constants/routes";
-import { AuthCard, AuthIntro, LoginForm } from "@/features/auth";
+import { AuthCard, AuthIntro, LoginForm, OAuthButtons } from "@/features/auth";
 
 export const metadata: Metadata = { title: "Iniciar sesión" };
 
@@ -31,6 +31,7 @@ export default function LoginPage() {
           </>
         }
       >
+        <OAuthButtons />
         <LoginForm />
       </AuthCard>
     </>
