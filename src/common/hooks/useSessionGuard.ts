@@ -1,27 +1,19 @@
 import { useRouter } from "next/navigation";
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect } from "react";
 import { routes } from "@/common/constants/routes";
-import { useSessionStore } from "@/common/store/useSessionStore";
+import { useMeQuery } from "@/common/hooks/useMeQuery";
+import { useSession } from "@/common/hooks/useSession";
 
 export type SessionAccess = "private" | "guest";
-
-const subscribeToHydration = (onChange: () => void) =>
-  useSessionStore.persist?.onFinishHydration(onChange) ?? (() => {});
-const getIsHydrated = () => useSessionStore.persist?.hasHydrated() ?? true;
-// En el servidor no hay localStorage: se asume "aún no hidratado".
-const getServerIsHydrated = () => false;
+export type GuardStatus = "loading" | "error" | "ready" | "redirecting";
 
 export function useSessionGuard(access: SessionAccess) {
   const router = useRouter();
-  const isHydrated = useSyncExternalStore(
-    subscribeToHydration,
-    getIsHydrated,
-    getServerIsHydrated,
-  );
-  const isAuthenticated = useSessionStore((state) => state.user !== null);
+  const { status: session } = useSession();
+  const me = useMeQuery();
+  // Con "unknown" (servidor/hidratación) nunca se redirige.
   const mustRedirect =
-    isHydrated &&
-    (access === "private" ? !isAuthenticated : isAuthenticated);
+    access === "private" ? session === "anonymous" : session === "authenticated";
 
   useEffect(() => {
     if (mustRedirect) {
@@ -29,10 +21,13 @@ export function useSessionGuard(access: SessionAccess) {
     }
   }, [mustRedirect, access, router]);
 
-  // Las vistas de invitado se renderizan desde el servidor (SEO); las privadas
-  // esperan a conocer la sesión para no mostrar contenido protegido.
-  const canRender =
-    access === "guest" ? !mustRedirect : isHydrated && !mustRedirect;
+  let status: GuardStatus;
+  if (mustRedirect) status = "redirecting";
+  // Las vistas de invitado se renderizan desde el servidor (SEO).
+  else if (access === "guest") status = "ready";
+  else if (me.isError) status = "error";
+  else if (me.isSuccess) status = "ready";
+  else status = "loading";
 
-  return { canRender };
+  return { status, retry: () => void me.refetch() };
 }
