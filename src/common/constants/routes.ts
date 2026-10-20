@@ -14,6 +14,8 @@ export const routes = {
   DASHBOARD: "/dashboard",
   DASHBOARD_PATHS: "/dashboard/paths",
   DASHBOARD_PROFILE: "/dashboard/profile",
+  DASHBOARD_ADMIN: "/dashboard/admin",
+  DASHBOARD_ADMIN_USERS: "/dashboard/admin/users",
   TERMS: "/terminos",
   PRIVACY: "/privacidad",
 };
