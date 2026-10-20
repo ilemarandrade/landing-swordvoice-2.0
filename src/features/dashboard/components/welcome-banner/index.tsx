@@ -1,11 +1,10 @@
 "use client";
 import { ButtonLink } from "@/common/components/button-link";
-import { learningPaths } from "@/common/constants/learningPaths";
-import { useSessionStore } from "@/common/store/useSessionStore";
+import { useCurrentUser } from "@/features/dashboard/hooks/useCurrentUser";
 
 export function WelcomeBanner() {
-  const user = useSessionStore((state) => state.user);
-  const pathName = user?.path ? learningPaths[user.path].name : null;
+  const { name, primaryPath } = useCurrentUser();
+  const pathName = primaryPath?.name ?? null;
 
   return (
     <section className="relative flex min-h-[200px] items-end overflow-hidden rounded-[18px] bg-ourPathsBackground bg-cover bg-center">
@@ -13,7 +12,7 @@ export function WelcomeBanner() {
       <div className="relative flex w-full flex-wrap items-end justify-between gap-5 p-5 md:p-9">
         <div className="flex max-w-xl flex-col gap-2.5">
           <h2 className="font-sedgwick break-words text-[32px] leading-tight md:text-5xl">
-            Hola, <span className="text-primary">{user?.name}</span>
+            Hola, <span className="text-primary">{name}</span>
           </h2>
           <p className="text-[17px] leading-normal text-[#E6E6EE]">
             {pathName ? (

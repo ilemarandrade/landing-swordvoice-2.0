@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { useSessionStore } from "@/common/store/useSessionStore";
+import { useCurrentUser } from "@/features/dashboard/hooks/useCurrentUser";
+import { useLogoutMutation } from "@/features/dashboard/hooks/useLogoutMutation";
 import { getInitials } from "@/features/dashboard/utils/getInitials";
 
 export function useAccountMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const name = useSessionStore((state) => state.user?.name ?? "");
-  const signOut = useSessionStore((state) => state.signOut);
+  const { name } = useCurrentUser();
+  const { mutate: logout } = useLogoutMutation();
 
   return {
     isOpen,
     toggle: () => setIsOpen((open) => !open),
     initials: getInitials(name),
-    // El SessionGuard del grupo (app) redirige al login al cerrar sesión.
-    signOut,
+    // Al borrar los tokens, el SessionGuard del grupo (app) redirige al login.
+    signOut: () => logout(),
   };
 }
