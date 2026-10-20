@@ -27,16 +27,10 @@ export function LoginForm() {
       />
       <Link
         href={routes.RECOVER_PASSWORD}
-        className="-mt-2 mb-2 self-end text-sm text-primary hover:text-[#FFA34D]"
+        className="-mt-2 mb-4 self-end text-sm text-primary hover:text-[#FFA34D]"
       >
         ¿Olvidaste tu contraseña?
       </Link>
-      <InputController
-        control={control}
-        name="remember"
-        label="Mantener sesión iniciada"
-        type="checkbox"
-      />
       <Button type="submit" label="Entrar" fullWidth disabled={isSubmitting} />
     </form>
   );

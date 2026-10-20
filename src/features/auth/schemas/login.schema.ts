@@ -6,8 +6,7 @@ export const loginSchema = z.object({
   password: z
     .string()
     .min(1, "Ingresa tu contraseña")
-    .max(72, "La contraseña no puede superar 72 caracteres"),
-  remember: z.boolean(),
+    .max(128, "La contraseña no puede superar 128 caracteres"),
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;

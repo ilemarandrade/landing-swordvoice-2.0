@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { useSessionStore } from "@/common/store/useSessionStore";
 import {
   registerSchema,
   type RegisterFormValues,
@@ -17,7 +16,6 @@ const defaultValues: RegisterFormValues = {
 };
 
 export function useRegisterForm() {
-  const signIn = useSessionStore((state) => state.signIn);
   const {
     control,
     handleSubmit,
@@ -34,11 +32,10 @@ export function useRegisterForm() {
     if (isSubmitted) void trigger("confirmPassword");
   }, [password, isSubmitted, trigger]);
 
-  // Sin backend todavía (roadmap feature 1): abre la sesión local y el
-  // SessionGuard del grupo (auth) redirige al dashboard.
-  const onSubmit = handleSubmit(({ name, email, path }) => {
-    signIn({ name, email, path });
-  });
+  // El registro contra la API llega en el sub-proyecto 2 (ver
+  // docs/superpowers/specs/2026-10-19-sesion-real-design.md): hasta entonces
+  // el formulario solo valida.
+  const onSubmit = handleSubmit(() => undefined);
 
   return { control, onSubmit, isSubmitting };
 }
