@@ -8,7 +8,7 @@ import {
   resetPasswordSchema,
   type ResetPasswordFormValues,
 } from "@/features/auth/schemas/resetPassword.schema";
-import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
 export function useResetPasswordForm(token: string) {
   const router = useRouter();

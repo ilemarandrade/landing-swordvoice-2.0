@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCurrentUser } from "@/features/dashboard/hooks/useCurrentUser";
 import { useLogoutMutation } from "@/features/dashboard/hooks/useLogoutMutation";
-import { getInitials } from "@/features/dashboard/utils/getInitials";
+import { getInitials } from "@/common/utils/getInitials";
 
 export function useAccountMenu() {
   const [isOpen, setIsOpen] = useState(false);

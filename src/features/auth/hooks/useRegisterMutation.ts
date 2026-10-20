@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiClient } from "@/common/api/apiClient";
 import { notifyError } from "@/common/errors/notifyError";
-import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
 type RegisterRequest = { name: string; email: string; password: string };
 

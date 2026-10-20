@@ -13,6 +13,7 @@ export const routes = {
   OAUTH_CALLBACK: "/auth/callback",
   DASHBOARD: "/dashboard",
   DASHBOARD_PATHS: "/dashboard/paths",
+  DASHBOARD_PROFILE: "/dashboard/profile",
   TERMS: "/terminos",
   PRIVACY: "/privacidad",
 };

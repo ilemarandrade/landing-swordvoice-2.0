@@ -4,7 +4,7 @@ import { apiClient } from "@/common/api/apiClient";
 import { clearTokens } from "@/common/api/tokenStorage";
 import { notifyError } from "@/common/errors/notifyError";
 import { authMessages } from "@/features/auth/constants/authMessages";
-import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
 type ResetPasswordRequest = { token: string; password: string };
 

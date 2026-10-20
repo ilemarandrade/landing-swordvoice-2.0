@@ -7,7 +7,7 @@ import {
   loginSchema,
   type LoginFormValues,
 } from "@/features/auth/schemas/login.schema";
-import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
 const defaultValues: LoginFormValues = { email: "", password: "" };
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ApiError } from "@/common/api/ApiError";
-import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
 describe("isApiErrorCode", () => {
   it("matches an ApiError with that code", () => {

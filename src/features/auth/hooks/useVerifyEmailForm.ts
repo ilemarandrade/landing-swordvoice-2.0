@@ -8,7 +8,7 @@ import {
   verifyEmailSchema,
   type VerifyEmailFormValues,
 } from "@/features/auth/schemas/verifyEmail.schema";
-import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
 export function useVerifyEmailForm(token: string) {
   const router = useRouter();

@@ -8,7 +8,7 @@ import {
   registerSchema,
   type RegisterFormValues,
 } from "@/features/auth/schemas/register.schema";
-import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
 const defaultValues: RegisterFormValues = {
   name: "",

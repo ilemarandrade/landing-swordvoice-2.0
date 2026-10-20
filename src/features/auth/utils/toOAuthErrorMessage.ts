@@ -1,7 +1,7 @@
 import { ApiError } from "@/common/api/ApiError";
 import { GENERIC_ERROR_MESSAGE } from "@/common/constants/messages";
 import { oauthMessages } from "@/features/auth/constants/oauthMessages";
-import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
 export function toOAuthErrorMessage(
   error: unknown,

@@ -3,7 +3,7 @@ import { apiClient } from "@/common/api/apiClient";
 import { authTokensSchema } from "@/common/api/auth.schema";
 import { saveTokens } from "@/common/api/tokenStorage";
 import { notifyError } from "@/common/errors/notifyError";
-import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
 type VerifyEmailRequest = { token: string; password: string };
 

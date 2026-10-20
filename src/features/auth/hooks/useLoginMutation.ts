@@ -4,7 +4,7 @@ import { authTokensSchema, type AuthTokens } from "@/common/api/auth.schema";
 import { saveTokens } from "@/common/api/tokenStorage";
 import { notifyError } from "@/common/errors/notifyError";
 import type { LoginFormValues } from "@/features/auth/schemas/login.schema";
-import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
 async function login(credentials: LoginFormValues) {
   const { data } = await apiClient.post("/auth/login", credentials);
