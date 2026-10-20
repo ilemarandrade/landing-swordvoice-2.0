@@ -14,5 +14,6 @@ export const dashboardNav: DashboardNavItem[] = [
   { id: "sesiones", label: "Sesiones" },
   { id: "portafolio", label: "Portafolio" },
   { id: "comunidad", label: "Comunidad" },
+  { id: "perfil", label: "Mi perfil", href: routes.DASHBOARD_PROFILE },
   { id: "ajustes", label: "Ajustes" },
 ];

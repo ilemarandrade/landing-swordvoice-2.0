@@ -4,20 +4,35 @@ import { useAccountMenu } from "@/features/dashboard/hooks/useAccountMenu";
 
 const me = vi.hoisted(() => ({ data: undefined as unknown }));
 const logout = vi.hoisted(() => ({ mutate: vi.fn() }));
+const profile = vi.hoisted(() => ({
+  data: undefined as { photoUrl: string | null } | undefined,
+}));
 vi.mock("@/common/hooks/useMeQuery", () => ({ useMeQuery: () => me }));
+vi.mock("@/common/hooks/useProfileQuery", () => ({
+  useProfileQuery: () => profile,
+}));
 vi.mock("@/features/dashboard/hooks/useLogoutMutation", () => ({
   useLogoutMutation: () => logout,
 }));
 
 describe("useAccountMenu", () => {
-  it("derives the initials from the real user name", () => {
+  it("exposes the real user name", () => {
     me.data = { name: "Ana Pérez", pathRoles: [] };
-    expect(renderHook(() => useAccountMenu()).result.current.initials).toBe("AP");
+    expect(renderHook(() => useAccountMenu()).result.current.name).toBe("Ana Pérez");
   });
 
-  it("uses the SV fallback initials while /auth/me loads", () => {
+  it("exposes an empty name while /auth/me loads", () => {
     me.data = undefined;
-    expect(renderHook(() => useAccountMenu()).result.current.initials).toBe("SV");
+    expect(renderHook(() => useAccountMenu()).result.current.name).toBe("");
+  });
+
+  it("exposes the profile photo, or null without one", () => {
+    profile.data = { photoUrl: "https://media.swordvoice.com/p.png" };
+    expect(renderHook(() => useAccountMenu()).result.current.photoUrl).toBe(
+      "https://media.swordvoice.com/p.png",
+    );
+    profile.data = undefined;
+    expect(renderHook(() => useAccountMenu()).result.current.photoUrl).toBeNull();
   });
 
   it("toggles the menu open state", () => {
