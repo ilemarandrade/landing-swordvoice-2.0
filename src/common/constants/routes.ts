@@ -10,6 +10,7 @@ export const routes = {
   RECOVER_PASSWORD: "/recuperar-contrasena",
   VERIFY_EMAIL: "/verify-email",
   RESET_PASSWORD: "/reset-password",
+  OAUTH_CALLBACK: "/auth/callback",
   DASHBOARD: "/dashboard",
   DASHBOARD_PATHS: "/dashboard/paths",
   TERMS: "/terminos",
