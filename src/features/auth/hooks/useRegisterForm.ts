@@ -1,10 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
+import { authMessages } from "@/features/auth/constants/authMessages";
+import { useRegisterMutation } from "@/features/auth/hooks/useRegisterMutation";
+import { useResendVerificationMutation } from "@/features/auth/hooks/useResendVerificationMutation";
 import {
   registerSchema,
   type RegisterFormValues,
 } from "@/features/auth/schemas/register.schema";
+import { isApiErrorCode } from "@/features/auth/utils/isApiErrorCode";
 
 const defaultValues: RegisterFormValues = {
   name: "",
@@ -15,11 +19,15 @@ const defaultValues: RegisterFormValues = {
 };
 
 export function useRegisterForm() {
+  const [sentEmail, setSentEmail] = useState<string | null>(null);
+  const registerMutation = useRegisterMutation();
+  const resendMutation = useResendVerificationMutation();
   const {
     control,
     handleSubmit,
     trigger,
-    formState: { isSubmitting, isSubmitted },
+    setError,
+    formState: { isSubmitted, errors },
   } = useForm<RegisterFormValues>({
     defaultValues,
     resolver: zodResolver(registerSchema),
@@ -31,10 +39,30 @@ export function useRegisterForm() {
     if (isSubmitted) void trigger("confirmPassword");
   }, [password, isSubmitted, trigger]);
 
-  // El registro contra la API llega en el sub-proyecto 2 (ver
-  // docs/superpowers/specs/2026-10-19-sesion-real-design.md): hasta entonces
-  // el formulario solo valida.
-  const onSubmit = handleSubmit(() => undefined);
+  const onSubmit = handleSubmit(({ name, email, password }) =>
+    registerMutation.mutate(
+      { name, email, password },
+      {
+        onSuccess: () => setSentEmail(email),
+        onError: (error) => {
+          if (isApiErrorCode(error, "EMAIL_TAKEN")) {
+            setError("email", { message: authMessages.EMAIL_TAKEN });
+          }
+        },
+      },
+    ),
+  );
 
-  return { control, onSubmit, isSubmitting };
+  return {
+    control,
+    onSubmit,
+    isSubmitting: registerMutation.isPending,
+    // Desaparece cuando el campo se vuelve a validar al editarlo.
+    isEmailTaken: errors.email?.message === authMessages.EMAIL_TAKEN,
+    sentEmail,
+    resend: () => {
+      if (sentEmail) resendMutation.mutate(sentEmail);
+    },
+    isResending: resendMutation.isPending,
+  };
 }

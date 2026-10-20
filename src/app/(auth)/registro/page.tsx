@@ -16,13 +16,13 @@ export default function RegisterPage() {
       <AuthIntro
         title={
           <>
-            Elige tu <span className="text-primary">path</span> y{" "}
+            Crea tu <span className="text-primary">cuenta</span> y{" "}
             <span className="text-secondary">empieza</span>
           </>
         }
         description={
           <>
-            Crea tu cuenta, elige tu ruta y te asignamos un{" "}
+            Crea tu cuenta y, al activar tu membresía, te asignamos un{" "}
             <strong>MENTOR</strong> con el plan exacto que debes seguir.
           </>
         }
