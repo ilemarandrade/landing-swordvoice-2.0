@@ -3,13 +3,22 @@ import Link from "next/link";
 import { Button } from "@/common/components/button";
 import { InputController } from "@/common/components/input-controller";
 import { routes } from "@/common/constants/routes";
+import { UnverifiedEmailNotice } from "@/features/auth/components/login-form/unverified-email-notice";
 import { useLoginForm } from "@/features/auth/hooks/useLoginForm";
 
 export function LoginForm() {
-  const { control, onSubmit, isSubmitting } = useLoginForm();
+  const { control, onSubmit, isSubmitting, unverifiedEmail, resendVerification, isResending } =
+    useLoginForm();
 
   return (
     <form noValidate onSubmit={onSubmit} className="flex flex-col">
+      {unverifiedEmail && (
+        <UnverifiedEmailNotice
+          email={unverifiedEmail}
+          onResend={resendVerification}
+          isResending={isResending}
+        />
+      )}
       <InputController
         control={control}
         name="email"

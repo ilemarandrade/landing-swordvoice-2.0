@@ -52,14 +52,22 @@ describe("useLoginMutation", () => {
     expect(client.getQueryData(["auth", "me"])).toBeUndefined();
   });
 
-  it("notifies the API error and saves nothing", async () => {
-    const error = new ApiError(403, "Confirma tu correo", "EMAIL_NOT_VERIFIED");
+  it("notifies an error that the form does not handle", async () => {
+    const error = new ApiError(401, "Credenciales inválidas", "INVALID_CREDENTIALS");
     vi.mocked(apiClient.post).mockRejectedValue(error);
     const { result } = setup();
     act(() => result.current.mutate(credentials));
     await waitFor(() => expect(result.current.isError).toBe(true));
     expect(vi.mocked(notifyError).mock.calls[0]?.[0]).toBe(error);
     expect(getTokens()).toBeNull();
+  });
+
+  it("does not toast EMAIL_NOT_VERIFIED", async () => {
+    vi.mocked(apiClient.post).mockRejectedValue(new ApiError(403, "x", "EMAIL_NOT_VERIFIED"));
+    const { result } = setup();
+    act(() => result.current.mutate(credentials));
+    await waitFor(() => expect(result.current.isError).toBe(true));
+    expect(notifyError).not.toHaveBeenCalled();
   });
 
   it("fails and saves nothing when the response does not match the schema", async () => {
