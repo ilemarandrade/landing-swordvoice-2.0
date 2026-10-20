@@ -8,6 +8,8 @@ export const routes = {
   LOGIN: "/iniciar-sesion",
   REGISTER: "/registro",
   RECOVER_PASSWORD: "/recuperar-contrasena",
+  VERIFY_EMAIL: "/verify-email",
+  RESET_PASSWORD: "/reset-password",
   DASHBOARD: "/dashboard",
   DASHBOARD_PATHS: "/dashboard/paths",
   TERMS: "/terminos",

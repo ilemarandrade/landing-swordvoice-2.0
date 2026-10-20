@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Button } from "@/common/components/button";
 import { InputController } from "@/common/components/input-controller";
 import { routes } from "@/common/constants/routes";
-import { pathOptions } from "@/features/auth/constants/pathOptions";
 import { useRegisterForm } from "@/features/auth/hooks/useRegisterForm";
 
 export function RegisterForm() {
@@ -38,13 +37,6 @@ export function RegisterForm() {
         label="Confirmar contraseña"
         type="password"
         autoComplete="new-password"
-      />
-      <InputController
-        control={control}
-        name="path"
-        label="Tu path"
-        options={pathOptions}
-        description="Warrior, Master y Ancient: próximamente."
       />
       <InputController
         control={control}

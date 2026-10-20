@@ -11,7 +11,6 @@ const defaultValues: RegisterFormValues = {
   email: "",
   password: "",
   confirmPassword: "",
-  path: "initiated",
   acceptTerms: false,
 };
 
