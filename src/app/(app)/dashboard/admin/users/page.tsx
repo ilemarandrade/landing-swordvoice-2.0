@@ -8,6 +8,7 @@ type UsersRouteProps = {
     search?: string | string[];
     page?: string | string[];
     user?: string | string[];
+    academyRole?: string | string[];
   }>;
 };
 

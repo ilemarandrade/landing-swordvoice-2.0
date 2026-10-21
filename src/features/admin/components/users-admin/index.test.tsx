@@ -54,7 +54,9 @@ describe("UsersAdmin", () => {
 
   it("lists users with their role chips and opens one", async () => {
     respond([ana]);
-    renderWithClient(<UsersAdmin search="" page={1} userId={null} />);
+    renderWithClient(
+      <UsersAdmin search="" page={1} userId={null} academyRole={null} />,
+    );
     expect(await screen.findByText("Initiated · Mentor")).toBeInTheDocument();
     expect(screen.getByText("Sí")).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Ver Ana Pérez" }));
@@ -78,7 +80,9 @@ describe("UsersAdmin", () => {
       },
       luis,
     ]);
-    renderWithClient(<UsersAdmin search="" page={1} userId={null} />);
+    renderWithClient(
+      <UsersAdmin search="" page={1} userId={null} academyRole={null} />,
+    );
 
     expect(await screen.findByText("Initiated · Mentor")).toBeInTheDocument();
     expect(screen.getByText("Avanzado · Aprendiz")).toBeInTheDocument();
@@ -90,14 +94,16 @@ describe("UsersAdmin", () => {
   it("shows the empty state with and without a search", async () => {
     respond([]);
     const { unmount } = renderWithClient(
-      <UsersAdmin search="zzz" page={1} userId={null} />,
+      <UsersAdmin search="zzz" page={1} userId={null} academyRole={null} />,
     );
     expect(
       await screen.findByText("No encontramos usuarios con «zzz»"),
     ).toBeInTheDocument();
     unmount();
 
-    renderWithClient(<UsersAdmin search="" page={1} userId={null} />);
+    renderWithClient(
+      <UsersAdmin search="" page={1} userId={null} academyRole={null} />,
+    );
     expect(
       await screen.findByText("Todavía no hay usuarios"),
     ).toBeInTheDocument();
@@ -105,7 +111,9 @@ describe("UsersAdmin", () => {
 
   it("shows an alert with a retry button when the list fails", async () => {
     vi.mocked(apiClient.get).mockRejectedValue(new Error("boom"));
-    renderWithClient(<UsersAdmin search="" page={1} userId={null} />);
+    renderWithClient(
+      <UsersAdmin search="" page={1} userId={null} academyRole={null} />,
+    );
 
     expect(
       await screen.findByRole("alert"),
@@ -115,7 +123,9 @@ describe("UsersAdmin", () => {
 
   it("paginates and disables Anterior on the first page", async () => {
     respond([ana], { page: 1, limit: 20, total: 45, totalPages: 3 });
-    renderWithClient(<UsersAdmin search="" page={1} userId={null} />);
+    renderWithClient(
+      <UsersAdmin search="" page={1} userId={null} academyRole={null} />,
+    );
     expect(await screen.findByText("Página 1 de 3")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Anterior" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Siguiente" })).toBeEnabled();
@@ -128,7 +138,9 @@ describe("UsersAdmin", () => {
 
   it("disables Siguiente on the last page and goes back from it", async () => {
     respond([ana], { page: 3, limit: 20, total: 45, totalPages: 3 });
-    renderWithClient(<UsersAdmin search="" page={3} userId={null} />);
+    renderWithClient(
+      <UsersAdmin search="" page={3} userId={null} academyRole={null} />,
+    );
     expect(await screen.findByText("Página 3 de 3")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Siguiente" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Anterior" })).toBeEnabled();
@@ -141,7 +153,9 @@ describe("UsersAdmin", () => {
 
   it("enables both pagination buttons on a middle page", async () => {
     respond([ana], { page: 2, limit: 20, total: 45, totalPages: 3 });
-    renderWithClient(<UsersAdmin search="" page={2} userId={null} />);
+    renderWithClient(
+      <UsersAdmin search="" page={2} userId={null} academyRole={null} />,
+    );
     expect(await screen.findByText("Página 2 de 3")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Anterior" })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Siguiente" })).toBeEnabled();
@@ -149,7 +163,9 @@ describe("UsersAdmin", () => {
 
   it("hides pagination when there is a single page", async () => {
     respond([ana]);
-    renderWithClient(<UsersAdmin search="" page={1} userId={null} />);
+    renderWithClient(
+      <UsersAdmin search="" page={1} userId={null} academyRole={null} />,
+    );
     expect(await screen.findByText("Initiated · Mentor")).toBeInTheDocument();
     expect(
       screen.queryByRole("navigation", { name: "Paginación" }),
@@ -159,7 +175,9 @@ describe("UsersAdmin", () => {
   it("navigates once, 300 ms after the last keystroke, back to page 1", async () => {
     respond([ana]);
     vi.useFakeTimers();
-    renderWithClient(<UsersAdmin search="" page={4} userId={null} />);
+    renderWithClient(
+      <UsersAdmin search="" page={4} userId={null} academyRole={null} />,
+    );
     const field = screen.getByLabelText("Buscar por nombre o correo");
     fireEvent.change(field, { target: { value: "a" } });
     fireEvent.change(field, { target: { value: "an" } });
@@ -176,5 +194,42 @@ describe("UsersAdmin", () => {
       "/dashboard/admin/users?search=ana",
       { scroll: false },
     );
+  });
+
+  it("sends the selected academyRole to the list request", async () => {
+    respond([ana]);
+    renderWithClient(
+      <UsersAdmin search="" page={1} userId={null} academyRole="MENTOR" />,
+    );
+    expect(await screen.findByText("Initiated · Mentor")).toBeInTheDocument();
+    expect(apiClient.get).toHaveBeenCalledWith("/users", {
+      params: { page: 1, limit: 20, academyRole: "MENTOR" },
+    });
+    expect(screen.getByRole("button", { name: "Mentor" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
+
+  it("changing the role filter navigates to that role and resets the page", async () => {
+    respond([ana]);
+    renderWithClient(
+      <UsersAdmin search="ana" page={3} userId={null} academyRole={null} />,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Mentor" }));
+    expect(router.replace).toHaveBeenCalledWith(
+      "/dashboard/admin/users?search=ana&academyRole=MENTOR",
+      { scroll: false },
+    );
+  });
+
+  it("shows the role-filter message when the selected role has no users", async () => {
+    respond([]);
+    renderWithClient(
+      <UsersAdmin search="" page={1} userId={null} academyRole="ADMIN" />,
+    );
+    expect(
+      await screen.findByText("No hay usuarios que coincidan con los filtros."),
+    ).toBeInTheDocument();
   });
 });

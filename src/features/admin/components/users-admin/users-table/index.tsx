@@ -5,14 +5,26 @@ import { adminMessages } from "@/features/admin/constants/adminMessages";
 type UsersTableProps = {
   users: User[];
   search: string;
+  hasRoleFilter: boolean;
   onOpen: (userId: string) => void;
 };
 
-export function UsersTable({ users, search, onOpen }: UsersTableProps) {
+function emptyMessage(search: string, hasRoleFilter: boolean) {
+  if (search) return adminMessages.noResults(search);
+  if (hasRoleFilter) return adminMessages.NO_FILTER_RESULTS;
+  return adminMessages.NO_USERS;
+}
+
+export function UsersTable({
+  users,
+  search,
+  hasRoleFilter,
+  onOpen,
+}: UsersTableProps) {
   if (users.length === 0) {
     return (
       <p role="status" className="text-[#C9C9D6]">
-        {search ? adminMessages.noResults(search) : adminMessages.NO_USERS}
+        {emptyMessage(search, hasRoleFilter)}
       </p>
     );
   }

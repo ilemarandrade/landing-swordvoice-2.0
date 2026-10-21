@@ -5,7 +5,7 @@ import { useUsersAdminUrl } from "@/features/admin/hooks/useUsersAdminUrl";
 const router = vi.hoisted(() => ({ replace: vi.fn() }));
 vi.mock("next/navigation", () => ({ useRouter: () => router }));
 
-const current = { search: "ana", page: 3, userId: null };
+const current = { search: "ana", page: 3, userId: null, academyRole: null };
 
 describe("useUsersAdminUrl", () => {
   beforeEach(() => {
@@ -38,7 +38,7 @@ describe("useUsersAdminUrl", () => {
     );
 
     renderHook(() =>
-      useUsersAdminUrl({ search: "ana", page: 3, userId: "u1" }),
+      useUsersAdminUrl({ ...current, userId: "u1" }),
     ).result.current.closeUser();
     expect(router.replace).toHaveBeenLastCalledWith(
       "/dashboard/admin/users?search=ana&page=3",
@@ -57,6 +57,56 @@ describe("useUsersAdminUrl", () => {
     result.current.setPage(1);
     expect(router.replace).toHaveBeenLastCalledWith(
       "/dashboard/admin/users?search=ana",
+      { scroll: false },
+    );
+  });
+
+  it("sets academyRole in the URL and drops the page", () => {
+    renderHook(() =>
+      useUsersAdminUrl({ search: "", page: 3, userId: null, academyRole: null }),
+    ).result.current.setAcademyRole("MENTOR");
+    expect(router.replace).toHaveBeenCalledWith(
+      "/dashboard/admin/users?academyRole=MENTOR",
+      { scroll: false },
+    );
+  });
+
+  it("removes academyRole from the URL when set to null", () => {
+    renderHook(() =>
+      useUsersAdminUrl({ ...current, academyRole: "MENTOR" }),
+    ).result.current.setAcademyRole(null);
+    expect(router.replace).toHaveBeenCalledWith(
+      "/dashboard/admin/users?search=ana",
+      { scroll: false },
+    );
+  });
+
+  it("keeps the search when the role changes", () => {
+    renderHook(() => useUsersAdminUrl(current)).result.current.setAcademyRole(
+      "APPRENTICE",
+    );
+    expect(router.replace).toHaveBeenCalledWith(
+      "/dashboard/admin/users?search=ana&academyRole=APPRENTICE",
+      { scroll: false },
+    );
+  });
+
+  it("keeps the role when the search changes", () => {
+    renderHook(() =>
+      useUsersAdminUrl({ ...current, academyRole: "MENTOR", page: 2 }),
+    ).result.current.setSearch("luis");
+    expect(router.replace).toHaveBeenCalledWith(
+      "/dashboard/admin/users?search=luis&academyRole=MENTOR",
+      { scroll: false },
+    );
+  });
+
+  it("keeps the role when the page changes", () => {
+    renderHook(() =>
+      useUsersAdminUrl({ ...current, search: "", academyRole: "NEWCOMER" }),
+    ).result.current.setPage(2);
+    expect(router.replace).toHaveBeenCalledWith(
+      "/dashboard/admin/users?academyRole=NEWCOMER&page=2",
       { scroll: false },
     );
   });
