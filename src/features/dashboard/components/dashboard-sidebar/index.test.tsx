@@ -20,10 +20,10 @@ describe("DashboardSidebar", () => {
     });
   });
 
-  it("hides Mi path and Usuarios for an account without roles", () => {
+  it("hides Paths and Usuarios for an account without roles", () => {
     render(<DashboardSidebar />);
     expect(screen.getByRole("link", { name: "Inicio" })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Mi path" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Paths" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Usuarios" })).not.toBeInTheDocument();
   });
 
@@ -34,16 +34,16 @@ describe("DashboardSidebar", () => {
       "href",
       "/dashboard/admin/users",
     );
-    expect(screen.queryByRole("link", { name: "Mi path" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Paths" })).not.toBeInTheDocument();
   });
 
-  it("links Mi path to the primary path when there are roles", () => {
+  it("links Paths to the primary path when there are roles", () => {
     Object.assign(user, {
       primaryPath: { slug: "wanderer", name: "Wanderer" },
       hasPathRoles: true,
     });
     render(<DashboardSidebar />);
-    expect(screen.getByRole("link", { name: "Mi path" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Paths" })).toHaveAttribute(
       "href",
       "/dashboard/paths/wanderer",
     );
