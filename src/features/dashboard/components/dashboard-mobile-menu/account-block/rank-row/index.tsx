@@ -26,7 +26,7 @@ export function RankRow({ onNavigate }: RankRowProps) {
         </span>
       )}
       <div className="flex items-baseline gap-1.5">
-        <span className="text-xs uppercase tracking-wider text-[#9A9AAE]">Rango</span>
+        <span className="text-[12px] leading-4 uppercase tracking-wider text-[#9A9AAE]">Rango</span>
         <span className="font-sedgwick text-[22px] leading-tight text-primary">
           {primaryPath?.name ?? "Por definir"}
         </span>

@@ -36,7 +36,7 @@ export function AccountBlock({ onNavigate }: AccountBlockProps) {
           <span className="truncate text-base font-bold">{name}</span>
           <div className="flex items-center gap-2 text-[13px] text-[#C9C9D6]">
             {roleLabel && (
-              <span className="rounded-full border border-primary/60 px-2 text-xs text-white">
+              <span className="rounded-full border border-primary/60 px-2 text-[12px] leading-[18px] text-white">
                 {roleLabel}
               </span>
             )}

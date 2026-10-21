@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ComponentProps, MouseEvent } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { type MobileMenuItem, MobileMenu } from "@/common/components/mobile-menu";
 
 const LOGO = "Logo SV";
@@ -143,5 +143,76 @@ describe("MobileMenu", () => {
 
     const overlay = screen.getByText(LOGO).closest<HTMLElement>("[style]");
     expect(overlay?.style.backgroundImage).toContain("/backgrounds/custom.jpg");
+  });
+
+  describe("body scroll lock", () => {
+    afterEach(() => {
+      document.body.style.overflow = "";
+    });
+
+    it("locks body scroll while open and restores it when closed", async () => {
+      const user = userEvent.setup();
+      renderMenu();
+      expect(document.body.style.overflow).toBe("");
+
+      await user.click(screen.getByRole("button", { name: "Abrir menú" }));
+      expect(document.body.style.overflow).toBe("hidden");
+
+      await user.click(screen.getByRole("button", { name: "Cerrar menú" }));
+      expect(document.body.style.overflow).toBe("");
+    });
+
+    it("restores body scroll when a link closes the menu", async () => {
+      const user = userEvent.setup();
+      renderMenu({ onNavigate: (event) => event.preventDefault() });
+      await user.click(screen.getByRole("button", { name: "Abrir menú" }));
+      expect(document.body.style.overflow).toBe("hidden");
+
+      await user.click(screen.getByRole("link", { name: "Paths" }));
+      expect(document.body.style.overflow).toBe("");
+    });
+  });
+
+  describe("scroll container", () => {
+    const SCROLL_SELECTOR = ".overflow-y-auto";
+
+    it("compact: keeps the toggle outside the scroll container", async () => {
+      const user = userEvent.setup();
+      renderMenu({ compact: true, header: <p>Hola Ana</p> });
+      await user.click(screen.getByRole("button", { name: "Abrir menú" }));
+
+      const toggle = screen.getByRole("button", { name: "Cerrar menú" });
+      expect(toggle.closest(SCROLL_SELECTOR)).toBeNull();
+    });
+
+    it("compact: wraps header, nav and footer in the same scroll container", async () => {
+      const user = userEvent.setup();
+      renderMenu({
+        compact: true,
+        header: <p>Hola Ana</p>,
+        footer: <span>Pie de menú</span>,
+      });
+      await user.click(screen.getByRole("button", { name: "Abrir menú" }));
+
+      const scroller = screen.getByRole("navigation", { name: "Principal" }).closest(SCROLL_SELECTOR);
+      expect(scroller).not.toBeNull();
+      expect(scroller).toHaveClass("overflow-y-auto", "overscroll-contain");
+      expect(screen.getByText("Hola Ana").closest(SCROLL_SELECTOR)).toBe(scroller);
+      expect(screen.getByText("Pie de menú").closest(SCROLL_SELECTOR)).toBe(scroller);
+    });
+
+    it("non-compact: does not render a scroll container around header, nav or footer", async () => {
+      const user = userEvent.setup();
+      renderMenu({
+        header: <p>Hola Ana</p>,
+        footer: <span>Pie de menú</span>,
+      });
+      await user.click(screen.getByRole("button", { name: "Abrir menú" }));
+
+      expect(screen.getByRole("navigation", { name: "Principal" }).closest(SCROLL_SELECTOR)).toBeNull();
+      expect(screen.getByText("Hola Ana").closest(SCROLL_SELECTOR)).toBeNull();
+      expect(screen.getByText("Pie de menú").closest(SCROLL_SELECTOR)).toBeNull();
+      expect(screen.getByRole("button", { name: "Cerrar menú" }).closest(SCROLL_SELECTOR)).toBeNull();
+    });
   });
 });

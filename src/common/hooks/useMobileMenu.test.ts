@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { useMobileMenu } from "@/common/hooks/useMobileMenu";
 
 function pressKey(key: string) {
@@ -61,5 +61,74 @@ describe("useMobileMenu", () => {
     act(() => result.current.toggle());
     unmount();
     expect(removeSpy).toHaveBeenCalledWith("keydown", expect.any(Function));
+  });
+
+  describe("body scroll lock", () => {
+    afterEach(() => {
+      document.body.style.overflow = "";
+    });
+
+    it("sets body overflow to hidden while open", () => {
+      const { result } = renderHook(() => useMobileMenu());
+      expect(document.body.style.overflow).toBe("");
+      act(() => result.current.toggle());
+      expect(document.body.style.overflow).toBe("hidden");
+    });
+
+    it("restores the previous body overflow when closed", () => {
+      const { result } = renderHook(() => useMobileMenu());
+      act(() => result.current.toggle());
+      expect(document.body.style.overflow).toBe("hidden");
+      act(() => result.current.toggle());
+      expect(document.body.style.overflow).toBe("");
+    });
+
+    it("restores the previous body overflow when closed with close()", () => {
+      const { result } = renderHook(() => useMobileMenu());
+      act(() => result.current.toggle());
+      act(() => result.current.close());
+      expect(document.body.style.overflow).toBe("");
+    });
+
+    it("restores the body overflow when Escape closes the menu", () => {
+      const { result } = renderHook(() => useMobileMenu());
+      act(() => result.current.toggle());
+      act(() => pressKey("Escape"));
+      expect(result.current.isOpen).toBe(false);
+      expect(document.body.style.overflow).toBe("");
+    });
+
+    it("restores the body overflow on unmount while open", () => {
+      const { result, unmount } = renderHook(() => useMobileMenu());
+      act(() => result.current.toggle());
+      expect(document.body.style.overflow).toBe("hidden");
+      unmount();
+      expect(document.body.style.overflow).toBe("");
+    });
+
+    it("restores a pre-existing body overflow value, not an empty string", () => {
+      document.body.style.overflow = "scroll";
+      const { result } = renderHook(() => useMobileMenu());
+      act(() => result.current.toggle());
+      expect(document.body.style.overflow).toBe("hidden");
+      act(() => result.current.toggle());
+      expect(document.body.style.overflow).toBe("scroll");
+    });
+
+    it("restores a pre-existing body overflow value on unmount", () => {
+      document.body.style.overflow = "auto";
+      const { result, unmount } = renderHook(() => useMobileMenu());
+      act(() => result.current.toggle());
+      unmount();
+      expect(document.body.style.overflow).toBe("auto");
+    });
+
+    it("does not touch body overflow while closed", () => {
+      document.body.style.overflow = "clip";
+      const { result } = renderHook(() => useMobileMenu());
+      act(() => pressKey("Escape"));
+      expect(result.current.isOpen).toBe(false);
+      expect(document.body.style.overflow).toBe("clip");
+    });
   });
 });
