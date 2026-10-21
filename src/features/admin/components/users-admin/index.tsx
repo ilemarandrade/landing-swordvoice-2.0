@@ -2,6 +2,7 @@
 import { Button } from "@/common/components/button";
 import { UserSearchForm } from "@/features/admin/components/users-admin/user-search-form";
 import { UsersPagination } from "@/features/admin/components/users-admin/users-pagination";
+import { UserPanel } from "@/features/admin/components/users-admin/user-panel";
 import { UsersTable } from "@/features/admin/components/users-admin/users-table";
 import { useUserSearchForm } from "@/features/admin/hooks/useUserSearchForm";
 import { useUsersAdminUrl } from "@/features/admin/hooks/useUsersAdminUrl";
@@ -47,6 +48,9 @@ export function UsersAdmin(params: UsersAdminParams) {
         </>
       ) : (
         <p role="status">Cargando usuarios…</p>
+      )}
+      {params.userId && (
+        <UserPanel userId={params.userId} onClose={url.closeUser} />
       )}
     </>
   );
