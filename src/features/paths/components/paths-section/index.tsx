@@ -3,7 +3,7 @@ import { PathCard } from "@/common/components/path-card";
 import { routes } from "@/common/constants/routes";
 import { PathsError } from "@/features/paths/components/paths-error";
 import { PathsSkeleton } from "@/features/paths/components/paths-skeleton";
-import { getPathIcon } from "@/features/paths/constants/pathIcons";
+import { getPathIcon } from "@/common/constants/pathIcons";
 import { usePathDetailsQueries } from "@/features/paths/hooks/usePathDetailQuery";
 import { usePathsQuery } from "@/common/hooks/usePathsQuery";
 

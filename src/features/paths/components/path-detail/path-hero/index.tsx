@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { routes } from "@/common/constants/routes";
 import { PathProgress } from "@/features/paths/components/path-detail/path-hero/path-progress";
-import { getPathIcon } from "@/features/paths/constants/pathIcons";
+import { getPathIcon } from "@/common/constants/pathIcons";
 import type { PathDetail } from "@/features/paths/schemas/path.schema";
 import type { Trail } from "@/features/paths/utils/buildTrail";
 
