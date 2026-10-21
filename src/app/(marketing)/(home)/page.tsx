@@ -19,7 +19,6 @@ export default function HomePage() {
       <AboutSection />
       <SectionDivider />
       <SwordvoicesSection />
-      <SectionDivider className="relative top-2" />
       <PathsSection />
       <ContactSection />
       <BackToTopButton />
