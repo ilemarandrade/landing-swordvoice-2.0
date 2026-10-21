@@ -34,12 +34,18 @@ const paths = {
 };
 const ok = (data: unknown) => ({ data }) as Awaited<ReturnType<typeof apiClient.get>>;
 const mentorUser = { ...user, pathRoles: [{ path: initiated, role: "MENTOR" }] };
+const landing = { userId: "u1", showOnLanding: true, landingOrder: 3 };
 
 function mockGets(userResponse: Promise<unknown>) {
-  vi.mocked(apiClient.get).mockImplementation((url: string) =>
-    (url === "/paths" ? Promise.resolve(ok(paths)) : userResponse) as ReturnType<typeof apiClient.get>,
-  );
+  vi.mocked(apiClient.get).mockImplementation((url: string) => {
+    if (url === "/paths") return Promise.resolve(ok(paths)) as ReturnType<typeof apiClient.get>;
+    if (url === "/mentors/u1/landing") return Promise.resolve(ok(landing)) as ReturnType<typeof apiClient.get>;
+    return userResponse as ReturnType<typeof apiClient.get>;
+  });
 }
+
+const requestedMentorUrls = () =>
+  vi.mocked(apiClient.get).mock.calls.filter(([url]) => String(url).startsWith("/mentors/"));
 
 function deferred<T>() {
   let resolve!: (value: T) => void;
@@ -148,6 +154,28 @@ describe("UserPanel", () => {
     const dialog = await screen.findByRole("dialog", { name: "Ana Pérez" });
     const roleTerm = within(dialog).getByText("Rol", { selector: "dt" });
     expect(roleTerm.nextElementSibling).toHaveTextContent("Mentor");
+  });
+
+  it("shows Landing for a MENTOR and loads their landing settings", async () => {
+    mockGets(Promise.resolve(ok({ ...user, academyRole: "MENTOR" })));
+    renderWithClient(<UserPanel userId="u1" onClose={vi.fn()} />);
+    expect(
+      await screen.findByRole("heading", { level: 3, name: "Landing" }),
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByRole("checkbox", { name: "Mostrar en la landing" }),
+    ).toBeChecked();
+    expect(apiClient.get).toHaveBeenCalledWith("/mentors/u1/landing");
+  });
+
+  it("hides Landing and does not fetch landing settings for an APPRENTICE", async () => {
+    mockGets(Promise.resolve(ok(user)));
+    renderWithClient(<UserPanel userId="u1" onClose={vi.fn()} />);
+    await screen.findByRole("group", { name: "Rol en Initiated" });
+    expect(
+      screen.queryByRole("heading", { level: 3, name: "Landing" }),
+    ).not.toBeInTheDocument();
+    expect(requestedMentorUrls()).toHaveLength(0);
   });
 
   it("closes when the overlay is clicked", async () => {
