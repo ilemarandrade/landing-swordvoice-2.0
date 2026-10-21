@@ -5,6 +5,7 @@ import { type MouseEvent, useEffect, useState } from "react";
 import Hamburguer from "@/common/assets/icons/Hamburguer";
 import Logo from "@/common/assets/icons/Logo";
 import LogoSwordvoice from "@/common/assets/icons/LogoSwordvoice";
+import { AccountLink } from "@/common/components/navbar/account-link";
 import { NavLink } from "@/common/components/navbar/nav-link";
 import { navAnimation } from "@/common/constants/animations/navAnimation";
 import { mobileNavLinks, navLinks } from "@/common/constants/navLinks";
@@ -108,6 +109,7 @@ export function Navbar({ changeLogo }: NavbarProps) {
             onNavigate={handleClick}
           />
         ))}
+        <AccountLink />
       </motion.div>
 
       <div
@@ -133,6 +135,10 @@ export function Navbar({ changeLogo }: NavbarProps) {
                 onNavigate={handleClick}
               />
             ))}
+            <AccountLink
+              className="my-4"
+              onNavigate={() => setShowMenu(false)}
+            />
           </div>
         )}
       </div>
