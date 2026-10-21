@@ -1,19 +1,16 @@
 "use client";
-import { useQueries } from "@tanstack/react-query";
 import { PathCard } from "@/common/components/path-card";
 import { routes } from "@/common/constants/routes";
 import { PathsError } from "@/features/paths/components/paths-error";
 import { PathsSkeleton } from "@/features/paths/components/paths-skeleton";
-import { getPathIcon } from "@/features/paths/constants/pathIcons";
-import { pathDetailQueryOptions } from "@/features/paths/hooks/pathQueryOptions";
-import { usePathsQuery } from "@/features/paths/hooks/usePathsQuery";
+import { getPathIcon } from "@/common/constants/pathIcons";
+import { usePathDetailsQueries } from "@/features/paths/hooks/usePathDetailQuery";
+import { usePathsQuery } from "@/common/hooks/usePathsQuery";
 
 export function PathsSection() {
   const { data, isPending, isError, refetch } = usePathsQuery();
   const paths = data?.items ?? [];
-  const details = useQueries({
-    queries: paths.map((path) => pathDetailQueryOptions(path.slug)),
-  });
+  const details = usePathDetailsQueries(paths.map((p) => p.slug));
 
   return (
     <section

@@ -2,7 +2,7 @@
 
 Fuente única de verdad para implementar código en este repo. `pnpm lint` hace cumplir las reglas de estructura (§1, §3); el resto se revisa en code review. Si una regla no cubre tu caso: **detente y pregunta**, no improvises.
 
-Ejemplo canónico de punta a punta: la feature `src/features/paths` (schema → service con `request()` → `queryOptions` → hook → componente → route).
+Ejemplo canónico de punta a punta: la feature `src/features/paths` (schema → hook con su servicio y `useQuery` → componente cliente → route).
 
 ## 1. Estructura
 
@@ -11,12 +11,11 @@ src/app/                 Rutas de Next: cada segmento compone su UI con los arch
                          (layout, page, error, not-found, loading, route…). Ver §4.8.
 src/features/<dominio>/  Una carpeta por dominio (home, auth, legal, dashboard…).
   components/            Una carpeta kebab-case por componente con su index.tsx (ver §4.1)
-  hooks/                 Lógica del módulo + useXxxQuery / useXxxMutation
-  services/              Funciones cliente que llaman a request()
+  hooks/                 Lógica del módulo + useXxxQuery / useXxxMutation (con su servicio y query key)
   server/                Solo servidor (import "server-only"); entra por server/index.ts
   schemas/               *.schema.ts (zod) → tipos con z.infer
   store/                 Slice Zustand (solo si §4.5 lo justifica)
-  constants/             Incluye queryKeys.ts cuando haya queries
+  constants/
   utils/
   index.ts               API pública: secciones, componentes y constantes que componen las rutas de app/
 src/common/              Lo compartido: components, providers, hooks, api, store, config, errors, utils, constants, assets
@@ -31,7 +30,7 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 
 - `app` → `features/<x>` (solo `index.ts` o `server/index.ts`) → `common`.
 - Una feature NO importa de otra feature. `common` NO importa de `features` ni de `app`.
-- Dentro de una feature: `components → hooks → services → @/common/api`. Un componente nunca importa `services/` ni `server/`.
+- Dentro de una feature: `components → hooks → @/common/api`. Un componente nunca importa `apiClient` ni `server/`.
 - `server/` solo se importa desde `src/app/api/**`.
 - Imports siempre con `@/` (también dentro de la misma feature).
 
@@ -53,7 +52,7 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 - Un hijo solo lo importa su padre. Si otro componente de la feature lo necesita, sube a `features/<x>/components/<nombre>/`; si lo necesita otra feature, a `common/components/<nombre>/`.
 - Componentes base (un elemento visual, sin lógica de negocio): `src/common/components/input/index.tsx`.
 - Componente con hijos: `src/common/components/navbar/index.tsx` → `navbar/nav-link/index.tsx`; `src/features/home/components/contact-section/index.tsx` → `contact-section/contact-form/index.tsx`.
-- Los componentes usan hooks de su feature; nunca `services` ni `fetch`.
+- Los componentes usan hooks de su feature; nunca `apiClient` ni `fetch`.
 - Las features NO definen páginas ni layouts (`XxxPage`, `XxxLayout`): exportan secciones y componentes, y la ruta los compone en `src/app` (§4.8).
 - Export nombrado en PascalCase (`export function ContactForm`), props en `type XxxProps`. Más de 150 líneas → divide en hijos.
 - Import por carpeta: `@/features/home/components/contact-section/contact-form` (sin `/index`).
@@ -76,12 +75,23 @@ Nace en la feature. Se mueve a `common/` cuando lo usa **una segunda feature**. 
 - Ejemplo: `<InputController control={control} name="email" label="Correo electrónico" type="email" />` (ver `src/features/home/components/contact-section/contact-form/index.tsx`).
 
 ### 4.4 Endpoints
-- Toda llamada HTTP pasa por `request(path, { method, body, params, schema })` de `@/common/api/httpClient`, que usa la instancia única de axios `apiClient` (`@/common/api/axiosInstances`, baseURL `NEXT_PUBLIC_API_URL`), desempaqueta el sobre `{ statusCode, message, data }` y valida `data` con el schema. Lanza `ApiError(status, message, errorCode)` ante error de red, HTTP no-2xx o respuesta inválida.
-- `services/<recurso>Service.ts`: funciones que solo llaman a `request`. Ej.: `src/features/paths/services/pathsService.ts`.
-- `hooks/`: `useQuery` / `useMutation` envolviendo services. Query keys en `constants/queryKeys.ts`: `export const xKeys = { all: ["x"] as const, detail: (id: string) => ["x", id] as const }`.
+- **Por ahora todas las peticiones a la API se hacen desde el cliente** con TanStack Query: ni `page.tsx`, ni `generateMetadata`, ni `sitemap.ts` llaman a la API, y no se usa prefetch ni `<HydrationBoundary>`. Flujo: schema → hook (servicio + `useQuery`) → componente cliente → `page.tsx` lo compone.
+- Toda llamada HTTP usa la instancia única de axios `apiClient` (`@/common/api/apiClient`, baseURL `NEXT_PUBLIC_API_URL`, timeout de 10 s). Sus interceptores desempaquetan el sobre `{ statusCode, message, data }` (`response.data` ya es `data`) y convierten cualquier fallo en `ApiError(status, message, errorCode)` (status 0 = sin conexión).
+- Un hook por query o mutation en `hooks/useXxxQuery.ts` / `useXxxMutation.ts`, y en el mismo archivo: la función de servicio (llama a `apiClient` y valida la respuesta con `schema.parse`), la query key literal (`["paths"]`, `["paths", slug]`) y el `useQuery` / `useMutation`. Ej.: `src/features/paths/hooks/usePathDetailQuery.ts`.
+  ```ts
+  async function getPaths() {
+    const { data } = await apiClient.get("/paths");
+    return pathsSchema.parse(data);
+  }
+  export function usePathsQuery() {
+    return useQuery({ queryKey: ["paths"], queryFn: getPaths });
+  }
+  ```
+- Si la misma query se usa de otra forma (p. ej. `useQueries`), va como otro hook en el mismo archivo (`usePathDetailsQueries`), no en un archivo aparte.
 - `app/api/**/route.ts`: `safeParse` del body con el MISMO schema → 400 `{ message }`; llama a `features/<x>/server`; 200 con JSON validable por el schema de respuesta; 500 `{ message }` genérico, y el error real solo a `console.error`.
-- Prohibido importar `axios` fuera de `src/common/api`, y `fetch` fuera de `src/common/api` y `src/features/*/server` (ESLint).
-- Las queries se definen con `queryOptions` en `hooks/` para reutilizarlas en el hook (cliente) y en el prefetch de `page.tsx` con `getQueryClient()` + `<HydrationBoundary>` (servidor). Ej.: `src/features/paths/hooks/pathQueryOptions.ts`.
+- Prohibido importar `axios` o usar `fetch` fuera de `src/common/api` (y `fetch` en `src/features/*/server`) (ESLint).
+- La política global vive en `createQueryClient()` (`src/common/api/queryClient.ts`), que `Providers` instancia una vez con `useState`: `staleTime` de 60 s y sin reintentos ante 4xx. No repitas `retry` ni `staleTime` en cada query salvo que esa query necesite otra cosa.
+- Los estados derivados de un error (p. ej. `isNotFound` ante un 404) los calcula el hook, no el componente. Ej.: `src/features/paths/hooks/usePathDetailQuery.ts`.
 
 ### 4.5 Estado
 - Datos de servidor: SOLO TanStack Query. Nunca se copian a Zustand ni a `useState`.
@@ -124,7 +134,8 @@ Next.js 15.5. Referencia: https://nextjs.org/docs/app/getting-started/project-st
 ## 5. Tests (Vitest + React Testing Library)
 - Junto al código: `x.ts` → `x.test.ts`.
 - Schemas: casos válidos e inválidos con el mensaje exacto (`src/features/home/schemas/contact.schema.test.ts`).
-- Services / httpClient: `vi.spyOn(globalThis, "fetch")` — éxito, `!res.ok`, respuesta inválida (`src/common/api/httpClient.test.ts`).
+- `apiClient`: los helpers de los interceptores (`unwrapEnvelope`, `toApiError`) como funciones puras (`src/common/api/apiClient.test.ts`).
+- Hooks de datos: `vi.mock("@/common/api/apiClient")` y `renderHook` con QueryClient — éxito, `ApiError`, respuesta que no cumple el schema.
 - Hooks: `renderHook`; si usan React Query, `renderWithClient` de `test/renderWithClient.tsx`.
 - Componentes: comportamiento visible con `getByRole` / `getByLabelText` + `userEvent`. Sin snapshots.
 - Server y route handlers: `// @vitest-environment node`.

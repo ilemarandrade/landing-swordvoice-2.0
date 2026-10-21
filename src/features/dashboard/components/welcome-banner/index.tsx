@@ -1,32 +1,47 @@
 "use client";
 import { ButtonLink } from "@/common/components/button-link";
-import { learningPaths } from "@/common/constants/learningPaths";
-import { useSessionStore } from "@/common/store/useSessionStore";
+import { routes } from "@/common/constants/routes";
+import { useCurrentUser } from "@/features/dashboard/hooks/useCurrentUser";
 
 export function WelcomeBanner() {
-  const user = useSessionStore((state) => state.user);
-  const pathName = user?.path ? learningPaths[user.path].name : null;
+  const { name, apprenticePath, academyRole, isAdmin } = useCurrentUser();
+
+  const subtitle = apprenticePath ? (
+    <>
+      Estás en el path{" "}
+      <strong className="text-secondary">{apprenticePath.name}</strong>.
+    </>
+  ) : isAdmin ? (
+    "Administra usuarios y roles."
+  ) : academyRole === "NEWCOMER" ? (
+    "Tu cuenta está lista. Pronto nos pondremos en contacto contigo para continuar."
+  ) : null;
+
+  const showAdminAction = isAdmin && !apprenticePath;
 
   return (
     <section className="relative flex min-h-[200px] items-end overflow-hidden rounded-[18px] bg-ourPathsBackground bg-cover bg-center">
-      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/20" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/20"
+      />
       <div className="relative flex w-full flex-wrap items-end justify-between gap-5 p-5 md:p-9">
         <div className="flex max-w-xl flex-col gap-2.5">
           <h2 className="font-sedgwick break-words text-[32px] leading-tight md:text-5xl">
-            Hola, <span className="text-primary">{user?.name}</span>
+            Hola, <span className="text-primary">{name}</span>
           </h2>
-          <p className="text-[17px] leading-normal text-[#E6E6EE]">
-            {pathName ? (
-              <>
-                Estás en el path <strong className="text-secondary">{pathName}</strong>.
-                Tu mentor te dejó el plan de esta semana.
-              </>
-            ) : (
-              "Pronto te asignaremos un path y un mentor."
-            )}
-          </p>
+          {subtitle && (
+            <p className="text-[17px] leading-normal text-[#E6E6EE]">
+              {subtitle}
+            </p>
+          )}
         </div>
-        <ButtonLink href="#progreso" label="Continuar plan" />
+        {showAdminAction && (
+          <ButtonLink
+            href={routes.DASHBOARD_ADMIN_USERS}
+            label="Ir a usuarios"
+          />
+        )}
       </div>
     </section>
   );

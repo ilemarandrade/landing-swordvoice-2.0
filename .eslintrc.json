@@ -107,7 +107,7 @@
           },
           {
             "name": "axios",
-            "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
+            "message": "Usa apiClient de @/common/api/apiClient (conventions §4.4)."
           }
         ]
       }
@@ -116,7 +116,7 @@
       "error",
       {
         "name": "fetch",
-        "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
+        "message": "Usa apiClient de @/common/api/apiClient (conventions §4.4)."
       }
     ],
     "no-restricted-properties": [
@@ -151,7 +151,7 @@
               },
               {
                 "name": "axios",
-                "message": "Usa request() de @/common/api/httpClient (conventions §4.4)."
+                "message": "Usa apiClient de @/common/api/apiClient (conventions §4.4)."
               }
             ],
             "patterns": [

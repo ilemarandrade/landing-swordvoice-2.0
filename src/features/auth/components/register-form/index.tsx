@@ -3,20 +3,20 @@ import Link from "next/link";
 import { Button } from "@/common/components/button";
 import { InputController } from "@/common/components/input-controller";
 import { routes } from "@/common/constants/routes";
-import { pathOptions } from "@/features/auth/constants/pathOptions";
+import { RegisterEmailSent } from "@/features/auth/components/register-form/register-email-sent";
 import { useRegisterForm } from "@/features/auth/hooks/useRegisterForm";
 
 export function RegisterForm() {
-  const { control, onSubmit, isSubmitting } = useRegisterForm();
+  const { control, onSubmit, isSubmitting, isEmailTaken, sentEmail, resend, isResending } =
+    useRegisterForm();
+
+  if (sentEmail) {
+    return <RegisterEmailSent email={sentEmail} onResend={resend} isResending={isResending} />;
+  }
 
   return (
     <form noValidate onSubmit={onSubmit} className="flex flex-col">
-      <InputController
-        control={control}
-        name="name"
-        label="Nombre y Apellido"
-        autoComplete="name"
-      />
+      <InputController control={control} name="name" label="Nombre y Apellido" autoComplete="name" />
       <InputController
         control={control}
         name="email"
@@ -24,13 +24,21 @@ export function RegisterForm() {
         type="email"
         autoComplete="email"
       />
+      {isEmailTaken && (
+        <Link
+          href={routes.RECOVER_PASSWORD}
+          className="-mt-2 mb-4 self-start text-sm text-primary hover:text-[#FFA34D]"
+        >
+          ¿Olvidaste tu contraseña?
+        </Link>
+      )}
       <InputController
         control={control}
         name="password"
         label="Contraseña"
         type="password"
         autoComplete="new-password"
-        description="Mínimo 8 caracteres, con al menos un número."
+        description="Mínimo 8 caracteres."
       />
       <InputController
         control={control}
@@ -38,13 +46,6 @@ export function RegisterForm() {
         label="Confirmar contraseña"
         type="password"
         autoComplete="new-password"
-      />
-      <InputController
-        control={control}
-        name="path"
-        label="Tu path"
-        options={pathOptions}
-        description="Warrior, Master y Ancient: próximamente."
       />
       <InputController
         control={control}

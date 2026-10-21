@@ -21,7 +21,6 @@ export function PathCard({
   description,
   href,
   ctaLabel = "Ver",
-  eyebrow,
   stats,
 }: PathCardProps) {
   return (

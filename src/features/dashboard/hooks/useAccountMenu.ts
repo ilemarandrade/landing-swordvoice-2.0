@@ -1,17 +1,22 @@
 import { useState } from "react";
-import { useSessionStore } from "@/common/store/useSessionStore";
-import { getInitials } from "@/features/dashboard/utils/getInitials";
+import { academyRoleLabels } from "@/common/constants/academyRoleLabels";
+import { useProfileQuery } from "@/common/hooks/useProfileQuery";
+import { useCurrentUser } from "@/features/dashboard/hooks/useCurrentUser";
+import { useLogoutMutation } from "@/features/dashboard/hooks/useLogoutMutation";
 
 export function useAccountMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const name = useSessionStore((state) => state.user?.name ?? "");
-  const signOut = useSessionStore((state) => state.signOut);
+  const { name, academyRole } = useCurrentUser();
+  const { data: profile } = useProfileQuery();
+  const { mutate: logout } = useLogoutMutation();
 
   return {
     isOpen,
     toggle: () => setIsOpen((open) => !open),
-    initials: getInitials(name),
-    // El SessionGuard del grupo (app) redirige al login al cerrar sesión.
-    signOut,
+    name,
+    roleLabel: academyRole ? academyRoleLabels[academyRole] : null,
+    photoUrl: profile?.photoUrl ?? null,
+    // Al borrar los tokens, el SessionGuard del grupo (app) redirige al login.
+    signOut: () => logout(),
   };
 }

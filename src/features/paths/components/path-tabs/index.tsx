@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathsQuery } from "@/features/paths/hooks/usePathsQuery";
+import { usePathsQuery } from "@/common/hooks/usePathsQuery";
 
 type PathTabsProps = { activeSlug: string; basePath: string };
 

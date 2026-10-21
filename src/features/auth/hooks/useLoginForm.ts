@@ -1,34 +1,43 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSessionStore } from "@/common/store/useSessionStore";
+import { useLoginMutation } from "@/features/auth/hooks/useLoginMutation";
+import { useResendVerificationMutation } from "@/features/auth/hooks/useResendVerificationMutation";
 import {
   loginSchema,
   type LoginFormValues,
 } from "@/features/auth/schemas/login.schema";
+import { isApiErrorCode } from "@/common/api/isApiErrorCode";
 
-const defaultValues: LoginFormValues = {
-  email: "",
-  password: "",
-  remember: false,
-};
+const defaultValues: LoginFormValues = { email: "", password: "" };
 
 export function useLoginForm() {
-  const signIn = useSessionStore((state) => state.signIn);
-  const {
-    control,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<LoginFormValues>({
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
+  const { mutate, isPending } = useLoginMutation();
+  const resendMutation = useResendVerificationMutation();
+  const { control, handleSubmit } = useForm<LoginFormValues>({
     defaultValues,
     resolver: zodResolver(loginSchema),
   });
 
-  // Sin backend todavía (roadmap feature 1): abre la sesión local y el
-  // SessionGuard del grupo (auth) redirige al dashboard. `remember` se
-  // enviará al backend cuando exista.
-  const onSubmit = handleSubmit(({ email }) => {
-    signIn({ name: email.split("@")[0], email, path: null });
+  // Al guardar los tokens, el SessionGuard del grupo (guest) redirige al dashboard.
+  const onSubmit = handleSubmit((values) => {
+    setUnverifiedEmail(null);
+    mutate(values, {
+      onError: (error) => {
+        if (isApiErrorCode(error, "EMAIL_NOT_VERIFIED")) setUnverifiedEmail(values.email);
+      },
+    });
   });
 
-  return { control, onSubmit, isSubmitting };
+  return {
+    control,
+    onSubmit,
+    isSubmitting: isPending,
+    unverifiedEmail,
+    resendVerification: () => {
+      if (unverifiedEmail) resendMutation.mutate(unverifiedEmail);
+    },
+    isResending: resendMutation.isPending,
+  };
 }
