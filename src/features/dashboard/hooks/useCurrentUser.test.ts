@@ -7,6 +7,7 @@ vi.mock("@/common/hooks/useMeQuery", () => ({ useMeQuery: () => me }));
 
 const initiated = { id: "p1", slug: "initiated", name: "Initiated" };
 const wanderer = { id: "p2", slug: "wanderer", name: "Wanderer" };
+const sage = { id: "p3", slug: "sage", name: "Sage" };
 
 describe("useCurrentUser", () => {
   it("returns empty values while /auth/me loads", () => {
@@ -14,7 +15,7 @@ describe("useCurrentUser", () => {
     expect(renderHook(() => useCurrentUser()).result.current).toEqual({
       name: "",
       primaryPath: null,
-      primaryRole: null,
+      apprenticePath: null,
       academyRole: null,
       isAdmin: false,
       hasPathRoles: false,
@@ -33,10 +34,52 @@ describe("useCurrentUser", () => {
     expect(renderHook(() => useCurrentUser()).result.current).toEqual({
       name: "Ana Pérez",
       primaryPath: { slug: "initiated", name: "Initiated" },
-      primaryRole: "MENTOR",
+      apprenticePath: { slug: "wanderer", name: "Wanderer" },
       academyRole: "MENTOR",
       isAdmin: false,
       hasPathRoles: true,
+    });
+  });
+
+  it("returns the first APPRENTICE path even when a MENTOR path comes before it", () => {
+    me.data = {
+      name: "Ana",
+      academyRole: "APPRENTICE",
+      pathRoles: [
+        { path: initiated, role: "MENTOR" },
+        { path: wanderer, role: "APPRENTICE" },
+      ],
+    };
+    expect(renderHook(() => useCurrentUser()).result.current.apprenticePath).toEqual({
+      slug: "wanderer",
+      name: "Wanderer",
+    });
+  });
+
+  it("returns the first of several APPRENTICE paths", () => {
+    me.data = {
+      name: "Ana",
+      academyRole: "APPRENTICE",
+      pathRoles: [
+        { path: initiated, role: "APPRENTICE" },
+        { path: sage, role: "APPRENTICE" },
+      ],
+    };
+    expect(renderHook(() => useCurrentUser()).result.current.apprenticePath).toEqual({
+      slug: "initiated",
+      name: "Initiated",
+    });
+  });
+
+  it("returns no apprentice path when the user is only a mentor", () => {
+    me.data = {
+      name: "Ana",
+      academyRole: "MENTOR",
+      pathRoles: [{ path: initiated, role: "MENTOR" }],
+    };
+    expect(renderHook(() => useCurrentUser()).result.current).toMatchObject({
+      primaryPath: { slug: "initiated", name: "Initiated" },
+      apprenticePath: null,
     });
   });
 
@@ -45,7 +88,7 @@ describe("useCurrentUser", () => {
     expect(renderHook(() => useCurrentUser()).result.current).toEqual({
       name: "Ana",
       primaryPath: null,
-      primaryRole: null,
+      apprenticePath: null,
       academyRole: "NEWCOMER",
       isAdmin: false,
       hasPathRoles: false,
@@ -59,6 +102,7 @@ describe("useCurrentUser", () => {
       isAdmin: true,
       hasPathRoles: false,
       primaryPath: null,
+      apprenticePath: null,
     });
   });
 

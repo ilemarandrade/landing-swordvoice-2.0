@@ -5,7 +5,6 @@ import { DashboardSidebar } from "@/features/dashboard/components/dashboard-side
 const user = vi.hoisted(() => ({
   name: "Ana",
   primaryPath: null as { slug: string; name: string } | null,
-  primaryRole: null as "MENTOR" | "APPRENTICE" | null,
   isAdmin: false,
   hasPathRoles: false,
 }));
@@ -16,7 +15,6 @@ describe("DashboardSidebar", () => {
   beforeEach(() => {
     Object.assign(user, {
       primaryPath: null,
-      primaryRole: null,
       isAdmin: false,
       hasPathRoles: false,
     });
@@ -42,7 +40,6 @@ describe("DashboardSidebar", () => {
   it("links Mi path to the primary path when there are roles", () => {
     Object.assign(user, {
       primaryPath: { slug: "wanderer", name: "Wanderer" },
-      primaryRole: "APPRENTICE",
       hasPathRoles: true,
     });
     render(<DashboardSidebar />);
