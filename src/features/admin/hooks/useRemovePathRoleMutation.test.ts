@@ -12,7 +12,7 @@ vi.mock("@/common/api/apiClient", () => ({ apiClient: { delete: vi.fn() } }));
 vi.mock("@/common/errors/notifyError", () => ({ notifyError: vi.fn() }));
 vi.mock("react-hot-toast", () => ({ default: { success: vi.fn() } }));
 
-const user = { id: "u1", email: "a@x.com", name: "Ana", role: "USER", emailVerified: true, pathRoles: [] };
+const user = { id: "u1", email: "a@x.com", name: "Ana", academyRole: "NEWCOMER", emailVerified: true, pathRoles: [] };
 
 function setup() {
   const client = new QueryClient({ defaultOptions: { mutations: { retry: false } } });

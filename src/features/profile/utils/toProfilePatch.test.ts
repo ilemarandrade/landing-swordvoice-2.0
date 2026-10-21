@@ -55,6 +55,7 @@ describe("toProfileFormValues", () => {
         portfolioUrl: null,
         linkedinUrl: null,
         freeCodeCampUsername: "ana",
+        academyRole: "NEWCOMER",
         professionalTitle: null,
         shortDescription: null,
       }),

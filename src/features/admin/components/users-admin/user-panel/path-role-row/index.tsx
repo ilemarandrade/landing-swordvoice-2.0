@@ -1,7 +1,5 @@
-import {
-  pathRoleLabels,
-  type PathRoleType,
-} from "@/features/admin/constants/pathRoleLabels";
+import type { PathRoleType } from "@/common/api/auth.schema";
+import { academyRoleLabels } from "@/common/constants/academyRoleLabels";
 
 type PathRoleRowProps = {
   pathName: string;
@@ -12,8 +10,8 @@ type PathRoleRowProps = {
 
 const OPTIONS: { role: PathRoleType | null; label: string }[] = [
   { role: null, label: "Sin rol" },
-  { role: "APPRENTICE", label: pathRoleLabels.APPRENTICE },
-  { role: "MENTOR", label: pathRoleLabels.MENTOR },
+  { role: "APPRENTICE", label: academyRoleLabels.APPRENTICE },
+  { role: "MENTOR", label: academyRoleLabels.MENTOR },
 ];
 
 export function PathRoleRow({

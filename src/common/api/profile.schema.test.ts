@@ -3,6 +3,7 @@ import { profileSchema } from "@/common/api/profile.schema";
 
 const valid = {
   name: "Ana Pérez",
+  academyRole: "MENTOR",
   photoUrl: null,
   bio: null,
   githubUrl: "https://github.com/ana",
@@ -33,6 +34,16 @@ describe("profileSchema", () => {
     const withoutName: Partial<typeof valid> = { ...valid };
     delete withoutName.name;
     expect(profileSchema.safeParse(withoutName).success).toBe(false);
+  });
+
+  it("rejects a profile without academyRole", () => {
+    const withoutRole: Partial<typeof valid> = { ...valid };
+    delete withoutRole.academyRole;
+    expect(profileSchema.safeParse(withoutRole).success).toBe(false);
+  });
+
+  it("rejects an unknown academyRole", () => {
+    expect(profileSchema.safeParse({ ...valid, academyRole: "USER" }).success).toBe(false);
   });
 
   it("rejects a null name", () => {

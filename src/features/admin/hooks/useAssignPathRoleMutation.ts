@@ -1,9 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { apiClient } from "@/common/api/apiClient";
-import { userSchema } from "@/common/api/auth.schema";
+import { type PathRoleType, userSchema } from "@/common/api/auth.schema";
 import { adminMessages } from "@/features/admin/constants/adminMessages";
-import type { PathRoleType } from "@/features/admin/constants/pathRoleLabels";
 import {
   applyUpdatedUser,
   handlePathRoleError,

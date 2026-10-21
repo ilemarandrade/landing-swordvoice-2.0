@@ -15,6 +15,7 @@ describe("useCurrentUser", () => {
       name: "",
       primaryPath: null,
       primaryRole: null,
+      academyRole: null,
       isAdmin: false,
       hasPathRoles: false,
     });
@@ -23,7 +24,7 @@ describe("useCurrentUser", () => {
   it("uses the first path role as the primary one", () => {
     me.data = {
       name: "Ana Pérez",
-      role: "USER",
+      academyRole: "MENTOR",
       pathRoles: [
         { path: initiated, role: "MENTOR" },
         { path: wanderer, role: "APPRENTICE" },
@@ -33,28 +34,52 @@ describe("useCurrentUser", () => {
       name: "Ana Pérez",
       primaryPath: { slug: "initiated", name: "Initiated" },
       primaryRole: "MENTOR",
+      academyRole: "MENTOR",
       isAdmin: false,
       hasPathRoles: true,
     });
   });
 
   it("reports no roles and no admin for a plain account without path roles", () => {
-    me.data = { name: "Ana", role: "USER", pathRoles: [] };
+    me.data = { name: "Ana", academyRole: "NEWCOMER", pathRoles: [] };
     expect(renderHook(() => useCurrentUser()).result.current).toEqual({
       name: "Ana",
       primaryPath: null,
       primaryRole: null,
+      academyRole: "NEWCOMER",
       isAdmin: false,
       hasPathRoles: false,
     });
   });
 
   it("detects an admin without path roles", () => {
-    me.data = { name: "Admin", role: "ADMIN", pathRoles: [] };
+    me.data = { name: "Admin", academyRole: "ADMIN", pathRoles: [] };
     expect(renderHook(() => useCurrentUser()).result.current).toMatchObject({
+      academyRole: "ADMIN",
       isAdmin: true,
       hasPathRoles: false,
       primaryPath: null,
     });
+  });
+
+  it.each(["MENTOR", "APPRENTICE", "NEWCOMER"] as const)(
+    "is not an admin with academyRole %s, even with a path role",
+    (academyRole) => {
+      me.data = {
+        name: "Ana",
+        academyRole,
+        pathRoles: [{ path: initiated, role: "MENTOR" }],
+      };
+      expect(renderHook(() => useCurrentUser()).result.current.isAdmin).toBe(false);
+    },
+  );
+
+  it("is an admin with academyRole ADMIN even when a path role is MENTOR", () => {
+    me.data = {
+      name: "Ana",
+      academyRole: "ADMIN",
+      pathRoles: [{ path: initiated, role: "MENTOR" }],
+    };
+    expect(renderHook(() => useCurrentUser()).result.current.isAdmin).toBe(true);
   });
 });

@@ -1,6 +1,6 @@
 import type { User } from "@/common/api/auth.schema";
+import { academyRoleLabels } from "@/common/constants/academyRoleLabels";
 import { adminMessages } from "@/features/admin/constants/adminMessages";
-import { pathRoleLabels } from "@/features/admin/constants/pathRoleLabels";
 
 type UsersTableProps = {
   users: User[];
@@ -19,13 +19,14 @@ export function UsersTable({ users, search, onOpen }: UsersTableProps) {
 
   return (
     <div className="overflow-x-auto rounded-[18px] border border-white/15 bg-[#000E2799]">
-      <table className="w-full min-w-[640px] text-left text-[15px]">
+      <table className="w-full min-w-[760px] text-left text-[15px]">
         <thead className="border-b border-white/15 text-sm text-[#C9C9D6]">
           <tr>
             <th className="p-4 font-semibold">Nombre</th>
+            <th className="p-4 font-semibold">Rol</th>
             <th className="p-4 font-semibold">Correo</th>
             <th className="p-4 font-semibold">Confirmado</th>
-            <th className="p-4 font-semibold">Roles</th>
+            <th className="p-4 font-semibold">Paths</th>
             <th className="p-4" aria-label="Acciones" />
           </tr>
         </thead>
@@ -36,6 +37,7 @@ export function UsersTable({ users, search, onOpen }: UsersTableProps) {
               className="border-b border-white/10 last:border-0"
             >
               <td className="p-4">{user.name}</td>
+              <td className="p-4">{academyRoleLabels[user.academyRole]}</td>
               <td className="p-4 text-[#E6E6EE]">{user.email}</td>
               <td className="p-4">{user.emailVerified ? "Sí" : "No"}</td>
               <td className="p-4">
@@ -48,7 +50,7 @@ export function UsersTable({ users, search, onOpen }: UsersTableProps) {
                         key={path.id}
                         className="rounded-full border border-primary/60 px-3 py-1 text-sm"
                       >
-                        {path.name} · {pathRoleLabels[role]}
+                        {path.name} · {academyRoleLabels[role]}
                       </li>
                     ))}
                   </ul>

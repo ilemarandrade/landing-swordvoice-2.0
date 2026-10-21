@@ -21,6 +21,13 @@ describe("useAccountMenu", () => {
     expect(renderHook(() => useAccountMenu()).result.current.name).toBe("Ana Pérez");
   });
 
+  it("exposes the academy role label, or null without a role", () => {
+    me.data = { name: "Ana Pérez", academyRole: "MENTOR", pathRoles: [] };
+    expect(renderHook(() => useAccountMenu()).result.current.roleLabel).toBe("Mentor");
+    me.data = undefined;
+    expect(renderHook(() => useAccountMenu()).result.current.roleLabel).toBeNull();
+  });
+
   it("exposes an empty name while /auth/me loads", () => {
     me.data = undefined;
     expect(renderHook(() => useAccountMenu()).result.current.name).toBe("");

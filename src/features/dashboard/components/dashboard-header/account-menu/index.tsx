@@ -5,38 +5,45 @@ import { routes } from "@/common/constants/routes";
 import { useAccountMenu } from "@/features/dashboard/hooks/useAccountMenu";
 
 export function AccountMenu() {
-  const { isOpen, toggle, name, photoUrl, signOut } = useAccountMenu();
+  const { isOpen, toggle, name, roleLabel, photoUrl, signOut } = useAccountMenu();
 
   return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={toggle}
-        aria-expanded={isOpen}
-        aria-controls="account-menu"
-        aria-label="Mi cuenta"
-        className="rounded-full hover:[&>span]:border-primary"
-      >
-        <Avatar name={name} photoUrl={photoUrl} size={44} />
-      </button>
-      <div
-        id="account-menu"
-        hidden={!isOpen}
-        className="absolute right-0 top-14 z-20 w-48 rounded-xl border border-white/15 bg-black p-2"
-      >
-        <Link
-          href={routes.DASHBOARD_PROFILE}
-          className="flex min-h-11 w-full items-center rounded-lg px-3 text-left text-white no-underline hover:bg-white/10"
-        >
-          Mi perfil
-        </Link>
+    <div className="flex items-center gap-4">
+      {roleLabel && (
+        <span className="inline-flex rounded-full border border-primary/60 px-3 py-1 text-sm">
+          {roleLabel}
+        </span>
+      )}
+      <div className="relative">
         <button
           type="button"
-          onClick={signOut}
-          className="min-h-11 w-full rounded-lg px-3 text-left hover:bg-white/10"
+          onClick={toggle}
+          aria-expanded={isOpen}
+          aria-controls="account-menu"
+          aria-label="Mi cuenta"
+          className="rounded-full hover:[&>span]:border-primary"
         >
-          Cerrar sesión
+          <Avatar name={name} photoUrl={photoUrl} size={44} />
         </button>
+        <div
+          id="account-menu"
+          hidden={!isOpen}
+          className="absolute right-0 top-14 z-20 w-48 rounded-xl border border-white/15 bg-black p-2"
+        >
+          <Link
+            href={routes.DASHBOARD_PROFILE}
+            className="flex min-h-11 w-full items-center rounded-lg px-3 text-left text-white no-underline hover:bg-white/10"
+          >
+            Mi perfil
+          </Link>
+          <button
+            type="button"
+            onClick={signOut}
+            className="min-h-11 w-full rounded-lg px-3 text-left hover:bg-white/10"
+          >
+            Cerrar sesión
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -11,7 +11,8 @@ export function useCurrentUser() {
       name: primary.path.name,
     },
     primaryRole: primary?.role ?? null,
-    isAdmin: data?.role === "ADMIN",
+    academyRole: data?.academyRole ?? null,
+    isAdmin: data?.academyRole === "ADMIN",
     hasPathRoles: primary !== null,
   };
 }

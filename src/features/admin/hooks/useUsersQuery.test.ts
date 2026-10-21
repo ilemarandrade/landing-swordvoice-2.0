@@ -15,7 +15,7 @@ function wrapper({ children }: { children: ReactNode }) {
 
 const page = {
   items: [
-    { id: "u1", email: "ana@example.com", name: "Ana", role: "USER", emailVerified: true, pathRoles: [] },
+    { id: "u1", email: "ana@example.com", name: "Ana", academyRole: "NEWCOMER", emailVerified: true, pathRoles: [] },
   ],
   meta: { page: 1, limit: 20, total: 1, totalPages: 1 },
 };

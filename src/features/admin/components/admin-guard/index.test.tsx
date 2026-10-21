@@ -20,26 +20,26 @@ describe("AdminGuard", () => {
   });
 
   it("sends a USER back to the dashboard", () => {
-    me.data = { role: "USER" };
+    me.data = { academyRole: "NEWCOMER" };
     render(<AdminGuard>zona admin</AdminGuard>);
     expect(screen.queryByText("zona admin")).not.toBeInTheDocument();
     expect(router.replace).toHaveBeenCalledWith("/dashboard");
   });
 
   it("renders the area for an ADMIN", () => {
-    me.data = { role: "ADMIN" };
+    me.data = { academyRole: "ADMIN" };
     render(<AdminGuard>zona admin</AdminGuard>);
     expect(screen.getByText("zona admin")).toBeInTheDocument();
     expect(router.replace).not.toHaveBeenCalled();
   });
 
   it("removes the area and redirects when the admin role is revoked after loading", () => {
-    me.data = { role: "ADMIN" };
+    me.data = { academyRole: "ADMIN" };
     const { rerender } = render(<AdminGuard>zona admin</AdminGuard>);
     expect(screen.getByText("zona admin")).toBeInTheDocument();
 
     // /auth/me se recarga tras un 403 y ya no trae el rol ADMIN.
-    me.data = { role: "USER" };
+    me.data = { academyRole: "NEWCOMER" };
     rerender(<AdminGuard>zona admin</AdminGuard>);
     expect(screen.queryByText("zona admin")).not.toBeInTheDocument();
     expect(router.replace).toHaveBeenCalledWith("/dashboard");

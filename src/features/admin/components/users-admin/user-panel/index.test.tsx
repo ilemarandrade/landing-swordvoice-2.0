@@ -21,7 +21,7 @@ const user = {
   id: "u1",
   email: "ana@example.com",
   name: "Ana Pérez",
-  role: "USER",
+  academyRole: "APPRENTICE",
   emailVerified: true,
   pathRoles: [{ path: initiated, role: "APPRENTICE" }],
 };
@@ -132,13 +132,22 @@ describe("UserPanel", () => {
   });
 
   it("is labelled by the user's name and shows the account details", async () => {
-    mockGets(Promise.resolve(ok({ ...user, role: "ADMIN" })));
+    mockGets(Promise.resolve(ok({ ...user, academyRole: "ADMIN" })));
     renderWithClient(<UserPanel userId="u1" onClose={vi.fn()} />);
     const dialog = await screen.findByRole("dialog", { name: "Ana Pérez" });
     expect(dialog).toHaveAttribute("aria-modal", "true");
     expect(within(dialog).getByText("ana@example.com")).toBeInTheDocument();
     expect(within(dialog).getByText("Sí")).toBeInTheDocument();
-    expect(within(dialog).getByText("Administrador")).toBeInTheDocument();
+    const roleTerm = within(dialog).getByText("Rol", { selector: "dt" });
+    expect(roleTerm.nextElementSibling).toHaveTextContent("Admin");
+  });
+
+  it("shows the academyRole label under 'Rol' for a non-admin user", async () => {
+    mockGets(Promise.resolve(ok({ ...user, academyRole: "MENTOR" })));
+    renderWithClient(<UserPanel userId="u1" onClose={vi.fn()} />);
+    const dialog = await screen.findByRole("dialog", { name: "Ana Pérez" });
+    const roleTerm = within(dialog).getByText("Rol", { selector: "dt" });
+    expect(roleTerm.nextElementSibling).toHaveTextContent("Mentor");
   });
 
   it("closes when the overlay is clicked", async () => {

@@ -19,6 +19,7 @@ const profile = {
   portfolioUrl: null,
   linkedinUrl: null,
   freeCodeCampUsername: null,
+  academyRole: "NEWCOMER",
   professionalTitle: null,
   shortDescription: null,
 };

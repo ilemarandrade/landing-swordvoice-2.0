@@ -17,7 +17,7 @@ const user = {
   id: "u1",
   email: "ana@example.com",
   name: "Ana",
-  role: "USER",
+  academyRole: "NEWCOMER",
   emailVerified: true,
   pathRoles: [],
 };

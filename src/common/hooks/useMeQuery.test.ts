@@ -25,7 +25,7 @@ const user = {
   id: "u1",
   email: "ana@example.com",
   name: "Ana Pérez",
-  role: "USER",
+  academyRole: "NEWCOMER",
   emailVerified: true,
   pathRoles: [{ path: { id: "p1", slug: "initiated", name: "Initiated" }, role: "MENTOR" }],
 };
@@ -60,7 +60,7 @@ describe("useMeQuery", () => {
 
   it("fails when the response does not match the schema", async () => {
     saveTokens({ accessToken: "a", refreshToken: "r", expiresIn: 900 });
-    vi.mocked(apiClient.get).mockResolvedValue(ok({ ...user, role: "OWNER" }));
+    vi.mocked(apiClient.get).mockResolvedValue(ok({ ...user, academyRole: "OWNER" }));
     const { result } = renderHook(() => useMeQuery(), { wrapper: createWrapper() });
     await waitFor(() => expect(result.current.isError).toBe(true));
   });

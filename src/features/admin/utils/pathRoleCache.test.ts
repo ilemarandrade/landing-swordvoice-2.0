@@ -9,7 +9,7 @@ import { applyUpdatedUser, handlePathRoleError } from "@/features/admin/utils/pa
 
 vi.mock("@/common/errors/notifyError", () => ({ notifyError: vi.fn() }));
 
-const user: User = { id: "u1", email: "ana@example.com", name: "Ana", role: "USER", emailVerified: true, pathRoles: [] };
+const user: User = { id: "u1", email: "ana@example.com", name: "Ana", academyRole: "NEWCOMER", emailVerified: true, pathRoles: [] };
 const updated: User = { ...user, name: "Ana B" };
 const listKey = ["users", { search: "", page: 1 }] as const;
 const detailKey = ["users", "u1"] as const;

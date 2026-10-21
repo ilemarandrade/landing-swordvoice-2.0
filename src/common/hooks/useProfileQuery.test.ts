@@ -20,6 +20,7 @@ function wrapper({ children }: { children: ReactNode }) {
 
 const profile = {
   name: "Ana Pérez",
+  academyRole: "MENTOR",
   photoUrl: null,
   bio: null,
   githubUrl: "https://github.com/ana",

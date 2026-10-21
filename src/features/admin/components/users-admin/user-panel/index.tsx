@@ -1,9 +1,10 @@
 "use client";
+import type { PathRoleType } from "@/common/api/auth.schema";
 import { Button } from "@/common/components/button";
+import { academyRoleLabels } from "@/common/constants/academyRoleLabels";
 import { usePathsQuery } from "@/common/hooks/usePathsQuery";
 import { PathRoleRow } from "@/features/admin/components/users-admin/user-panel/path-role-row";
 import { adminMessages } from "@/features/admin/constants/adminMessages";
-import type { PathRoleType } from "@/features/admin/constants/pathRoleLabels";
 import { useAssignPathRoleMutation } from "@/features/admin/hooks/useAssignPathRoleMutation";
 import { useDialog } from "@/features/admin/hooks/useDialog";
 import { useRemovePathRoleMutation } from "@/features/admin/hooks/useRemovePathRoleMutation";
@@ -73,10 +74,8 @@ export function UserPanel({ userId, onClose }: UserPanelProps) {
               <dd>{user.data.email}</dd>
               <dt className="text-[#C9C9D6]">Confirmado</dt>
               <dd>{user.data.emailVerified ? "Sí" : "No"}</dd>
-              <dt className="text-[#C9C9D6]">Rol global</dt>
-              <dd>
-                {user.data.role === "ADMIN" ? "Administrador" : "Usuario"}
-              </dd>
+              <dt className="text-[#C9C9D6]">Rol</dt>
+              <dd>{academyRoleLabels[user.data.academyRole]}</dd>
             </dl>
             <h3 className="mt-2 text-lg font-bold text-primary">
               Roles por path

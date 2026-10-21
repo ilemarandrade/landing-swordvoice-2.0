@@ -13,7 +13,7 @@ const ana = {
   id: "u1",
   email: "ana@example.com",
   name: "Ana Pérez",
-  role: "USER",
+  academyRole: "MENTOR",
   emailVerified: true,
   pathRoles: [
     {
@@ -27,7 +27,7 @@ const luis = {
   id: "u2",
   email: "luis@example.com",
   name: "Luis Gómez",
-  role: "USER",
+  academyRole: "NEWCOMER",
   emailVerified: false,
   pathRoles: [],
 };

@@ -1,11 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { authTokensSchema, userSchema } from "@/common/api/auth.schema";
+import {
+  academyRoleSchema,
+  authTokensSchema,
+  userSchema,
+} from "@/common/api/auth.schema";
 
 const validUser = {
   id: "u1",
   email: "ana@example.com",
   name: "Ana Pérez",
-  role: "USER",
+  academyRole: "MENTOR",
   emailVerified: true,
   pathRoles: [
     { path: { id: "p1", slug: "initiated", name: "Initiated" }, role: "MENTOR" },
@@ -31,7 +35,27 @@ describe("authTokensSchema", () => {
   });
 });
 
+describe("academyRoleSchema", () => {
+  it.each(["ADMIN", "MENTOR", "APPRENTICE", "NEWCOMER"])("accepts %s", (role) => {
+    expect(academyRoleSchema.safeParse(role).success).toBe(true);
+  });
+
+  it("rejects an unknown academy role", () => {
+    expect(academyRoleSchema.safeParse("USER").success).toBe(false);
+  });
+});
+
 describe("userSchema", () => {
+  it.each(["ADMIN", "MENTOR", "APPRENTICE", "NEWCOMER"])(
+    "accepts a user with academyRole %s",
+    (academyRole) => {
+      expect(userSchema.parse({ ...validUser, academyRole })).toEqual({
+        ...validUser,
+        academyRole,
+      });
+    },
+  );
+
   it("accepts a user with path roles", () => {
     expect(userSchema.parse(validUser)).toEqual(validUser);
   });
@@ -41,7 +65,9 @@ describe("userSchema", () => {
   });
 
   it.each([
-    ["an unknown role", { ...validUser, role: "OWNER" }],
+    ["an unknown academyRole", { ...validUser, academyRole: "OWNER" }],
+    ["a missing academyRole", { ...validUser, academyRole: undefined }],
+    ["the legacy role field instead of academyRole", { ...validUser, academyRole: undefined, role: "USER" }],
     ["an unknown path role", { ...validUser, pathRoles: [{ ...validUser.pathRoles[0], role: "ADMIN" }] }],
     ["a missing emailVerified", { ...validUser, emailVerified: undefined }],
     ["a path without slug", { ...validUser, pathRoles: [{ path: { id: "p1", name: "Initiated" }, role: "MENTOR" }] }],

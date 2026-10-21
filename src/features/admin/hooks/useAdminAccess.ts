@@ -7,7 +7,7 @@ import { useMeQuery } from "@/common/hooks/useMeQuery";
 export function useAdminAccess() {
   const router = useRouter();
   const { data } = useMeQuery();
-  const isAdmin = data?.role === "ADMIN";
+  const isAdmin = data?.academyRole === "ADMIN";
   const mustRedirect = data !== undefined && !isAdmin;
 
   useEffect(() => {

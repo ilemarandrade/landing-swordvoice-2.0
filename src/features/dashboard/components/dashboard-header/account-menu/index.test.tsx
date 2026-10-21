@@ -7,6 +7,7 @@ const menu = vi.hoisted(() => ({
   isOpen: true,
   toggle: vi.fn(),
   name: "Ana Pérez",
+  roleLabel: null as string | null,
   photoUrl: null as string | null,
   signOut: vi.fn(),
 }));
@@ -15,9 +16,25 @@ vi.mock("@/features/dashboard/hooks/useAccountMenu", () => ({ useAccountMenu: ()
 describe("AccountMenu", () => {
   beforeEach(() => {
     menu.isOpen = true;
+    menu.roleLabel = null;
     menu.photoUrl = null;
     menu.toggle.mockClear();
     menu.signOut.mockClear();
+  });
+
+  it("shows the academy role label as a badge", () => {
+    menu.roleLabel = "Mentor";
+    render(<AccountMenu />);
+    expect(screen.getByText("Mentor")).toBeInTheDocument();
+  });
+
+  it("shows no role badge when the user has no academy role", () => {
+    menu.roleLabel = null;
+    render(<AccountMenu />);
+    expect(screen.queryByText("Mentor")).not.toBeInTheDocument();
+    expect(screen.queryByText("Admin")).not.toBeInTheDocument();
+    expect(screen.queryByText("Aprendiz")).not.toBeInTheDocument();
+    expect(screen.queryByText("Nuevo")).not.toBeInTheDocument();
   });
 
   it("shows the initials without a photo and the photo when there is one", () => {

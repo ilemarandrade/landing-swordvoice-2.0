@@ -15,7 +15,7 @@ const user = {
   id: "u1",
   email: "ana@example.com",
   name: "Ana",
-  role: "USER",
+  academyRole: "MENTOR",
   emailVerified: true,
   pathRoles: [{ path: { id: "p1", slug: "initiated", name: "Initiated" }, role: "MENTOR" }],
 };
