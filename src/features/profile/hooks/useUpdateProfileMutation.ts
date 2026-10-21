@@ -24,9 +24,12 @@ export function useUpdateProfileMutation() {
       }
       toast.success(profileMessages.PROFILE_UPDATED);
     },
-    // El usuario de freeCodeCamp ocupado se muestra bajo su campo.
+    // Estos errores de validación del backend se muestran bajo su campo.
     onError: (error) => {
-      if (!isApiErrorCode(error, "FREECODECAMP_USERNAME_TAKEN"))
+      if (
+        !isApiErrorCode(error, "FREECODECAMP_USERNAME_TAKEN") &&
+        !isApiErrorCode(error, "EXPERIENCE_START_IN_FUTURE")
+      )
         notifyError(error);
     },
   });

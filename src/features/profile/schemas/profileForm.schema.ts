@@ -18,6 +18,19 @@ function isHttpsUrl(value: string): boolean {
 const optionalText = (max: number, message: string) =>
   z.string().trim().max(max, message);
 
+// AAAA-MM-DD que existe de verdad (descarta 2019-02-30 o 2019-13-01).
+function isRealDate(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return (
+    !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value
+  );
+}
+
+function todayUtc(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
 const optionalUrl = (isValid: (value: string) => boolean, message: string) =>
   z
     .string()
@@ -31,7 +44,7 @@ export const profileFormSchema = z.object({
     .trim()
     .min(1, "Ingresa tu nombre")
     .max(80, "El nombre no puede superar 80 caracteres"),
-  bio: optionalText(500, "La bio no puede superar 500 caracteres"),
+  bio: optionalText(1500, "La bio no puede superar 1500 caracteres"),
   githubUrl: optionalUrl(
     (value) => GITHUB_URL.test(value),
     "Usa el formato https://github.com/tu-usuario",
@@ -53,9 +66,21 @@ export const profileFormSchema = z.object({
     "El título no puede superar 80 caracteres",
   ),
   shortDescription: optionalText(
-    280,
-    "La descripción no puede superar 280 caracteres",
+    150,
+    "La descripción no puede superar 150 caracteres",
   ),
+  experienceStartedAt: z
+    .string()
+    .trim()
+    .refine(
+      (value) => value === "" || isRealDate(value),
+      "Usa una fecha válida",
+    )
+    .refine(
+      // Solo compara fechas bien formadas; las inválidas ya tienen su mensaje.
+      (value) => !isRealDate(value) || value <= todayUtc(),
+      "La fecha no puede ser futura",
+    ),
 });
 
 export type ProfileFormValues = z.infer<typeof profileFormSchema>;

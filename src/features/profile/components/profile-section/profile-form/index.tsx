@@ -75,6 +75,13 @@ export function ProfileForm({ profile, email, isMentor }: ProfileFormProps) {
             multiline
             description="Se muestra en la landing."
           />
+          <InputController
+            control={control}
+            name="experienceStartedAt"
+            label="Inicio de experiencia"
+            type="date"
+            description="Se usa para calcular tus años de experiencia en la landing."
+          />
         </fieldset>
       )}
       <Button

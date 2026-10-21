@@ -9,6 +9,7 @@ const NULLABLE_FIELDS = [
   "freeCodeCampUsername",
   "professionalTitle",
   "shortDescription",
+  "experienceStartedAt",
 ] as const;
 
 type NullableField = (typeof NULLABLE_FIELDS)[number];
@@ -16,6 +17,7 @@ type NullableField = (typeof NULLABLE_FIELDS)[number];
 const MENTOR_FIELDS: ReadonlySet<NullableField> = new Set<NullableField>([
   "professionalTitle",
   "shortDescription",
+  "experienceStartedAt",
 ]);
 
 export type ProfilePatch = { name?: string } & Partial<
@@ -32,6 +34,7 @@ export function toProfileFormValues(profile: Profile): ProfileFormValues {
     freeCodeCampUsername: profile.freeCodeCampUsername ?? "",
     professionalTitle: profile.professionalTitle ?? "",
     shortDescription: profile.shortDescription ?? "",
+    experienceStartedAt: profile.experienceStartedAt ?? "",
   };
 }
 

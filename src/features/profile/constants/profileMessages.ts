@@ -5,4 +5,5 @@ export const profileMessages = {
     "Ese usuario de freeCodeCamp ya está vinculado a otra cuenta",
   INVALID_IMAGE: "Elige una imagen JPG, PNG o WebP",
   PHOTO_UPLOAD_FAILED: "No pudimos subir la foto. Inténtalo de nuevo.",
+  EXPERIENCE_START_IN_FUTURE: "La fecha no puede ser futura",
 } as const;

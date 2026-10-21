@@ -30,6 +30,20 @@ describe("profileSchema", () => {
     expect(profileSchema.parse(filled)).toEqual(filled);
   });
 
+  it("accepts experienceStartedAt as a date, as null, or absent", () => {
+    expect(
+      profileSchema.parse({ ...valid, experienceStartedAt: "2019-03-15" }).experienceStartedAt,
+    ).toBe("2019-03-15");
+    expect(
+      profileSchema.parse({ ...valid, experienceStartedAt: null }).experienceStartedAt,
+    ).toBeNull();
+    expect(profileSchema.parse(valid).experienceStartedAt).toBeUndefined();
+  });
+
+  it("rejects experienceStartedAt that is not a string or null", () => {
+    expect(profileSchema.safeParse({ ...valid, experienceStartedAt: 2019 }).success).toBe(false);
+  });
+
   it("rejects a profile without name", () => {
     const withoutName: Partial<typeof valid> = { ...valid };
     delete withoutName.name;
