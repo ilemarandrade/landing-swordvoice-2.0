@@ -24,7 +24,7 @@ export function VerifyEmail({ token }: VerifyEmailProps) {
         }
         description="Escribe la contraseña de tu cuenta para confirmar tu correo y entrar."
       />
-      <AuthCard title="Confirmar correo">
+      <AuthCard title="Confirmar">
         <VerifyEmailForm
           control={control}
           onSubmit={onSubmit}

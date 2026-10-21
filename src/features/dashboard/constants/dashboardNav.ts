@@ -15,7 +15,12 @@ export const dashboardNav: DashboardNavItem[] = [
     href: routes.DASHBOARD_ADMIN_USERS,
     activePrefix: routes.DASHBOARD_ADMIN,
   },
-  { id: "path", label: "Mi path", href: routes.DASHBOARD_PATHS, activePrefix: routes.DASHBOARD_PATHS },
+  {
+    id: "path",
+    label: "Paths",
+    href: routes.DASHBOARD_PATHS,
+    activePrefix: routes.DASHBOARD_PATHS,
+  },
   { id: "mentor", label: "Mi mentor" },
   { id: "sesiones", label: "Sesiones" },
   { id: "portafolio", label: "Portafolio" },
