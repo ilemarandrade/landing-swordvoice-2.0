@@ -98,7 +98,7 @@ export function Navbar({ changeLogo }: NavbarProps) {
 
       <motion.div
         variants={navAnimation.nav}
-        className="hidden md:flex mx-8 mt-5 gap-[40px] py-4"
+        className="hidden md:flex mx-8 gap-6 flex items-center"
       >
         {navLinks.map((link) => (
           <NavLink

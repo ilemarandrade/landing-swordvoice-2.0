@@ -9,11 +9,16 @@ type NavLinkProps = {
   onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
 };
 
-export function NavLink({ item, variant, className, onNavigate }: NavLinkProps) {
+export function NavLink({
+  item,
+  variant,
+  className,
+  onNavigate,
+}: NavLinkProps) {
   return (
     <a
       href={item.href}
-      className="no-underline"
+      className="no-underline max-h-max"
       onClick={(event) => onNavigate(event, item.href)}
     >
       <Typography variant={variant} className={className}>
