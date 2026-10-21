@@ -48,8 +48,9 @@ export function Navbar({ changeLogo }: NavbarProps) {
 
       <motion.div
         initial="offscreen"
-        whileInView="onscreen"
-        viewport={{ once: true }}
+        // animate (no whileInView): el estado offscreen saca el bloque del viewport
+        // (top: -100px), así que el IntersectionObserver nunca lo vería entrar.
+        animate="onscreen"
         variants={navAnimation.nav}
         className="hidden md:flex mx-8 gap-6 flex items-center"
       >
