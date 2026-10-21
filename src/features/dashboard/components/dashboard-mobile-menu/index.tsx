@@ -44,7 +44,7 @@ export function DashboardMobileMenu() {
             close();
             signOut();
           }}
-          className={`${buttonClassName()} ${outlineClassName}`}
+          className={`${buttonClassName()} ${outlineClassName} mt-6`}
         >
           Cerrar sesión
         </button>
