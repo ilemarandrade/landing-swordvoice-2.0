@@ -1,6 +1,10 @@
 export const adminMessages = {
   ROLE_ASSIGNED: "Rol asignado",
   ROLE_REMOVED: "Rol quitado",
+  LANDING_SAVED: "Configuración de landing guardada",
+  LANDING_ORDER_TAKEN:
+    "Esa posición ya la tiene otro mentor. Libérala primero.",
+  LANDING_LOAD_FAILED: "No pudimos cargar la configuración de landing.",
   USER_NOT_FOUND: "Este usuario ya no existe.",
   USER_LOAD_FAILED: "No pudimos cargar este usuario.",
   NO_USERS: "Todavía no hay usuarios",

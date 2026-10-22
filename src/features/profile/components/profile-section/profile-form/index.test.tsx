@@ -32,6 +32,8 @@ const TAKEN = "Ese usuario de freeCodeCamp ya está vinculado a otra cuenta";
 describe("ProfileForm", () => {
   beforeEach(() => {
     vi.mocked(apiClient.patch).mockReset();
+    vi.mocked(notifyError).mockClear();
+    vi.mocked(toast.success).mockClear();
   });
 
   it("shows the email read-only and disables saving without changes", () => {
@@ -58,6 +60,16 @@ describe("ProfileForm", () => {
     renderWithClient(<ProfileForm profile={profile} email="ana@example.com" isMentor />);
     expect(screen.getByLabelText("Título profesional")).toBeInTheDocument();
     expect(screen.getByLabelText("Descripción corta")).toBeInTheDocument();
+  });
+
+  it("shows the experience start date only for mentors", () => {
+    const { unmount } = renderWithClient(
+      <ProfileForm profile={profile} email="ana@example.com" isMentor={false} />,
+    );
+    expect(screen.queryByLabelText("Inicio de experiencia")).not.toBeInTheDocument();
+    unmount();
+    renderWithClient(<ProfileForm profile={profile} email="ana@example.com" isMentor />);
+    expect(screen.getByLabelText("Inicio de experiencia")).toHaveAttribute("type", "date");
   });
 
   it("shows the mentor hint on the mentor fields", () => {
@@ -109,6 +121,21 @@ describe("ProfileForm", () => {
     expect(await screen.findByText(TAKEN)).toBeInTheDocument();
     expect(field).toHaveAttribute("aria-invalid", "true");
     expect(field).toHaveAccessibleDescription(TAKEN);
+    expect(notifyError).not.toHaveBeenCalled();
+    expect(toast.success).not.toHaveBeenCalled();
+  });
+
+  it("shows the backend future-date error under the experience start date without a toast", async () => {
+    const FUTURE = "La fecha no puede ser futura";
+    vi.mocked(apiClient.patch).mockRejectedValue(
+      new ApiError(422, "x", "EXPERIENCE_START_IN_FUTURE"),
+    );
+    renderWithClient(<ProfileForm profile={profile} email="ana@example.com" isMentor />);
+    const field = screen.getByLabelText("Inicio de experiencia");
+    await userEvent.type(field, "2019-03-15");
+    await userEvent.click(screen.getByRole("button", { name: SAVE }));
+    expect(await screen.findByText(FUTURE)).toBeInTheDocument();
+    expect(field).toHaveAttribute("aria-invalid", "true");
     expect(notifyError).not.toHaveBeenCalled();
     expect(toast.success).not.toHaveBeenCalled();
   });

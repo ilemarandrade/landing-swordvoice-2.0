@@ -2,15 +2,14 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import type { Mentor } from "@/features/home/schemas/mentor.schema";
 import { SwordvoicesCard } from "@/features/home/components/swordvoices-section/swordvoices-carousel/swordvoices-card";
-import { swordvoices } from "@/features/home/constants/swordvoices";
 import { useSlidesToShow } from "@/features/home/hooks/useSlidesToShow";
 
 const settings = {
   dots: true,
   speed: 500,
   arrows: false,
-  infinite: true,
   slidesToScroll: 1,
   customPaging: () => (
     <div
@@ -25,24 +24,27 @@ const settings = {
   pauseOnHover: true,
 };
 
-export function SwordVoicesCarousel() {
+type SwordVoicesCarouselProps = { mentors: Mentor[] };
+
+export function SwordVoicesCarousel({ mentors }: SwordVoicesCarouselProps) {
   const { slidesToShow } = useSlidesToShow();
+  // Con menos mentores que huecos no hay nada que girar: se muestran todos
+  // y no se duplican cards en el bucle.
+  const shown = Math.min(slidesToShow, mentors.length);
+  const loops = mentors.length > shown;
 
   // react-slick no aplica cambios de slidesToShow tras montar: se remonta.
   return (
     <Slider
-      key={slidesToShow}
+      key={shown}
       {...settings}
-      slidesToShow={slidesToShow}
-      autoplay={slidesToShow < 4}
+      slidesToShow={shown}
+      infinite={loops}
+      autoplay={loops && slidesToShow < 4}
       className="my-slider mb-24 mt-10 mx-4 [&_.slick-track]:flex [&_.slick-slide]:h-auto [&_.slick-slide>div]:h-full"
     >
-      {swordvoices.map((swordvoice) => (
-        <SwordvoicesCard
-          key={swordvoice.name}
-          swordvoice={swordvoice}
-          className="mx-6"
-        />
+      {mentors.map((mentor) => (
+        <SwordvoicesCard key={mentor.id} mentor={mentor} className="mx-6" />
       ))}
     </Slider>
   );

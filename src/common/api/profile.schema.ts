@@ -14,6 +14,8 @@ export const profileSchema = z.object({
   freeCodeCampUsername: optional,
   professionalTitle: optional,
   shortDescription: optional,
+  // Opcional: el backend antiguo aún no lo devuelve.
+  experienceStartedAt: z.string().nullable().optional(),
 });
 
 export type Profile = z.infer<typeof profileSchema>;

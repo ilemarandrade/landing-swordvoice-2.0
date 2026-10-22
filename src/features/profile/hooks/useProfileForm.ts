@@ -39,6 +39,11 @@ export function useProfileForm(
             message: profileMessages.FREECODECAMP_TAKEN,
           });
         }
+        if (isApiErrorCode(error, "EXPERIENCE_START_IN_FUTURE")) {
+          setError("experienceStartedAt", {
+            message: profileMessages.EXPERIENCE_START_IN_FUTURE,
+          });
+        }
       },
     }),
   );

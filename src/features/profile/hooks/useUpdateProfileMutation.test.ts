@@ -35,6 +35,7 @@ function setup() {
 describe("useUpdateProfileMutation", () => {
   beforeEach(() => {
     vi.mocked(apiClient.patch).mockReset();
+    vi.mocked(notifyError).mockClear();
   });
 
   it("patches, caches the profile and does not refetch /auth/me without a name change", async () => {
@@ -67,6 +68,16 @@ describe("useUpdateProfileMutation", () => {
     act(() => failing.result.current.mutate({ bio: "x" }));
     await waitFor(() => expect(failing.result.current.isError).toBe(true));
     expect(notifyError).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not notify EXPERIENCE_START_IN_FUTURE (it is shown under its field)", async () => {
+    vi.mocked(apiClient.patch).mockRejectedValueOnce(
+      new ApiError(422, "x", "EXPERIENCE_START_IN_FUTURE"),
+    );
+    const { result } = setup();
+    act(() => result.current.mutate({ experienceStartedAt: "2999-01-01" }));
+    await waitFor(() => expect(result.current.isError).toBe(true));
+    expect(notifyError).not.toHaveBeenCalled();
   });
 
   it("fails when the response does not match the schema", async () => {

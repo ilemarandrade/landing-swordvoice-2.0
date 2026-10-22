@@ -3,6 +3,7 @@ import type { PathRoleType } from "@/common/api/auth.schema";
 import { Button } from "@/common/components/button";
 import { academyRoleLabels } from "@/common/constants/academyRoleLabels";
 import { usePathsQuery } from "@/common/hooks/usePathsQuery";
+import { MentorLandingForm } from "@/features/admin/components/users-admin/user-panel/mentor-landing-form";
 import { PathRoleRow } from "@/features/admin/components/users-admin/user-panel/path-role-row";
 import { adminMessages } from "@/features/admin/constants/adminMessages";
 import { useAssignPathRoleMutation } from "@/features/admin/hooks/useAssignPathRoleMutation";
@@ -93,6 +94,9 @@ export function UserPanel({ userId, onClose }: UserPanelProps) {
                 onChange={(role) => changeRole(path.id, role)}
               />
             ))}
+            {user.data.academyRole === "MENTOR" && (
+              <MentorLandingForm userId={userId} />
+            )}
           </>
         )}
       </aside>

@@ -1,14 +1,17 @@
 import GithubIcon from "@/common/assets/icons/GithubIcon";
 import LinkedinIcon from "@/common/assets/icons/LinkedinIcon";
 import WorldIcon from "@/common/assets/icons/WorldIcon";
-import type { SwordvoiceLinks } from "@/features/home/constants/swordvoices";
+import type { Mentor } from "@/features/home/schemas/mentor.schema";
 
-type SocialLinksProps = { name: string; links: SwordvoiceLinks };
+type SocialLinksProps = {
+  name: string;
+  links: Pick<Mentor, "linkedinUrl" | "githubUrl" | "portfolioUrl">;
+};
 
 const SOCIALS = [
-  { key: "linkedin", label: "LinkedIn", Icon: LinkedinIcon, color: "text-[#0A66C2]" },
-  { key: "github", label: "GitHub", Icon: GithubIcon, color: "text-black" },
-  { key: "portfolio", label: "Portafolio", Icon: WorldIcon, color: "text-blue" },
+  { key: "linkedinUrl", label: "LinkedIn", Icon: LinkedinIcon, color: "text-[#0A66C2]" },
+  { key: "githubUrl", label: "GitHub", Icon: GithubIcon, color: "text-black" },
+  { key: "portfolioUrl", label: "Portafolio", Icon: WorldIcon, color: "text-blue" },
 ] as const;
 
 export function SocialLinks({ name, links }: SocialLinksProps) {
