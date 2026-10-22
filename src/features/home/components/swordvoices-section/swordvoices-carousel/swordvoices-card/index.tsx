@@ -9,11 +9,17 @@ export function SwordvoicesCard({
   mentor,
   className = "",
 }: SwordvoicesCardProps) {
-  const { name, professionalTitle, shortDescription, yearsOfExperience, photoUrl } = mentor;
+  const {
+    name,
+    professionalTitle,
+    shortDescription,
+    yearsOfExperience,
+    photoUrl,
+  } = mentor;
 
   return (
     <article
-      className={`${className} group mx-3 flex h-full flex-col overflow-hidden rounded-[18px] bg-white text-black transition-transform duration-300 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0`}
+      className={`${className} max-w-sm group mx-3 flex h-full flex-col overflow-hidden rounded-[18px] bg-white text-black transition-transform duration-300 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0`}
     >
       <SwordvoicePhoto
         name={name}
